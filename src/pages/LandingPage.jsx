@@ -166,7 +166,12 @@ const LandingPage = () => {
         justifyContent: 'space-between',
         alignItems: 'center'
       }}>
-        <Logo color="white" />
+        <button 
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+        >
+          <Logo color="white" />
+        </button>
         
         {/* Desktop Menu */}
         <div className="desktop-menu" style={{ display: 'none', gap: '2rem', alignItems: 'center' }}>
@@ -273,6 +278,73 @@ const LandingPage = () => {
               />
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Trusted By Section (Infinite Slide) */}
+      <section style={{ 
+        padding: '3rem 0', 
+        background: 'white', 
+        borderBottom: '1px solid #f1f5f9',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap'
+      }}>
+        <p style={{ textAlign: 'center', color: '#64748b', fontSize: '0.9rem', marginBottom: '2rem', fontWeight: 600, letterSpacing: '0.05em' }}>
+          TRUSTED BY INNOVATIVE COMPANIES GLOBALLY
+        </p>
+        <div style={{ display: 'flex', overflow: 'hidden' }}>
+          <motion.div 
+            animate={{ x: [0, -1035] }}
+            transition={{ 
+              duration: 25, 
+              repeat: Infinity, 
+              ease: "linear" 
+            }}
+            style={{ display: 'flex', gap: '4rem', paddingLeft: '4rem' }}
+          >
+            {[
+              "TechGlobal", "InnovateHQ", "SecureCorp", "CloudNative", "FutureScale", 
+              "EliteSystems", "PrimeBuilders", "NexGen", "TechGlobal", "InnovateHQ", "SecureCorp"
+            ].map((company, i) => (
+              <div key={i} style={{ 
+                fontSize: '1.5rem', 
+                fontWeight: 700, 
+                color: '#cbd5e1',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}>
+                <Globe size={24} style={{ opacity: 0.5 }} />
+                {company}
+              </div>
+            ))}
+          </motion.div>
+          <motion.div 
+            animate={{ x: [0, -1035] }}
+            transition={{ 
+              duration: 25, 
+              repeat: Infinity, 
+              ease: "linear" 
+            }}
+            style={{ display: 'flex', gap: '4rem', paddingLeft: '4rem' }}
+          >
+            {[
+              "TechGlobal", "InnovateHQ", "SecureCorp", "CloudNative", "FutureScale", 
+              "EliteSystems", "PrimeBuilders", "NexGen", "TechGlobal", "InnovateHQ", "SecureCorp"
+            ].map((company, i) => (
+              <div key={i} style={{ 
+                fontSize: '1.5rem', 
+                fontWeight: 700, 
+                color: '#cbd5e1',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}>
+                <Globe size={24} style={{ opacity: 0.5 }} />
+                {company}
+              </div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
@@ -390,7 +462,7 @@ const LandingPage = () => {
                 </div>
 
                 <button 
-                  onClick={() => navigate('/business-type')}
+                  onClick={() => navigate('/register')}
                   className="btn" 
                   style={{ 
                     marginTop: '2rem',

@@ -4,9 +4,7 @@ import Layout from './components/Layout';
 import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
 import GetStarted from './pages/GetStarted';
-import BusinessType from './pages/BusinessType';
-import Registration from './pages/Registration';
-import Payment from './pages/Payment';
+import SignupWizard from './pages/SignupWizard';
 import Success from './pages/Success';
 
 function App() {
@@ -16,10 +14,9 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route element={<Layout />}>
           <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<GetStarted />} />
-          <Route path="/business-type" element={<BusinessType />} />
-          <Route path="/register" element={<Registration />} />
-          <Route path="/payment" element={<Payment />} />
+          <Route path="/signup" element={<SignupWizard />} />
+          <Route path="/register" element={<SignupWizard />} />
+          <Route path="/payment" element={<SignupWizard />} />
           <Route path="/success" element={<Success />} />
         </Route>
       </Routes>
