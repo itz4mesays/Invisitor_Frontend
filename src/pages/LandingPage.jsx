@@ -36,6 +36,7 @@ const FeatureItem = ({ icon, label, value }) => (
 const LandingPage = () => {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isYearly, setIsYearly] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -57,6 +58,18 @@ const LandingPage = () => {
       text: "Understand your building traffic with real-time analytics and detailed reporting. Peak hours, host performance, and visitor trends—all in one dashboard."
     }
   ];
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      setTimeout(() => {
+        const element = document.querySelector(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -87,8 +100,8 @@ const LandingPage = () => {
       price: '0',
       duration: '14 days',
       tagline: 'Explore our features',
-      visitors: '50/mo',
-      hosts: '2',
+      visitors: '10/mo',
+      hosts: '1',
       history: '14 days',
       notif: 'Basic Alert',
       badge: false,
@@ -100,7 +113,7 @@ const LandingPage = () => {
     },
     {
       name: 'Starter Plan',
-      price: '29',
+      price: '25,000',
       duration: 'per month',
       tagline: 'Perfect for small shops',
       visitors: '500/mo',
@@ -117,7 +130,7 @@ const LandingPage = () => {
     },
     {
       name: 'Professional Plan',
-      price: '99',
+      price: '75,000',
       duration: 'per month',
       tagline: 'Scaling businesses',
       visitors: '5,000/mo',
@@ -133,8 +146,8 @@ const LandingPage = () => {
     },
     {
       name: 'Enterprise Plan',
-      price: 'Custom',
-      duration: 'Contact us',
+      price: '150,000',
+      duration: 'per month',
       tagline: 'Large scale operations',
       visitors: 'Unlimited',
       hosts: 'Unlimited',
@@ -175,7 +188,7 @@ const LandingPage = () => {
         
         {/* Desktop Menu */}
         <div className="desktop-menu" style={{ display: 'none', gap: '2rem', alignItems: 'center' }}>
-          {['Home', 'About', 'Why Choose', 'Pricing', 'Contact'].map((item) => (
+          {['Home', 'About', 'Why Choose Us?', 'Pricing', 'Contact'].map((item) => (
             <button 
               key={item} 
               onClick={() => scrollTo(item.toLowerCase().replace(' ', '-'))}
@@ -410,8 +423,29 @@ const LandingPage = () => {
       <section id="pricing" style={{ padding: '8rem 1rem', background: '#f8fafc' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <h2 style={{ textAlign: 'center', fontSize: '2.5rem', marginBottom: '1rem', color: '#0d2331' }}>Simple, Transparent Pricing</h2>
-          <p style={{ textAlign: 'center', color: '#64748b', marginBottom: '4rem' }}>Choose the plan that fits your business needs</p>
+          <p style={{ textAlign: 'center', color: '#64748b', marginBottom: '2.5rem' }}>Choose the plan that fits your business needs</p>
           
+          {/* Billing Toggle */}
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginBottom: '4rem' }}>
+            <span style={{ fontWeight: 600, color: !isYearly ? '#0d2331' : '#94a3b8' }}>Monthly</span>
+            <div 
+              onClick={() => setIsYearly(!isYearly)}
+              style={{ 
+                width: '60px', height: '32px', background: '#0d2331', borderRadius: '30px', 
+                padding: '4px', cursor: 'pointer', position: 'relative'
+              }}
+            >
+              <motion.div 
+                animate={{ x: isYearly ? 28 : 0 }}
+                style={{ width: '24px', height: '24px', background: 'white', borderRadius: '50%' }}
+              />
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <span style={{ fontWeight: 600, color: isYearly ? '#0d2331' : '#94a3b8' }}>Yearly</span>
+              <span style={{ background: '#dcfce7', color: '#16a34a', fontSize: '0.7rem', padding: '0.25rem 0.5rem', borderRadius: '20px', fontWeight: 700 }}>Save 20%</span>
+            </div>
+          </div>
+
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
             {plans.map((plan, i) => (
               <motion.div 
@@ -442,8 +476,15 @@ const LandingPage = () => {
                   <h3 style={{ fontSize: '1.5rem', fontWeight: 700, color: plan.popular ? '#00a3ff' : '#0d2331' }}>{plan.name}</h3>
                   <p style={{ color: '#64748b', fontSize: '0.9rem', marginTop: '0.5rem' }}>{plan.tagline}</p>
                   <div style={{ marginTop: '1.5rem', display: 'flex', alignItems: 'baseline' }}>
-                    <span style={{ fontSize: '2.5rem', fontWeight: 800, color: '#0d2331' }}>{plan.price !== 'Custom' ? '$' : ''}{plan.price}</span>
-                    <span style={{ color: '#64748b', marginLeft: '0.5rem' }}>/{plan.duration}</span>
+                    <span style={{ fontSize: '2.5rem', fontWeight: 800, color: '#0d2331' }}>
+                      {plan.price !== 'Custom' ? '₦' : ''}
+                      {plan.price === 'Custom' ? 'Custom' : (
+                        isYearly 
+                        ? (parseInt(plan.price.replace(',', '')) * 0.8).toLocaleString() 
+                        : plan.price
+                      )}
+                    </span>
+                    <span style={{ color: '#64748b', marginLeft: '0.5rem' }}>/{isYearly ? 'yr' : 'mo'}</span>
                   </div>
                 </div>
 

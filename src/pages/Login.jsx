@@ -39,7 +39,7 @@ const Login = () => {
       <div className="divider">OR</div>
 
       <p style={{ textAlign: 'center', fontSize: '0.85rem' }}>
-        Don't have an account? <Link to="/signup" className="link">Sign up</Link>
+        Don't have an account? <Link to="/#pricing" className="link">Sign up</Link>
       </p>
     </div>
   );

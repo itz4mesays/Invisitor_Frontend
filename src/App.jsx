@@ -6,6 +6,8 @@ import Login from './pages/Login';
 import GetStarted from './pages/GetStarted';
 import SignupWizard from './pages/SignupWizard';
 import Success from './pages/Success';
+import VerifyingPayment from './pages/VerifyingPayment';
+import PaymentFailed from './pages/PaymentFailed';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
           <Route path="/signup" element={<SignupWizard />} />
           <Route path="/register" element={<SignupWizard />} />
           <Route path="/payment" element={<SignupWizard />} />
+          <Route path="/verify-payment" element={<VerifyingPayment />} />
+          <Route path="/payment-failed" element={<PaymentFailed />} />
           <Route path="/success" element={<Success />} />
         </Route>
       </Routes>
