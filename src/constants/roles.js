@@ -11,7 +11,7 @@ export const DUMMY_USERS = [
   {
     id: '1',
     name: 'John Resident',
-    email: 'resident@example.com',
+    email: 'resident@invisitor.com',
     password: 'password123',
     role: ROLES.RESIDENT,
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John',
@@ -19,7 +19,7 @@ export const DUMMY_USERS = [
   {
     id: '2',
     name: 'Alice Manager',
-    email: 'manager@example.com',
+    email: 'manager@invisitor.com',
     password: 'password123',
     role: ROLES.ESTATE_MANAGER,
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alice',
@@ -27,7 +27,7 @@ export const DUMMY_USERS = [
   {
     id: '3',
     name: 'Bob Visitor',
-    email: 'visitor@example.com',
+    email: 'visitor@invisitor.com',
     password: 'password123',
     role: ROLES.VISITOR,
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Bob',
@@ -35,7 +35,7 @@ export const DUMMY_USERS = [
   {
     id: '4',
     name: 'Sarah Host',
-    email: 'host@example.com',
+    email: 'host@invisitor.com',
     password: 'password123',
     role: ROLES.HOST,
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah',
@@ -43,7 +43,7 @@ export const DUMMY_USERS = [
   {
     id: '5',
     name: 'David FrontDesk',
-    email: 'frontdesk@example.com',
+    email: 'frontdesk@invisitor.com',
     password: 'password123',
     role: ROLES.FRONTDESK,
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=David',
@@ -51,7 +51,7 @@ export const DUMMY_USERS = [
   {
     id: '6',
     name: 'Super Admin',
-    email: 'admin@example.com',
+    email: 'admin@invisitor.com',
     password: 'password123',
     role: ROLES.ADMIN,
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Admin',

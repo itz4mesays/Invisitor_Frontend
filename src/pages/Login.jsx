@@ -95,12 +95,12 @@ const Login = () => {
       <div style={{ marginTop: '1.5rem', padding: '1rem', background: '#f8fafc', borderRadius: '12px', fontSize: '0.75rem' }}>
         <p style={{ fontWeight: 'bold', marginBottom: '0.5rem', color: '#1e293b' }}>Test Credentials (pw: password123):</p>
         <ul style={{ listStyle: 'none', padding: 0, color: '#64748b' }}>
-          <li>Admin: admin@example.com</li>
-          <li>Resident: resident@example.com</li>
-          <li>Manager: manager@example.com</li>
-          <li>Visitor: visitor@example.com</li>
-          <li>Host: host@example.com</li>
-          <li>FrontDesk: frontdesk@example.com</li>
+          <li>Admin: admin@invisitor.com</li>
+          <li>Resident: resident@invisitor.com</li>
+          <li>Manager: manager@invisitor.com</li>
+          <li>Visitor: visitor@invisitor.com</li>
+          <li>Host: host@invisitor.com</li>
+          <li>FrontDesk: frontdesk@invisitor.com</li>
         </ul>
       </div>
 

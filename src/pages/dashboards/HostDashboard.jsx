@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Users, 
@@ -46,6 +47,7 @@ const Modal = ({ isOpen, onClose, children, maxWidth = '850px' }) => {
 };
 
 const HostDashboard = () => {
+  const navigate = useNavigate();
   const [isConfirmModalOpen, setIsConfirmModalOpen] = React.useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = React.useState(false);
   const [isRescheduleModalOpen, setIsRescheduleModalOpen] = React.useState(false);
@@ -218,7 +220,7 @@ const HostDashboard = () => {
             <div className="upcoming-box">
               <div className="box-header">
                 <h3>Upcoming Appointments</h3>
-                <button className="btn-see-all">See all <ArrowRight size={14} /></button>
+                <button className="btn-see-all" onClick={() => navigate('/host/appointments')}>See all <ArrowRight size={14} /></button>
               </div>
               <div className="upcoming-list">
                 {upcomingAppointments.map((appt, idx) => (

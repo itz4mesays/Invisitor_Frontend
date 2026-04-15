@@ -846,7 +846,7 @@ const HostAppointments = () => {
         }
 
         .list-title {
-          font-size: 1.5rem;
+          font-size: 1.125rem;
           font-weight: 800;
           color: #1e293b;
         }
@@ -863,7 +863,7 @@ const HostAppointments = () => {
           align-items: center;
           gap: 0.5rem;
           color: #64748b;
-          font-size: 1rem;
+          font-size: 0.8125rem;
           font-weight: 600;
           cursor: pointer;
         }
@@ -890,8 +890,8 @@ const HostAppointments = () => {
         }
 
         .status-strip {
-          padding: 1rem 1.5rem;
-          font-size: 1.125rem;
+          padding: 0.75rem 1.5rem;
+          font-size: 0.875rem;
           font-weight: 700;
           border-bottom: 1px solid #f1f5f9;
         }
@@ -905,7 +905,7 @@ const HostAppointments = () => {
         }
 
         .card-date-title {
-          font-size: 1.5rem;
+          font-size: 1.125rem;
           font-weight: 800;
           color: #1e293b;
           margin-bottom: 1.25rem;
@@ -916,7 +916,7 @@ const HostAppointments = () => {
           align-items: center;
           gap: 0.75rem;
           color: #475569;
-          font-size: 1rem;
+          font-size: 0.875rem;
           font-weight: 600;
           margin-bottom: 0.75rem;
         }
@@ -972,13 +972,13 @@ const HostAppointments = () => {
         }
 
         .v-name {
-          font-size: 1.125rem;
+          font-size: 0.875rem;
           font-weight: 800;
           color: #1e293b;
         }
 
         .v-role {
-          font-size: 0.875rem;
+          font-size: 0.75rem;
           color: #64748b;
         }
 
@@ -1142,14 +1142,14 @@ const HostAppointments = () => {
         }
 
         .confirm-title {
-          font-size: 2rem;
+          font-size: 1.5rem;
           font-weight: 800;
           color: #0d2331;
           margin-bottom: 1.5rem;
         }
 
         .confirm-subtext {
-          font-size: 1.125rem;
+          font-size: 0.875rem;
           line-height: 1.6;
           color: #475569;
           font-weight: 600;
@@ -1176,13 +1176,13 @@ const HostAppointments = () => {
         }
 
         .v-name-large {
-          font-size: 1.375rem;
+          font-size: 1.125rem;
           font-weight: 800;
           color: #1e293b;
         }
 
         .v-role-large {
-          font-size: 1rem;
+          font-size: 0.875rem;
           color: #64748b;
         }
 
@@ -1242,7 +1242,7 @@ const HostAppointments = () => {
         }
 
         .add-modal-title {
-          font-size: 2rem;
+          font-size: 1.5rem;
           font-weight: 800;
           color: #0d2331;
           margin-bottom: 0.5rem;
@@ -1250,7 +1250,7 @@ const HostAppointments = () => {
 
         .add-modal-subtitle {
           color: #94a3b8;
-          font-size: 1.125rem;
+          font-size: 1rem;
           font-weight: 600;
         }
 
@@ -1268,7 +1268,7 @@ const HostAppointments = () => {
           align-items: center;
           gap: 0.75rem;
           font-weight: 700;
-          font-size: 1.125rem;
+          font-size: 0.875rem;
           color: #94a3b8;
           cursor: pointer;
           position: relative;
@@ -1307,7 +1307,7 @@ const HostAppointments = () => {
         }
 
         .form-field label {
-          font-size: 0.875rem;
+          font-size: 0.75rem;
           font-weight: 800;
           color: #1e293b;
           letter-spacing: 0.5px;
@@ -1316,10 +1316,10 @@ const HostAppointments = () => {
         .form-field select,
         .form-field input {
           width: 100%;
-          padding: 1rem;
+          padding: 0.875rem;
           border-radius: 12px;
           border: 1.5px solid #e2e8f0;
-          font-size: 1rem;
+          font-size: 0.875rem;
           color: #1e293b;
           font-weight: 600;
           outline: none;

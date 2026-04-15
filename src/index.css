@@ -379,13 +379,13 @@ input:focus {
 
 /* Dashboard Dark Mode Global Overrides */
 body.dark-mode {
-  background: #0f172a !important;
-  color: #f8fafc !important;
+  background-color: #0a0c10 !important;
+  color: #f1f5f9 !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body.dark-mode .dashboard-container {
-  background-color: #0f172a !important;
-  color: #f8fafc !important;
+  background-color: #0a0c10 !important;
 }
 
 body.dark-mode .sidebar, 
@@ -398,58 +398,75 @@ body.dark-mode .subscription-section,
 body.dark-mode .sub-main-info, 
 body.dark-mode .sub-metrics, 
 body.dark-mode .visitor-confirm-card, 
+body.dark-mode .modal-container, 
+body.dark-mode .search-bar {
+  background-color: #12141a !important;
+  border-color: #1e222b !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4) !important;
+}
+
 body.dark-mode .action-icon-circle, 
 body.dark-mode .btn-reschedule-mini, 
 body.dark-mode .btn-light, 
 body.dark-mode .sidebar-toggle-btn,
-body.dark-mode .modal-container,
-body.dark-mode .nav-link:hover,
-body.dark-mode .action-row:hover,
-body.dark-mode .search-bar,
 body.dark-mode .user-profile-mini,
 body.dark-mode .calendar-icon-box,
 body.dark-mode .date-badge,
 body.dark-mode .invitee-box,
-body.dark-mode .btn-cancel-large {
-  background-color: #1e293b !important;
-  border-color: #334155 !important;
-  color: #f8fafc !important;
+body.dark-mode .btn-cancel-large,
+body.dark-mode .btn-close-circle {
+  background-color: #1a1d24 !important;
+  border-color: #272c36 !important;
+  color: #f1f5f9 !important;
+}
+
+body.dark-mode .nav-link:hover,
+body.dark-mode .action-row:hover {
+  background-color: #1e222b !important;
 }
 
 body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode h4, body.dark-mode h5,
 body.dark-mode .logo-text, body.dark-mode .nav-link, body.dark-mode .header-user-name,
-body.dark-mode .stat-value, body.dark-mode .metric-item span, body.dark-mode .search-icon,
+body.dark-mode .stat-value, body.dark-mode .metric-item span, 
 body.dark-mode .search-bar input, body.dark-mode label, body.dark-mode input, body.dark-mode select {
-  color: #f8fafc !important;
+  color: #f1f5f9 !important;
+}
+
+body.dark-mode .search-icon {
+  color: #64748b !important;
 }
 
 body.dark-mode .nav-link.active {
-  background-color: #334155 !important;
+  background-color: #1a1d24 !important;
   color: var(--accent-blue) !important;
+  border: 1px solid #272c36 !important;
 }
 
 body.dark-mode .stat-label, body.dark-mode .meta-period, body.dark-mode .action-meta p,
 body.dark-mode .appt-meta p, body.dark-mode .appt-time, body.dark-mode .invitee-meta p,
 body.dark-mode .sub-card-text p, body.dark-mode .date-text span, body.dark-mode .metric-item label,
-body.dark-mode .add-modal-subtitle, body.dark-mode .add-modal-tab, body.dark-mode .btn-close-circle {
+body.dark-mode .add-modal-subtitle, body.dark-mode .add-modal-tab {
   color: #94a3b8 !important;
 }
 
-body.dark-mode .btn-dark, body.dark-mode .btn-confirm-large {
-  background-color: var(--accent-blue) !important;
-  color: white !important;
-}
-
-body.dark-mode .btn-primary {
-  background: var(--accent-blue) !important;
+body.dark-mode .form-field select option {
+  background: #12141a !important;
+  color: #f1f5f9 !important;
 }
 
 body.dark-mode input, body.dark-mode select {
-  background-color: #0f172a !important;
-  border-color: #334155 !important;
+  background-color: #0a0c10 !important;
+  border-color: #272c36 !important;
 }
 
-body.dark-mode .form-field select option {
-  background: #1e293b !important;
-  color: #f8fafc !important;
+body.dark-mode .btn-dark, body.dark-mode .btn-confirm-large, body.dark-mode .btn-primary, body.dark-mode .btn-footer-primary {
+  background-color: #f1f5f9 !important;
+  color: #0a0c10 !important;
+  font-weight: 800 !important;
+  border: none !important;
+}
+
+body.dark-mode .btn-dark:hover, body.dark-mode .btn-confirm-large:hover, body.dark-mode .btn-footer-primary:hover {
+  background-color: #ffffff !important;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
 }
