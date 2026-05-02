@@ -22,9 +22,23 @@ const DashboardLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const [isNotifOpen, setIsNotifOpen] = useState(false);
   const [openDropdowns, setOpenDropdowns] = useState({});
   const location = useLocation();
   const navigate = useNavigate();
+
+  const notifications = [
+    { id: 1, text: "Your visitor James arrived.", time: "2m ago", unread: true },
+    { id: 2, text: "Appointment APT-001 confirmed.", time: "1h ago", unread: true },
+    { id: 3, text: "System maintenance scheduled for tonight.", time: "3h ago", unread: false },
+    { id: 4, text: "New message from Support.", time: "5h ago", unread: false },
+    { id: 5, text: "Security alert: Gate B offline.", time: "1d ago", unread: false },
+    { id: 6, text: "Your profile was updated.", time: "2d ago", unread: false },
+    { id: 7, text: "Monthly report is ready.", time: "2d ago", unread: false },
+    { id: 8, text: "Invoice #INV-2041 paid.", time: "3d ago", unread: false },
+    { id: 9, text: "Welcome to InVisitor!", time: "1w ago", unread: false },
+    { id: 10, text: "Please verify your email.", time: "1w ago", unread: false }
+  ];
 
   useEffect(() => {
     if (isDarkMode) {
@@ -213,10 +227,41 @@ const DashboardLayout = () => {
             <button className="theme-toggle-btn" onClick={() => setIsDarkMode(!isDarkMode)} style={{ background: 'none', border: 'none', color: '#64748b', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
               {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
             </button>
-            <button className="notification-btn">
-              <Bell size={20} />
-              <span className="notification-dot"></span>
-            </button>
+            <div 
+              className="notification-container" 
+              style={{ position: 'relative' }}
+              onMouseEnter={() => setIsNotifOpen(true)}
+              onMouseLeave={() => setIsNotifOpen(false)}
+            >
+              <button className="notification-btn">
+                <Bell size={20} />
+                <span className="notification-dot"></span>
+              </button>
+              <AnimatePresence>
+                {isNotifOpen && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}
+                    className="notification-dropdown"
+                  >
+                    <div className="notif-header">
+                      <h4>Notifications</h4>
+                      <button className="notif-mark-read">Mark all as read</button>
+                    </div>
+                    <div className="notif-list">
+                      {notifications.map(n => (
+                        <div key={n.id} className={`notif-item ${n.unread ? 'unread' : ''}`}>
+                          <div className="notif-text">{n.text}</div>
+                          <div className="notif-time">{n.time}</div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="notif-footer">
+                      <button className="notif-view-all" onClick={() => { setIsNotifOpen(false); navigate(`/${role}/notifications`); }}>View all notifications</button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
             <div className="user-profile-container" style={{ position: 'relative' }}>
               <div className="user-profile-circle" onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}>
                 <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${role}`} alt="Profile" />
@@ -578,6 +623,38 @@ const DashboardLayout = () => {
         .profile-dropdown button.logout-btn-drop:hover {
           background: #fef2f2;
         }
+
+        .notification-dropdown {
+          position: absolute;
+          right: 0;
+          top: calc(100% + 5px);
+          background: white;
+          border: 1px solid #e2e8f0;
+          border-radius: 12px;
+          box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+          width: 320px;
+          z-index: 50;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .notif-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-bottom: 1px solid #f1f5f9; }
+        .notif-header h4 { margin: 0; font-size: 0.9375rem; font-weight: 800; color: #1e293b; }
+        .notif-mark-read { background: none; border: none; font-size: 0.75rem; font-weight: 600; color: #3b82f6; cursor: pointer; }
+        
+        .notif-list { max-height: 350px; overflow-y: auto; display: flex; flex-direction: column; }
+        .notif-item { padding: 0.875rem 1rem; border-bottom: 1px solid #f1f5f9; display: flex; flex-direction: column; gap: 0.25rem; transition: background 0.2s; cursor: pointer; }
+        .notif-item:hover { background: #f8fafc; }
+        .notif-item.unread { background: #eff6ff; }
+        .notif-item.unread:hover { background: #e0f2fe; }
+        
+        .notif-text { font-size: 0.875rem; color: #1e293b; font-weight: 500; line-height: 1.4; }
+        .notif-time { font-size: 0.75rem; color: #94a3b8; }
+
+        .notif-footer { padding: 0.75rem; border-top: 1px solid #f1f5f9; text-align: center; }
+        .notif-view-all { background: none; border: none; font-size: 0.8125rem; font-weight: 700; color: #64748b; cursor: pointer; transition: color 0.2s; }
+        .notif-view-all:hover { color: #1e293b; }
 
         .content-area {
           padding: 2rem;

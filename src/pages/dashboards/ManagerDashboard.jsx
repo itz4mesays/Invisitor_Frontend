@@ -4,6 +4,25 @@ import { useNavigate } from 'react-router-dom';
 import { 
   Users, Calendar, Clock, ArrowRight, Shield, QrCode, CreditCard, ChevronRight, CheckCircle2, AlertCircle 
 } from 'lucide-react';
+import { ResponsiveContainer, AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+
+const APPOINTMENTS_DATA = [
+  { month: 'Jan', appointments: 120 }, { month: 'Feb', appointments: 150 },
+  { month: 'Mar', appointments: 180 }, { month: 'Apr', appointments: 220 },
+  { month: 'May', appointments: 250 }, { month: 'Jun', appointments: 210 },
+  { month: 'Jul', appointments: 280 }, { month: 'Aug', appointments: 310 },
+  { month: 'Sep', appointments: 290 }, { month: 'Oct', appointments: 330 },
+  { month: 'Nov', appointments: 380 }, { month: 'Dec', appointments: 420 },
+];
+
+const RESIDENTS_DATA = [
+  { month: 'Jan', residents: 350 }, { month: 'Feb', residents: 365 },
+  { month: 'Mar', residents: 380 }, { month: 'Apr', residents: 385 },
+  { month: 'May', residents: 400 }, { month: 'Jun', residents: 410 },
+  { month: 'Jul', residents: 415 }, { month: 'Aug', residents: 425 },
+  { month: 'Sep', residents: 430 }, { month: 'Oct', residents: 440 },
+  { month: 'Nov', residents: 445 }, { month: 'Dec', residents: 450 },
+];
 
 const ManagerDashboard = () => {
   const navigate = useNavigate();
@@ -60,6 +79,48 @@ const ManagerDashboard = () => {
         ))}
       </div>
 
+      <div className="md-graphs-grid">
+        <div className="md-graph-card">
+          <div className="md-card-header" style={{ marginBottom: '1rem' }}>
+            <h3>Appointments Overview</h3>
+          </div>
+          <div className="md-graph-container">
+            <ResponsiveContainer width="100%" height={260}>
+              <BarChart data={APPOINTMENTS_DATA} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#94a3b8' }} dy={10} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#94a3b8' }} />
+                <Tooltip cursor={{ fill: '#f8fafc' }} contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+                <Bar dataKey="appointments" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={28} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        <div className="md-graph-card">
+          <div className="md-card-header" style={{ marginBottom: '1rem' }}>
+            <h3>Resident Growth</h3>
+          </div>
+          <div className="md-graph-container">
+            <ResponsiveContainer width="100%" height={260}>
+              <AreaChart data={RESIDENTS_DATA} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="colorRes" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#94a3b8' }} dy={10} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#94a3b8' }} />
+                <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+                <Area type="monotone" dataKey="residents" stroke="#10b981" strokeWidth={3} fillOpacity={1} fill="url(#colorRes)" />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      </div>
+
       <div className="md-main-grid">
         <div className="md-recent-appointments">
           <div className="md-card-header">
@@ -95,11 +156,11 @@ const ManagerDashboard = () => {
                 <div className="md-action-icon" style={{ background: '#eef2ff', color: '#6366f1' }}><Users size={20} /></div>
                 <span>Add Resident</span>
               </button>
-              <button className="md-action-btn" onClick={() => navigate('/manager/security/add-officer')}>
+              <button className="md-action-btn" onClick={() => navigate('/manager/security/add')}>
                 <div className="md-action-icon" style={{ background: '#fffbeb', color: '#d97706' }}><Shield size={20} /></div>
                 <span>Add Officer</span>
               </button>
-              <button className="md-action-btn" onClick={() => navigate('/manager/support')}>
+              <button className="md-action-btn" onClick={() => navigate('/manager/support/tickets')}>
                 <div className="md-action-icon" style={{ background: '#fef2f2', color: '#dc2626' }}><AlertCircle size={20} /></div>
                 <span>Support Tickets</span>
               </button>
@@ -195,6 +256,10 @@ const ManagerDashboard = () => {
         .md-stat-label { font-size: 0.8125rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
         .md-stat-value { font-size: 1.875rem; font-weight: 800; color: #1e293b; line-height: 1; }
 
+        .md-graphs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+        .md-graph-card { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; display: flex; flex-direction: column; }
+        .md-graph-container { flex: 1; width: 100%; min-height: 250px; }
+
         .md-main-grid { display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; }
         .md-recent-appointments { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; }
         .md-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
@@ -249,6 +314,7 @@ const ManagerDashboard = () => {
 
         @media (max-width: 1024px) {
           .md-stats-grid { grid-template-columns: repeat(2, 1fr); }
+          .md-graphs-grid { grid-template-columns: 1fr; }
           .md-main-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 768px) {

@@ -30,6 +30,7 @@ import HostFrontDesk from './pages/host/FrontDesk';
 // Shared Pages
 import ActivityLog from './pages/shared/ActivityLog';
 import Profile from './pages/shared/Profile';
+import Notifications from './pages/shared/Notifications';
 import Transactions from './pages/financial/Transactions';
 
 // Manager Pages
@@ -39,6 +40,7 @@ import ManagerTransactions from './pages/manager/Transactions';
 import ManagerSecurity from './pages/manager/Security';
 import ManagerResidents from './pages/manager/Residents';
 import AddOfficer from './pages/manager/AddOfficer';
+import OfficerDetails from './pages/manager/OfficerDetails';
 import ResidentDetails from './pages/manager/ResidentDetails';
 import AddResident from './pages/manager/AddResident';
 
@@ -69,6 +71,7 @@ function App() {
           <Route index element={<Navigate to="/admin/dashboard" replace />} />
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="activity-log" element={<ActivityLog />} />
+          <Route path="notifications" element={<Notifications />} />
           <Route path="profile" element={<Profile />} />
           <Route path="*" element={<div>Coming Soon</div>} />
         </Route>
@@ -80,6 +83,7 @@ function App() {
           <Route path="reports" element={<ResidentReports />} />
           <Route path="transactions" element={<Transactions />} />
           <Route path="activity-log" element={<ActivityLog />} />
+          <Route path="notifications" element={<Notifications />} />
           <Route path="support/dashboard" element={<SupportDashboard />} />
           <Route path="support/tickets" element={<ManageTickets />} />
           <Route path="support/tickets/:ticketId" element={<TicketView />} />
@@ -91,6 +95,7 @@ function App() {
           <Route index element={<Navigate to="/manager/dashboard" replace />} />
           <Route path="dashboard" element={<ManagerDashboard />} />
           <Route path="activity-log" element={<ActivityLog />} />
+          <Route path="notifications" element={<Notifications />} />
           <Route path="appointments" element={<ManagerAppointments />} />
           <Route path="reports" element={<ManagerReports />} />
           <Route path="support/dashboard" element={<SupportDashboard />} />
@@ -99,6 +104,7 @@ function App() {
           <Route path="transactions" element={<ManagerTransactions />} />
           <Route path="security" element={<ManagerSecurity />} />
           <Route path="security/add" element={<AddOfficer />} />
+          <Route path="security/:officerId" element={<OfficerDetails />} />
           <Route path="residents" element={<ManagerResidents />} />
           <Route path="residents/add" element={<AddResident />} />
           <Route path="residents/:residentId" element={<ResidentDetails />} />
@@ -111,6 +117,7 @@ function App() {
           <Route path="dashboard" element={<VisitorDashboard />} />
           <Route path="transactions" element={<Transactions />} />
           <Route path="activity-log" element={<ActivityLog />} />
+          <Route path="notifications" element={<Notifications />} />
           <Route path="support/dashboard" element={<SupportDashboard />} />
           <Route path="support/tickets" element={<ManageTickets />} />
           <Route path="support/tickets/:ticketId" element={<TicketView />} />
@@ -123,6 +130,7 @@ function App() {
           <Route path="dashboard" element={<HostDashboard />} />
           <Route path="transactions" element={<Transactions />} />
           <Route path="activity-log" element={<ActivityLog />} />
+          <Route path="notifications" element={<Notifications />} />
           <Route path="visitors" element={<HostVisitors />} />
           <Route path="appointments" element={<HostAppointments />} />
           <Route path="front-desk" element={<HostFrontDesk />} />
@@ -138,6 +146,7 @@ function App() {
           <Route path="dashboard" element={<FrontDeskDashboard />} />
           <Route path="transactions" element={<Transactions />} />
           <Route path="activity-log" element={<ActivityLog />} />
+          <Route path="notifications" element={<Notifications />} />
           <Route path="support/dashboard" element={<SupportDashboard />} />
           <Route path="support/tickets" element={<ManageTickets />} />
           <Route path="support/tickets/:ticketId" element={<TicketView />} />

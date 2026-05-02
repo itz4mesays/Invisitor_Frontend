@@ -1,139 +1,163 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, Save, User, Shield, Phone, Mail, Clock, CreditCard } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { ChevronLeft, User, Shield, Mail, Phone, Clock, Check } from 'lucide-react';
 
 const AddOfficer = () => {
   const navigate = useNavigate();
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    role: 'Security Officer',
+    shift: 'Morning (6AM - 2PM)',
+    idType: 'National ID',
+    idNumber: '',
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSuccess(true);
+    // Normally we'd save data here
+    navigate('/manager/security');
   };
 
-  if (isSuccess) {
-    return (
-      <div className="success-page-container">
-        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="success-card">
-          <div className="success-icon-wrapper"><Check size={48} strokeWidth={4} /></div>
-          <h1>Officer Added Successfully!</h1>
-          <p>The new officer has been registered and can now access the system with their credentials.</p>
-          <div className="success-actions">
-            <button className="btn-primary" onClick={() => navigate('/manager/security')}>View Officers</button>
-            <button className="btn-outline" onClick={() => navigate('/manager')}>Back to Dashboard</button>
-          </div>
-        </motion.div>
-        <style jsx>{`
-          .success-page-container { display: flex; align-items: center; justify-content: center; min-height: 70vh; padding: 2rem; }
-          .success-card { background: white; padding: 4rem 2rem; border-radius: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center; max-width: 500px; width: 100%; border: 1px solid #e2e8f0; }
-          .success-icon-wrapper { width: 80px; height: 80px; background: #dcfce7; color: #16a34a; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; }
-          h1 { font-size: 1.75rem; font-weight: 800; color: #0d2331; margin-bottom: 1rem; }
-          p { color: #64748b; margin-bottom: 2.5rem; line-height: 1.6; }
-          .success-actions { display: flex; flex-direction: column; gap: 1rem; }
-          .btn-primary { background: #3b82f6; color: white; border: none; padding: 1rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
-          .btn-outline { background: white; color: #3b82f6; border: 2px solid #3b82f6; padding: 1rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
-        `}</style>
-      </div>
-    );
-  }
-
   return (
-    <div className="add-officer-container">
-      <header className="page-header">
-        <button className="btn-back" onClick={() => navigate(-1)}><ChevronLeft size={20} /> Back</button>
-        <h1>Add New Officer</h1>
-        <p>Create an account for a new Security or Front Desk Officer</p>
-      </header>
+    <div className="add-officer-page">
+      <div className="ao-header">
+        <button className="ao-back-btn" onClick={() => navigate(-1)}>
+          <ChevronLeft size={20} /> Back
+        </button>
+        <div>
+          <h1>Add New Officer</h1>
+          <p>Register a new security or front desk officer.</p>
+        </div>
+      </div>
 
-      <form className="add-officer-form" onSubmit={handleSubmit}>
-        <div className="form-section">
-          <h3>Personal Information</h3>
-          <div className="form-grid">
-            <div className="form-group">
-              <label>Full Name</label>
-              <div className="input-with-icon"><User size={18} /><input type="text" placeholder="e.g. Officer James Wilson" required /></div>
+      <motion.form 
+        className="ao-form-card"
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        onSubmit={handleSubmit}
+      >
+        <div className="ao-section">
+          <h3><User size={18} /> Personal Information</h3>
+          <div className="ao-grid">
+            <div className="ao-field">
+              <label>First Name</label>
+              <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} required placeholder="James" />
             </div>
-            <div className="form-group">
+            <div className="ao-field">
+              <label>Last Name</label>
+              <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} required placeholder="Wilson" />
+            </div>
+            <div className="ao-field">
               <label>Email Address</label>
-              <div className="input-with-icon"><Mail size={18} /><input type="email" placeholder="james@security.com" required /></div>
+              <div className="ao-input-with-icon">
+                <Mail size={16} />
+                <input type="email" name="email" value={formData.email} onChange={handleChange} required placeholder="james@example.com" />
+              </div>
             </div>
-            <div className="form-group">
+            <div className="ao-field">
               <label>Phone Number</label>
-              <div className="input-with-dial-code">
-                <select className="dial-code"><option>+234</option><option>+1</option><option>+44</option></select>
-                <input type="tel" placeholder="814 609 2019" required />
+              <div className="ao-input-with-icon">
+                <Phone size={16} />
+                <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required placeholder="+234 800 000 0000" />
               </div>
-            </div>
-            <div className="form-group">
-              <label>Gender</label>
-              <select required><option value="">Select Gender</option><option>Male</option><option>Female</option></select>
             </div>
           </div>
         </div>
 
-        <div className="form-section">
-          <h3>Employment Details</h3>
-          <div className="form-grid">
-            <div className="form-group">
-              <label>Officer Type</label>
-              <div className="input-with-icon"><Shield size={18} />
-                <select required><option value="">Select Type</option><option>Security Officer</option><option>Front Desk Officer</option></select>
+        <div className="ao-divider" />
+
+        <div className="ao-section">
+          <h3><Shield size={18} /> Role & Assignment</h3>
+          <div className="ao-grid">
+            <div className="ao-field">
+              <label>Officer Role</label>
+              <select name="role" value={formData.role} onChange={handleChange}>
+                <option value="Security Officer">Security Officer</option>
+                <option value="Front Desk Officer">Front Desk Officer</option>
+              </select>
+            </div>
+            <div className="ao-field">
+              <label>Assigned Shift</label>
+              <div className="ao-input-with-icon">
+                <Clock size={16} />
+                <select name="shift" value={formData.shift} onChange={handleChange}>
+                  <option value="Morning (6AM - 2PM)">Morning (6AM - 2PM)</option>
+                  <option value="Afternoon (2PM - 10PM)">Afternoon (2PM - 10PM)</option>
+                  <option value="Night (10PM - 6AM)">Night (10PM - 6AM)</option>
+                </select>
               </div>
-            </div>
-            <div className="form-group">
-              <label>Badge Number / ID</label>
-              <input type="text" placeholder="e.g. SEC001" required />
-            </div>
-            <div className="form-group">
-              <label>Shift Assignment</label>
-              <div className="input-with-icon"><Clock size={18} />
-                <select required><option value="">Select Shift</option><option>Morning (6AM - 2PM)</option><option>Afternoon (2PM - 10PM)</option><option>Night (10PM - 6AM)</option></select>
-              </div>
-            </div>
-            <div className="form-group">
-              <label>Joining Date</label>
-              <input type="date" required />
             </div>
           </div>
         </div>
 
-        <div className="form-actions">
+        <div className="ao-divider" />
+
+        <div className="ao-section">
+          <h3><CreditCard size={18} /> Identification</h3>
+          <div className="ao-grid">
+            <div className="ao-field">
+              <label>ID Type</label>
+              <select name="idType" value={formData.idType} onChange={handleChange}>
+                <option value="National ID">National ID</option>
+                <option value="Driver's License">Driver's License</option>
+                <option value="International Passport">International Passport</option>
+              </select>
+            </div>
+            <div className="ao-field">
+              <label>ID Number</label>
+              <input type="text" name="idNumber" value={formData.idNumber} onChange={handleChange} required placeholder="NIN or ID Number" />
+            </div>
+          </div>
+        </div>
+
+        <div className="ao-form-actions">
           <button type="button" className="btn-cancel" onClick={() => navigate(-1)}>Cancel</button>
-          <button type="submit" className="btn-submit">Add Officer</button>
+          <button type="submit" className="btn-submit"><Save size={18} /> Save Officer</button>
         </div>
-      </form>
+      </motion.form>
 
       <style jsx>{`
-        .add-officer-container { padding: 2rem; max-width: 900px; margin: 0 auto; }
-        .page-header { margin-bottom: 2.5rem; }
-        .btn-back { display: flex; align-items: center; gap: 0.5rem; background: none; border: none; color: #64748b; font-weight: 600; cursor: pointer; padding: 0; margin-bottom: 1rem; }
-        h1 { font-size: 2rem; font-weight: 800; color: #0d2331; margin: 0 0 0.5rem; }
-        .page-header p { color: #64748b; margin: 0; }
-        .add-officer-form { display: flex; flex-direction: column; gap: 2rem; }
-        .form-section { background: white; padding: 2rem; border-radius: 20px; border: 1px solid #e2e8f0; }
-        .form-section h3 { font-size: 1.125rem; font-weight: 700; color: #0d2331; margin: 0 0 1.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 1rem; }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-        .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
-        .form-group label { font-size: 0.875rem; font-weight: 600; color: #0d2331; }
-        .input-with-icon { position: relative; }
-        .input-with-icon svg { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #94a3b8; }
-        .input-with-icon input, .input-with-icon select { padding-left: 3rem; }
-        .input-with-dial-code { display: flex; gap: 0.5rem; }
-        .dial-code { width: 100px; flex-shrink: 0; }
-        input, select { width: 100%; padding: 0.875rem 1rem; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 0.95rem; transition: all 0.2s; box-sizing: border-box; }
-        input:focus, select:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
-        .form-actions { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem; }
-        .btn-cancel { padding: 1rem 2rem; border: 1px solid #e2e8f0; border-radius: 12px; font-weight: 700; background: white; cursor: pointer; color: #64748b; }
-        .btn-submit { padding: 1rem 3rem; border: none; border-radius: 12px; font-weight: 700; background: #3b82f6; cursor: pointer; color: white; }
-        .btn-submit:hover { background: #2563eb; }
-        @media (max-width: 640px) {
-          .form-grid { grid-template-columns: 1fr; }
-          .form-actions { flex-direction: column; }
-          .btn-submit, .btn-cancel { width: 100%; }
-          .add-officer-container { padding: 1.5rem; }
-          h1 { font-size: 1.5rem; }
-          .form-section { padding: 1.5rem; }
+        .add-officer-page { display: flex; flex-direction: column; gap: 1.5rem; padding-bottom: 3rem; max-width: 800px; margin: 0 auto; }
+        .ao-header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 0.5rem; }
+        .ao-back-btn { background: white; border: 1px solid #e2e8f0; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #475569; cursor: pointer; transition: all 0.2s; flex-shrink: 0; }
+        .ao-back-btn:hover { background: #f8fafc; color: #0d2331; }
+        .ao-header h1 { font-size: 1.75rem; font-weight: 800; color: #1e293b; margin: 0 0 0.25rem 0; }
+        .ao-header p { color: #64748b; margin: 0; font-size: 0.9375rem; }
+
+        .ao-form-card { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 2rem; display: flex; flex-direction: column; gap: 2rem; }
+        .ao-section h3 { font-size: 1.125rem; font-weight: 700; color: #1e293b; margin: 0 0 1.25rem 0; display: flex; align-items: center; gap: 0.5rem; }
+        .ao-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+        
+        .ao-field { display: flex; flex-direction: column; gap: 0.5rem; }
+        .ao-field label { font-size: 0.8125rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
+        .ao-field input, .ao-field select { padding: 0.75rem 1rem; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 0.9375rem; color: #1e293b; outline: none; transition: border 0.2s; width: 100%; box-sizing: border-box; font-family: inherit; }
+        .ao-field input:focus, .ao-field select:focus { border-color: #3b82f6; }
+        
+        .ao-input-with-icon { position: relative; display: flex; align-items: center; }
+        .ao-input-with-icon svg { position: absolute; left: 1rem; color: #94a3b8; }
+        .ao-input-with-icon input, .ao-input-with-icon select { padding-left: 2.75rem; width: 100%; }
+
+        .ao-divider { height: 1px; background: #f1f5f9; margin: 0.5rem 0; }
+
+        .ao-form-actions { display: flex; justify-content: flex-end; gap: 1rem; padding-top: 1rem; }
+        .btn-cancel { padding: 0.875rem 1.5rem; background: white; border: 1px solid #e2e8f0; border-radius: 12px; font-weight: 700; color: #475569; cursor: pointer; transition: all 0.2s; }
+        .btn-cancel:hover { background: #f8fafc; color: #1e293b; }
+        .btn-submit { padding: 0.875rem 1.5rem; background: #0d2331; border: none; border-radius: 12px; font-weight: 700; color: white; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; }
+        .btn-submit:hover { background: #1e293b; transform: translateY(-1px); }
+
+        @media (max-width: 768px) {
+          .ao-grid { grid-template-columns: 1fr; }
+          .ao-form-card { padding: 1.5rem; }
+          .ao-form-actions { flex-direction: column-reverse; }
+          .btn-cancel, .btn-submit { width: 100%; justify-content: center; }
         }
       `}</style>
     </div>

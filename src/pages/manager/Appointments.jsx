@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, MoreVertical, Eye, Trash2, Calendar, QrCode } from 'lucide-react';
+import { Search, Eye, Trash2, Calendar, QrCode, User, Clock, Briefcase, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Pagination from '../../components/Pagination';
 
@@ -13,18 +13,17 @@ const STATUS_COLORS = {
 };
 
 const APPOINTMENTS = [
-  { id: 'APT-001', code: 'INV-7H2A', visitor: 'Dr. Alison Ogaga', resident: 'John Smith', purpose: 'Medical Visit', date: '2024-11-20', time: '2:00 PM', status: 'scheduled', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alison' },
-  { id: 'APT-002', code: 'INV-3KP9', visitor: 'Mr. James Wilson', resident: 'Sarah Johnson', purpose: 'Business Meeting', date: '2024-11-18', time: '3:00 PM', status: 'completed', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=James' },
-  { id: 'APT-003', code: 'INV-9LM4', visitor: 'Ms. Sarah Connor', resident: 'Emily Davis', purpose: 'Social Visit', date: '2024-11-15', time: '11:00 AM', status: 'cancelled', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=SarahC' },
-  { id: 'APT-004', code: 'INV-2RT7', visitor: 'Mrs. Grace Olu', resident: 'David Wilson', purpose: 'Family Visit', date: '2024-11-22', time: '4:00 PM', status: 'pending', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Grace' },
-  { id: 'APT-005', code: 'INV-5NB6', visitor: 'Mr. Victor Salisu', resident: 'John Smith', purpose: 'Package Delivery', date: '2024-11-24', time: '10:30 AM', status: 'scheduled', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Victor' },
+  { id: 'APT-001', code: 'INV-7H2A', visitor: 'Dr. Alison Ogaga', resident: 'John Smith', residentAddress: 'Block A, Apt 101', purpose: 'Medical Visit', date: '2024-11-20', time: '2:00 PM', status: 'scheduled', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alison' },
+  { id: 'APT-002', code: 'INV-3KP9', visitor: 'Mr. James Wilson', resident: 'Sarah Johnson', residentAddress: 'Block B, Apt 205', purpose: 'Business Meeting', date: '2024-11-18', time: '3:00 PM', status: 'completed', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=James' },
+  { id: 'APT-003', code: 'INV-9LM4', visitor: 'Ms. Sarah Connor', resident: 'Emily Davis', residentAddress: 'Block D, Apt 415', purpose: 'Social Visit', date: '2024-11-15', time: '11:00 AM', status: 'cancelled', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=SarahC' },
+  { id: 'APT-004', code: 'INV-2RT7', visitor: 'Mrs. Grace Olu', resident: 'David Wilson', residentAddress: 'Block A, Apt 102', purpose: 'Family Visit', date: '2024-11-22', time: '4:00 PM', status: 'pending', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Grace' },
+  { id: 'APT-005', code: 'INV-5NB6', visitor: 'Mr. Victor Salisu', resident: 'John Smith', residentAddress: 'Block A, Apt 101', purpose: 'Package Delivery', date: '2024-11-24', time: '10:30 AM', status: 'scheduled', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Victor' },
 ];
 
 const ManagerAppointments = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
-  const [activeDropdown, setActiveDropdown] = useState(null);
   const [viewAppt, setViewAppt] = useState(null);
   const [deleteAppt, setDeleteAppt] = useState(null);
   const [appointments, setAppointments] = useState(APPOINTMENTS);
@@ -45,6 +44,10 @@ const ManagerAppointments = () => {
     setDeleteAppt(null);
   };
 
+  const handleConfirm = (appt) => {
+    setAppointments(p => p.map(a => a.id === appt.id ? { ...a, status: 'scheduled' } : a));
+  };
+
   return (
     <div className="ma-page">
       <div className="ma-header">
@@ -63,57 +66,48 @@ const ManagerAppointments = () => {
         </div>
       </div>
 
-      <div className="ma-table-card">
-        <div style={{ overflowX: 'auto' }}>
-          <table className="ma-table">
-            <thead>
-              <tr><th>Code</th><th>Visitor</th><th>Resident</th><th>Purpose</th><th>Date & Time</th><th>Status</th><th></th></tr>
-            </thead>
-            <tbody>
-              {paginated.map(a => {
-                const sc = STATUS_COLORS[a.status] || {};
-                return (
-                  <tr key={a.id}>
-                    <td><code className="ma-code">{a.code}</code></td>
-                    <td>
-                      <div className="ma-visitor-cell">
-                        <img src={a.avatar} alt={a.visitor} />
-                        <span>{a.visitor}</span>
-                      </div>
-                    </td>
-                    <td><span style={{ color: '#64748b' }}>{a.resident}</span></td>
-                    <td><span style={{ color: '#64748b' }}>{a.purpose}</span></td>
-                    <td><div style={{ fontWeight: 600 }}>{a.date}</div><small style={{ color: '#94a3b8' }}>{a.time}</small></td>
-                    <td><span className="ma-status-pill" style={{ background: sc.bg, color: sc.color }}>{a.status.charAt(0).toUpperCase() + a.status.slice(1)}</span></td>
-                    <td>
-                      <div className="ma-action-wrap">
-                        <button className="ma-btn-dots" onClick={() => setActiveDropdown(activeDropdown === a.id ? null : a.id)}>
-                          <MoreVertical size={18} />
-                        </button>
-                        <AnimatePresence>
-                          {activeDropdown === a.id && (
-                            <>
-                              <div className="ma-drop-overlay" onClick={() => setActiveDropdown(null)} />
-                              <motion.div className="ma-dropdown" initial={{ opacity: 0, scale: 0.95, y: 6 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }}>
-                                <button onClick={() => { setViewAppt(a); setActiveDropdown(null); }}><Eye size={15} /> View Details</button>
-                                <button className="delete" onClick={() => { setDeleteAppt(a); setActiveDropdown(null); }}><Trash2 size={15} /> Delete</button>
-                              </motion.div>
-                            </>
-                          )}
-                        </AnimatePresence>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-              {paginated.length === 0 && (
-                <tr><td colSpan="7" style={{ textAlign: 'center', padding: '3rem', color: '#94a3b8' }}>No appointments found.</td></tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-        <Pagination currentPage={currentPage} totalCount={filtered.length} pageSize={pageSize} onPageChange={setCurrentPage} onPageSizeChange={(s) => { setCurrentPage(1); }} />
+      <div className="ma-grid">
+        {paginated.map((a, i) => {
+          const sc = STATUS_COLORS[a.status] || {};
+          return (
+            <motion.div key={a.id} className="ma-card" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
+              <div className="ma-card-header">
+                <img src={a.avatar} alt={a.visitor} className="ma-avatar" />
+                <div className="ma-card-info">
+                  <h3>{a.visitor}</h3>
+                  <span className="ma-status-badge" style={{ background: sc.bg, color: sc.color }}>{a.status.charAt(0).toUpperCase() + a.status.slice(1)}</span>
+                </div>
+                <span className="ma-code-badge">{a.code}</span>
+              </div>
+              <div className="ma-card-details">
+                <div className="ma-detail"><User size={14} /><span>Host: {a.resident}</span></div>
+                <div className="ma-detail"><Calendar size={14} /><span>Date: {a.date}</span></div>
+                <div className="ma-detail"><Clock size={14} /><span>Time: {a.time}</span></div>
+                <div className="ma-detail"><Briefcase size={14} /><span>Purpose: {a.purpose}</span></div>
+              </div>
+              <div className="ma-card-actions">
+                <button 
+                  className={`ma-btn-confirm ${a.status !== 'pending' ? 'disabled' : ''}`} 
+                  onClick={() => a.status === 'pending' && handleConfirm(a)} 
+                  title="Confirm Appointment"
+                >
+                  <Check size={15} /> Confirm
+                </button>
+                <button className="ma-btn-view" onClick={() => setViewAppt(a)}><Eye size={15} /> View</button>
+                <button className="ma-btn-delete" onClick={() => setDeleteAppt(a)} title="Delete Appointment"><Trash2 size={15} /></button>
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
+
+      {filtered.length === 0 && (
+        <div style={{ textAlign: 'center', padding: '3rem', color: '#94a3b8' }}>No appointments found.</div>
+      )}
+
+      {filtered.length > 0 && (
+        <Pagination currentPage={currentPage} totalCount={filtered.length} pageSize={pageSize} onPageChange={setCurrentPage} onPageSizeChange={(s) => { setPageSize(s); setCurrentPage(1); }} />
+      )}
 
       {/* View Modal */}
       {viewAppt && (
@@ -130,7 +124,7 @@ const ManagerAppointments = () => {
               <div className="ma-qr-placeholder"><QrCode size={80} color="#0d2331" /></div>
             </div>
             <div className="ma-modal-details">
-              {[['Resident', viewAppt.resident], ['Purpose', viewAppt.purpose], ['Date', viewAppt.date], ['Time', viewAppt.time]].map(([k, v]) => (
+              {[['Resident', viewAppt.resident], ['Address', viewAppt.residentAddress], ['Purpose', viewAppt.purpose], ['Date', viewAppt.date], ['Time', viewAppt.time]].map(([k, v]) => (
                 <div key={k} className="ma-modal-row"><span>{k}</span><strong>{v}</strong></div>
               ))}
               <div className="ma-modal-row">
@@ -170,24 +164,22 @@ const ManagerAppointments = () => {
         .ma-status-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
         .ma-tab { background: white; border: 1px solid #e2e8f0; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.8125rem; font-weight: 600; color: #64748b; cursor: pointer; }
         .ma-tab.active { background: #0d2331; color: white; border-color: #0d2331; }
-        .ma-table-card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.5rem; }
-        .ma-table { width: 100%; border-collapse: collapse; min-width: 700px; }
-        .ma-table th { padding: 0.875rem 0; font-size: 0.75rem; font-weight: 600; color: #94a3b8; border-bottom: 1px solid #f1f5f9; text-align: left; }
-        .ma-table td { padding: 1rem 0; font-size: 0.875rem; border-bottom: 1px solid #f8fafc; }
-        .ma-code { background: #f1f5f9; padding: 3px 8px; border-radius: 6px; font-size: 0.8125rem; font-weight: 700; color: #0d2331; }
-        .ma-visitor-cell { display: flex; align-items: center; gap: 0.75rem; }
-        .ma-visitor-cell img { width: 36px; height: 36px; border-radius: 50%; }
-        .ma-visitor-cell span { font-weight: 600; color: #1e293b; }
-        .ma-status-pill { padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; white-space: nowrap; }
-        .ma-action-wrap { position: relative; display: inline-block; }
-        .ma-btn-dots { background: none; border: none; cursor: pointer; color: #94a3b8; display: flex; align-items: center; padding: 4px; border-radius: 6px; }
-        .ma-btn-dots:hover { background: #f1f5f9; }
-        .ma-drop-overlay { position: fixed; inset: 0; z-index: 90; }
-        .ma-dropdown { position: absolute; right: 0; top: calc(100% + 4px); background: white; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); z-index: 100; min-width: 140px; overflow: hidden; }
-        .ma-dropdown button { display: flex; align-items: center; gap: 8px; padding: 0.75rem 1rem; font-size: 0.875rem; font-weight: 600; color: #1e293b; background: none; border: none; width: 100%; cursor: pointer; }
-        .ma-dropdown button:hover { background: #f8fafc; }
-        .ma-dropdown button.delete { color: #ef4444; }
-        .ma-dropdown button.delete:hover { background: #fef2f2; }
+        .ma-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+        .ma-card { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+        .ma-card-header { display: flex; align-items: center; gap: 1rem; }
+        .ma-avatar { width: 56px; height: 56px; border-radius: 50%; border: 3px solid #f1f5f9; flex-shrink: 0; }
+        .ma-card-info { flex: 1; }
+        .ma-card-info h3 { font-size: 1rem; font-weight: 800; color: #1e293b; margin-bottom: 4px; }
+        .ma-status-badge { padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; text-transform: capitalize; display: inline-block; }
+        .ma-code-badge { background: #f1f5f9; color: #0d2331; padding: 4px 10px; border-radius: 6px; font-size: 0.8125rem; font-weight: 700; white-space: nowrap; }
+        .ma-card-details { display: flex; flex-direction: column; gap: 0.5rem; }
+        .ma-detail { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: #64748b; }
+        .ma-detail span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .ma-card-actions { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+        .ma-btn-view { flex: 1; background: #0d2331; color: white; border: none; padding: 0.625rem; border-radius: 10px; font-weight: 700; font-size: 0.8125rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.4rem; }
+        .ma-btn-delete { background: #fef2f2; color: #ef4444; border: none; padding: 0.625rem; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .ma-btn-confirm { flex: 1; background: #dcfce7; color: #15803d; border: none; padding: 0.625rem; border-radius: 10px; font-weight: 700; font-size: 0.8125rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.4rem; transition: all 0.2s; }
+        .ma-btn-confirm.disabled { opacity: 0.5; cursor: not-allowed; background: #f1f5f9; color: #94a3b8; }
         .ma-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 1rem; }
         .ma-modal { background: white; border-radius: 24px; padding: 2rem; max-width: 480px; width: 100%; position: relative; max-height: 90vh; overflow-y: auto; }
         .ma-modal-close { position: absolute; top: 1.25rem; right: 1.25rem; background: #f1f5f9; border: none; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; font-size: 1rem; }
@@ -203,11 +195,14 @@ const ManagerAppointments = () => {
         .ma-modal-row:last-child { border-bottom: none; }
         .ma-modal-row span { font-size: 0.8125rem; color: #94a3b8; font-weight: 600; }
         .ma-modal-row strong { font-size: 0.9375rem; color: #1e293b; }
+        @media (max-width: 1024px) {
+          .ma-grid { grid-template-columns: repeat(2, 1fr); }
+        }
         @media (max-width: 768px) {
           .ma-controls { flex-direction: column; align-items: stretch; }
           .ma-search { width: 100%; }
           .ma-status-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
-          .ma-table-card { padding: 1rem; }
+          .ma-grid { grid-template-columns: 1fr; }
         }
       `}</style>
     </div>

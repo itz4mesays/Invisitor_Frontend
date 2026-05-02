@@ -11,15 +11,73 @@ const ResidentDashboard = () => {
   const [copied, setCopied] = useState(false);
 
   const stats = [
-    { label: 'Upcoming Visitors', value: '3', icon: <Users size={20} />, bg: '#eef2ff', color: '#6366f1' },
-    { label: 'Past Month Visits', value: '12', icon: <Calendar size={20} />, bg: '#f0fdf4', color: '#16a34a' },
+    { label: 'Total Appointments', value: '15', icon: <Calendar size={20} />, bg: '#eef2ff', color: '#6366f1' },
+    { label: 'Upcoming Visitors', value: '3', icon: <Users size={20} />, bg: '#f0fdf4', color: '#16a34a' },
     { label: 'Security Alerts', value: '0', icon: <Shield size={20} />, bg: '#fffbeb', color: '#d97706' },
   ];
 
-  const upcomingAppointments = [
-    { id: 'APT-001', code: 'INV-7H2A', visitor: 'Dr. Alison Ogaga', purpose: 'Medical Visit', time: '09:00 AM', status: 'scheduled', date: 'Today' },
-    { id: 'APT-002', code: 'INV-3KP9', visitor: 'Mr. James Wilson', purpose: 'Business Meeting', time: '11:30 AM', status: 'scheduled', date: 'Today' },
-    { id: 'APT-003', code: 'INV-9LM4', visitor: 'Ms. Sarah Connor', purpose: 'Social Visit', time: '02:00 PM', status: 'scheduled', date: 'Tomorrow' },
+  const recentAppointments = [
+    { id: 'APT-001', code: 'INV-7H2A', visitor: 'Dr. Alison Ogaga', purpose: 'Medical Visit', time: '09:00 AM', status: 'completed', date: 'Yesterday' },
+    { id: 'APT-002', code: 'INV-3KP9', visitor: 'Mr. James Wilson', purpose: 'Business Meeting', time: '11:30 AM', status: 'completed', date: 'Yesterday' },
+    { id: 'APT-003', code: 'INV-9LM4', visitor: 'Ms. Sarah Connor', purpose: 'Social Visit', time: '02:00 PM', status: 'scheduled', date: 'Today' },
+    { id: 'APT-004', code: 'INV-1BC2', visitor: 'Mr. Victor Salisu', purpose: 'Package Delivery', time: '10:30 AM', status: 'scheduled', date: 'Tomorrow' },
+    { id: 'APT-005', code: 'INV-5X8Y', visitor: 'Mrs. Grace Olu', purpose: 'Family Visit', time: '03:00 PM', status: 'scheduled', date: 'Tomorrow' },
+  ];
+
+  const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const monthlyData = [
+    { label: 'Jan', count: 12 }, { label: 'Feb', count: 15 }, { label: 'Mar', count: 8 },
+    { label: 'Apr', count: 20 }, { label: 'May', count: 14 }, { label: 'Jun', count: 25 },
+    { label: 'Jul', count: 18 }, { label: 'Aug', count: 22 }, { label: 'Sep', count: 10 },
+    { label: 'Oct', count: 30 }, { label: 'Nov', count: 15 }, { label: 'Dec', count: 5 }
+  ];
+
+  const BarChart = ({ data, height = 200 }) => {
+    const max = Math.max(...data.map(d => d.count), 1);
+    return (
+      <div style={{ display: 'flex', alignItems: 'flex-end', gap: '6px', height: `${height}px`, padding: '0 8px' }}>
+        {data.map((d, i) => (
+          <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', height: '100%', justifyContent: 'flex-end' }}>
+            <motion.div
+              initial={{ height: 0 }}
+              animate={{ height: `${(d.count / max) * 80}%` }}
+              transition={{ delay: i * 0.05, duration: 0.5 }}
+              style={{ width: '100%', background: 'linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%)', borderRadius: '4px 4px 0 0', minHeight: d.count > 0 ? '4px' : '0' }}
+            />
+            <span style={{ fontSize: '0.6rem', color: '#94a3b8', fontWeight: 600 }}>{d.label}</span>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const DoughnutChart = ({ segments, size = 180 }) => {
+    const r = 70;
+    const cx = size / 2;
+    const cy = size / 2;
+    const total = segments.reduce((s, seg) => s + seg.value, 0) || 1;
+    let cumulAngle = -Math.PI / 2;
+    const arcs = segments.map((seg) => {
+      const angle = (seg.value / total) * Math.PI * 2;
+      const x1 = cx + r * Math.cos(cumulAngle);
+      const y1 = cy + r * Math.sin(cumulAngle);
+      cumulAngle += angle;
+      const x2 = cx + r * Math.cos(cumulAngle);
+      const y2 = cy + r * Math.sin(cumulAngle);
+      const largeArc = angle > Math.PI ? 1 : 0;
+      return { d: `M${cx},${cy} L${x1},${y1} A${r},${r} 0 ${largeArc},1 ${x2},${y2} Z`, color: seg.color };
+    });
+    return (
+      <svg viewBox={`0 0 ${size} ${size}`} style={{ width: size, height: size }}>
+        {arcs.map((arc, i) => <path key={i} d={arc.d} fill={arc.color} />)}
+        <circle cx={cx} cy={cy} r={r * 0.65} fill="white" />
+      </svg>
+    );
+  };
+
+  const doughnutSegments = [
+    { label: 'Check-In', value: 85, color: '#3b82f6' },
+    { label: 'Check-Out', value: 42, color: '#16a34a' }
   ];
 
   const getStatusColor = (status) => {
@@ -62,19 +120,28 @@ const ResidentDashboard = () => {
       </div>
 
       <div className="resd-main-grid">
-        <div className="resd-recent-appointments">
-          <div className="resd-card-header">
-            <h3>Your Upcoming Appointments</h3>
-            <button className="resd-btn-link" onClick={() => navigate('/resident/appointments')}>View All <ArrowRight size={14} /></button>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          {/* Chart Section */}
+          <div className="resd-chart-card">
+            <div className="resd-card-header">
+              <h3>Appointments Overview ({new Date().getFullYear()})</h3>
+            </div>
+            <BarChart data={monthlyData} height={180} />
           </div>
-          <div className="resd-appt-list">
-            {upcomingAppointments.length === 0 ? (
-              <div className="resd-empty-state">
-                <Calendar size={48} className="resd-text-light" />
-                <p>No upcoming appointments.</p>
-              </div>
-            ) : (
-              upcomingAppointments.map((apt, i) => {
+
+          <div className="resd-recent-appointments">
+            <div className="resd-card-header">
+              <h3>Recent Appointments</h3>
+              <button className="resd-btn-link" onClick={() => navigate('/resident/appointments')}>View All <ArrowRight size={14} /></button>
+            </div>
+            <div className="resd-appt-list">
+              {recentAppointments.length === 0 ? (
+                <div className="resd-empty-state">
+                  <Calendar size={48} className="resd-text-light" />
+                  <p>No recent appointments.</p>
+                </div>
+              ) : (
+                recentAppointments.map((apt, i) => {
                 const sc = getStatusColor(apt.status);
                 return (
                   <div key={i} className="resd-appt-item" onClick={() => setSelectedAppointment(apt)}>
@@ -94,21 +161,34 @@ const ResidentDashboard = () => {
             )}
           </div>
         </div>
+        </div>
 
         <div className="resd-side-panel">
-          <div className="resd-invite-box">
-            <h3>Quick Invite</h3>
-            <p>Send a fast invite code to a guest without booking a full appointment.</p>
-            <div className="resd-quick-code">INV-FAST</div>
-            <button className="resd-btn-outline" onClick={() => handleCopy('INV-FAST')}>
-              {copied ? <><Check size={16} /> Copied</> : <><Copy size={16} /> Copy Code</>}
-            </button>
-          </div>
-          
           <div className="resd-support-box">
             <h3>Need Help?</h3>
             <p>Contact estate management for any issues or to report a security concern.</p>
-            <button className="resd-btn-outline" onClick={() => navigate('/resident/support')}>Contact Support</button>
+            <button className="resd-btn-outline" onClick={() => navigate('/resident/support/tickets')}>Contact Security</button>
+          </div>
+
+          <div className="resd-doughnut-card">
+            <h3>Check-In vs Check-Out</h3>
+            <p>Total daily flow overview</p>
+            <div className="resd-doughnut-wrap">
+              <DoughnutChart segments={doughnutSegments} size={180} />
+              <div className="resd-doughnut-center-text">
+                <span className="resd-d-total">{doughnutSegments[0].value + doughnutSegments[1].value}</span>
+                <span className="resd-d-label">Total</span>
+              </div>
+            </div>
+            <div className="resd-pie-legend">
+              {doughnutSegments.map((seg, i) => (
+                <div key={i} className="resd-legend-item">
+                  <span style={{ width: 10, height: 10, borderRadius: '50%', background: seg.color, display: 'inline-block' }} />
+                  <span>{seg.label}</span>
+                  <span style={{ marginLeft: 'auto', fontWeight: 700 }}>{seg.value}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -176,6 +256,7 @@ const ResidentDashboard = () => {
         .resd-stat-value { font-size: 1.875rem; font-weight: 800; color: #1e293b; line-height: 1; }
 
         .resd-main-grid { display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; }
+        .resd-chart-card { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; }
         .resd-recent-appointments { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; }
         .resd-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
         .resd-card-header h3 { font-size: 1.125rem; font-weight: 800; color: #1e293b; margin: 0; }
@@ -194,12 +275,19 @@ const ResidentDashboard = () => {
         .resd-empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem 0; gap: 1rem; color: #94a3b8; font-weight: 600; }
         
         .resd-side-panel { display: flex; flex-direction: column; gap: 1.5rem; }
-        .resd-invite-box, .resd-support-box { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; text-align: center; }
-        .resd-invite-box h3, .resd-support-box h3 { font-size: 1.125rem; font-weight: 800; color: #1e293b; margin: 0 0 0.5rem 0; }
-        .resd-invite-box p, .resd-support-box p { font-size: 0.875rem; color: #64748b; margin: 0 0 1.5rem 0; line-height: 1.5; }
+        .resd-invite-box, .resd-support-box, .resd-doughnut-card { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; text-align: center; }
+        .resd-invite-box h3, .resd-support-box h3, .resd-doughnut-card h3 { font-size: 1.125rem; font-weight: 800; color: #1e293b; margin: 0 0 0.5rem 0; }
+        .resd-invite-box p, .resd-support-box p, .resd-doughnut-card p { font-size: 0.875rem; color: #64748b; margin: 0 0 1.5rem 0; line-height: 1.5; }
         .resd-quick-code { font-size: 1.5rem; font-weight: 900; color: #0d2331; letter-spacing: 4px; background: #f8fafc; padding: 1rem; border-radius: 12px; border: 1px dashed #cbd5e1; margin-bottom: 1rem; }
         .resd-btn-outline { background: white; border: 1.5px solid #e2e8f0; color: #0d2331; padding: 0.75rem 1rem; border-radius: 12px; font-weight: 700; width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; cursor: pointer; transition: all 0.2s; }
         .resd-btn-outline:hover { background: #f8fafc; border-color: #cbd5e1; }
+
+        .resd-doughnut-wrap { position: relative; display: flex; justify-content: center; margin-bottom: 1.5rem; }
+        .resd-doughnut-center-text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
+        .resd-d-total { font-size: 1.75rem; font-weight: 900; color: #1e293b; line-height: 1; margin-bottom: 0.25rem; }
+        .resd-d-label { font-size: 0.75rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
+        .resd-pie-legend { display: flex; flex-direction: column; gap: 0.75rem; text-align: left; }
+        .resd-legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: #475569; }
 
         /* Modal Styles */
         .resd-modal-overlay { position: fixed; inset: 0; background: rgba(13, 35, 49, 0.4); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 1rem; }
