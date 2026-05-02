@@ -13,11 +13,11 @@ const STATUS_COLORS = {
 };
 
 const APPOINTMENTS = [
-  { id: 'APT-001', code: 'INV-7H2A', visitor: 'Dr. Alison Ogaga', resident: 'John Smith', residentAddress: 'Block A, Apt 101', purpose: 'Medical Visit', date: '2024-11-20', time: '2:00 PM', status: 'scheduled', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alison' },
-  { id: 'APT-002', code: 'INV-3KP9', visitor: 'Mr. James Wilson', resident: 'Sarah Johnson', residentAddress: 'Block B, Apt 205', purpose: 'Business Meeting', date: '2024-11-18', time: '3:00 PM', status: 'completed', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=James' },
-  { id: 'APT-003', code: 'INV-9LM4', visitor: 'Ms. Sarah Connor', resident: 'Emily Davis', residentAddress: 'Block D, Apt 415', purpose: 'Social Visit', date: '2024-11-15', time: '11:00 AM', status: 'cancelled', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=SarahC' },
-  { id: 'APT-004', code: 'INV-2RT7', visitor: 'Mrs. Grace Olu', resident: 'David Wilson', residentAddress: 'Block A, Apt 102', purpose: 'Family Visit', date: '2024-11-22', time: '4:00 PM', status: 'pending', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Grace' },
-  { id: 'APT-005', code: 'INV-5NB6', visitor: 'Mr. Victor Salisu', resident: 'John Smith', residentAddress: 'Block A, Apt 101', purpose: 'Package Delivery', date: '2024-11-24', time: '10:30 AM', status: 'scheduled', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Victor' },
+  { id: 'APT-001', code: 'INV-7H2A', visitor: 'Dr. Alison Ogaga', visitorPhone: '+234 901 000 1111', visitorAddress: '123 Visitor St, Lagos', resident: 'John Smith', residentAddress: 'Block A, Apt 101', residentPhone: '+234 801 234 5678', purpose: 'Medical Visit', date: '2024-11-20', time: '2:00 PM', status: 'scheduled', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alison' },
+  { id: 'APT-002', code: 'INV-3KP9', visitor: 'Mr. James Wilson', visitorPhone: '+234 902 000 2222', visitorAddress: '456 Business Rd, Abuja', resident: 'Sarah Johnson', residentAddress: 'Block B, Apt 205', residentPhone: '+234 802 345 6789', purpose: 'Business Meeting', date: '2024-11-18', time: '3:00 PM', status: 'completed', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=James' },
+  { id: 'APT-003', code: 'INV-9LM4', visitor: 'Ms. Sarah Connor', visitorPhone: '+234 903 000 3333', visitorAddress: '789 Future Ave, Port Harcourt', resident: 'Emily Davis', residentAddress: 'Block D, Apt 415', residentPhone: '+234 803 456 7890', purpose: 'Social Visit', date: '2024-11-15', time: '11:00 AM', status: 'cancelled', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=SarahC' },
+  { id: 'APT-004', code: 'INV-2RT7', visitor: 'Mrs. Grace Olu', visitorPhone: '+234 904 000 4444', visitorAddress: '321 Family Lane, Ibadan', resident: 'David Wilson', residentAddress: 'Block A, Apt 102', residentPhone: '+234 804 567 8901', purpose: 'Family Visit', date: '2024-11-22', time: '4:00 PM', status: 'pending', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Grace' },
+  { id: 'APT-005', code: 'INV-5NB6', visitor: 'Mr. Victor Salisu', visitorPhone: '+234 905 000 5555', visitorAddress: '654 Delivery Blvd, Kano', resident: 'John Smith', residentAddress: 'Block A, Apt 101', residentPhone: '+234 805 678 9012', purpose: 'Package Delivery', date: '2024-11-24', time: '10:30 AM', status: 'scheduled', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Victor' },
 ];
 
 const ManagerAppointments = () => {
@@ -124,7 +124,7 @@ const ManagerAppointments = () => {
               <div className="ma-qr-placeholder"><QrCode size={80} color="#0d2331" /></div>
             </div>
             <div className="ma-modal-details">
-              {[['Resident', viewAppt.resident], ['Address', viewAppt.residentAddress], ['Purpose', viewAppt.purpose], ['Date', viewAppt.date], ['Time', viewAppt.time]].map(([k, v]) => (
+              {[['Visitor Phone', viewAppt.visitorPhone], ['Visitor Address', viewAppt.visitorAddress], ['Resident', viewAppt.resident], ['Phone', viewAppt.residentPhone], ['Address', viewAppt.residentAddress], ['Purpose', viewAppt.purpose], ['Date', viewAppt.date], ['Time', viewAppt.time]].map(([k, v]) => (
                 <div key={k} className="ma-modal-row"><span>{k}</span><strong>{v}</strong></div>
               ))}
               <div className="ma-modal-row">

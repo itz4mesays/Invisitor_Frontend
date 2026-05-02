@@ -20,7 +20,8 @@ import {
   Users,
   FileText,
   Trash2,
-  Eye
+  Eye,
+  MapPin
 } from 'lucide-react';
 
 // Reusable Modal Component
@@ -61,6 +62,8 @@ const ResidentAppointments = () => {
   const [activeAddTab, setActiveAddTab] = React.useState('Visitor');
   const [selectedAppointment, setSelectedAppointment] = React.useState(null);
   const [activeDropdown, setActiveDropdown] = React.useState(null);
+  const [hasChildren, setHasChildren] = React.useState('No');
+  const [coordinates, setCoordinates] = React.useState('');
 
   const handleConfirmClick = (appt) => {
     setSelectedAppointment(appt);
@@ -91,6 +94,8 @@ const ResidentAppointments = () => {
     setTimeout(() => {
       setIsAddSuccess(false);
       setActiveAddTab('Visitor');
+      setHasChildren('No');
+      setCoordinates('');
     }, 300);
   };
 
@@ -363,159 +368,132 @@ const ResidentAppointments = () => {
                   <p className="add-modal-subtitle">Create an appointment for a visitor</p>
                 </header>
 
-                <div className="add-modal-tabs">
-                  <button 
-                    className={`add-modal-tab ${activeAddTab === 'Visitor' ? 'active' : ''}`}
-                    onClick={() => setActiveAddTab('Visitor')}
-                  >
-                    <Users size={18} /> Visitor Details
-                  </button>
-                  <button 
-                    className={`add-modal-tab ${activeAddTab === 'Appointment' ? 'active' : ''}`}
-                    onClick={() => setActiveAddTab('Appointment')}
-                  >
-                    <Calendar size={18} /> Appointment Details
-                  </button>
-                </div>
+                <div className="tab-content-area" style={{ maxHeight: '70vh', overflowY: 'auto', paddingRight: '0.5rem' }}>
+                  
+                  {/* Subtle Host Banner instead of disabled inputs */}
+                  <div style={{ background: '#e0e7ff', border: '1px solid #c7d2fe', padding: '1rem', borderRadius: '12px', marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <div style={{ background: '#6366f1', color: 'white', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>
+                      R
+                    </div>
+                    <div>
+                      <p style={{ margin: 0, fontSize: '0.75rem', color: '#4f46e5', fontWeight: '700', textTransform: 'uppercase' }}>Hosting As</p>
+                      <p style={{ margin: 0, fontSize: '0.875rem', color: '#1e293b', fontWeight: '600' }}>Mr. Collis Makanju <span style={{ color: '#64748b', fontWeight: '400' }}>• +234 814 609 2019</span></p>
+                    </div>
+                  </div>
 
-                {activeAddTab === 'Visitor' ? (
-                  <div className="tab-content-area">
-                    <div className="form-grid-2-col">
+                  <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '1.5rem', marginBottom: '1.5rem', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+                    <h3 style={{ fontSize: '1.125rem', fontWeight: '800', color: '#1e293b', marginBottom: '1.25rem' }}>Who is coming?</h3>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
                       <div className="form-field">
                         <label>VISITOR NAME</label>
-                        <select defaultValue="">
-                          <option value="" disabled>Select Visitor Name</option>
-                          <option>David Awolowo</option>
-                          <option>Alison Ogaga</option>
-                        </select>
-                      </div>
-                      <div className="form-field">
-                        <label>GENDER (Optional)</label>
-                        <select defaultValue="Male">
-                          <option>Male</option>
-                          <option>Female</option>
-                        </select>
+                        <input type="text" placeholder="e.g. David Awolowo" />
                       </div>
                       
-                      <div className="form-field">
-                        <label>DATE OF BIRTH (Optional)</label>
-                        <div className="input-with-icon">
-                          <input type="date" />
-                          <Calendar size={18} className="field-icon" />
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                        <div className="form-field">
+                          <label>PHONE NUMBER</label>
+                          <input type="text" placeholder="+234 814 609 2019" />
                         </div>
-                      </div>
-                      <div className="form-field">
-                        <label>PHONE NUMBER</label>
-                        <div style={{ display: 'flex', gap: '0.5rem' }}>
-                          <select style={{ width: '80px', padding: '0.75rem', border: '1px solid #e2e8f0', borderRadius: '12px' }}>
-                            <option>+234</option>
-                            <option>+1</option>
-                            <option>+44</option>
+                        <div className="form-field">
+                          <label>GENDER (Optional)</label>
+                          <select defaultValue="Male">
+                            <option>Male</option>
+                            <option>Female</option>
                           </select>
-                          <input type="text" placeholder="814 609 2019" style={{ flex: 1, padding: '0.75rem', border: '1px solid #e2e8f0', borderRadius: '12px' }} />
                         </div>
                       </div>
 
                       <div className="form-field">
-                        <label>EMAIL ADDRESS</label>
-                        <input type="text" placeholder="sokotosultan@yandex.com" />
+                        <label>VISITOR ADDRESS (Optional)</label>
+                        <input type="text" placeholder="e.g. 123 Visitor St, Lagos" />
                       </div>
-                      <div className="form-field">
-                        <label>COMPANY NAME (Optional)</label>
-                        <select defaultValue="Acme Corps">
-                          <option>Acme Corps</option>
-                          <option>Other</option>
-                        </select>
-                      </div>
-
-                      <div className="form-field">
-                        <label>IDENTIFICATION DOCUMENT</label>
-                        <select defaultValue="Passport">
-                          <option>Passport</option>
-                        </select>
-                      </div>
-                      <div className="form-field">
-                        <label>ID NUMBER</label>
-                        <input type="text" placeholder="56398897654" />
-                      </div>
-                    </div>
-
-                    <div className="attachment-row">
-                      <div className="file-info-box">
-                        <div className="file-icon-box">
-                          <FileText size={18} />
-                        </div>
-                        <span className="file-name">ID CARD.PDF</span>
-                      </div>
-                      <button className="btn-view-outline-small">View ID Card</button>
-                    </div>
-
-                    <div className="add-modal-actions">
-                      <button className="btn-confirm-large" onClick={handleAddSubmit}>Create Appointment</button>
-                      <button className="btn-cancel-large" onClick={resetAddModal}>Cancel</button>
                     </div>
                   </div>
-                ) : (
-                  <div className="tab-content-area">
-                    <div className="form-grid-2-col">
-                      <div className="form-field">
-                        <label>VISIT PURPOSE</label>
-                        <select defaultValue="Business Meeting">
-                          <option>Business Meeting</option>
-                          <option>Personal</option>
-                          <option>Interview</option>
-                          <option>Delivery</option>
-                        </select>
+
+                  <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '1.5rem', marginBottom: '1.5rem', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+                    <h3 style={{ fontSize: '1.125rem', fontWeight: '800', color: '#1e293b', marginBottom: '1.25rem' }}>When & Why?</h3>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                        <div className="form-field">
+                          <label>DATE</label>
+                          <input type="date" />
+                        </div>
+                        <div className="form-field">
+                          <label>TIME</label>
+                          <input type="time" />
+                        </div>
                       </div>
-                      <div className="form-field">
-                        <label>HOST NAME</label>
-                        <select defaultValue="Harvey Specter">
-                          <option>Harvey Specter</option>
-                          <option>Mike Ross</option>
-                          <option>Louis Litt</option>
-                          <option>Donna Paulsen</option>
-                        </select>
+
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                        <div className="form-field">
+                          <label>PURPOSE</label>
+                          <select defaultValue="Personal">
+                            <option>Personal</option>
+                            <option>Business Meeting</option>
+                            <option>Delivery</option>
+                          </select>
+                        </div>
+                        <div className="form-field">
+                          <label>DURATION</label>
+                          <select defaultValue="1 Hour">
+                            <option>30 Minutes</option>
+                            <option>1 Hour</option>
+                            <option>2 Hours</option>
+                          </select>
+                        </div>
                       </div>
                       
-                      <div className="form-field">
-                        <label>APPOINTMENT DATE</label>
-                        <div className="input-with-icon">
-                          <input type="date" />
-                          <Calendar size={18} className="field-icon" />
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', background: '#f8fafc', padding: '1rem', borderRadius: '12px', border: '1px solid #f1f5f9' }}>
+                        <div className="form-field" style={{ margin: 0 }}>
+                          <label>BRINGING CHILDREN?</label>
+                          <select value={hasChildren} onChange={(e) => setHasChildren(e.target.value)}>
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                          </select>
                         </div>
+                        {hasChildren === 'Yes' && (
+                          <div className="form-field" style={{ margin: 0 }}>
+                            <label>NUMBER OF CHILDREN</label>
+                            <input type="number" min="1" defaultValue="1" />
+                          </div>
+                        )}
                       </div>
-                      <div className="form-field">
-                        <label>ARRIVAL TIME</label>
-                        <div className="input-with-icon">
-                          <input type="time" />
-                          <Clock size={18} className="field-icon" />
-                        </div>
-                      </div>
-
-                      <div className="form-field">
-                        <label>DURATION</label>
-                        <select defaultValue="30 Minutes">
-                          <option>30 Minutes</option>
-                          <option>1 Hour</option>
-                          <option>2 Hours</option>
-                        </select>
-                      </div>
-                      <div className="form-field">
-                        <label>VISITOR TYPE</label>
-                        <select defaultValue="General Visitor">
-                          <option>General Visitor</option>
-                          <option>VIP</option>
-                          <option>Contractor</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div className="add-modal-actions" style={{ marginTop: 'auto', paddingTop: '4rem' }}>
-                      <button className="btn-confirm-large" onClick={handleAddSubmit}>Create Appointment</button>
-                      <button className="btn-cancel-large" onClick={resetAddModal}>Cancel</button>
                     </div>
                   </div>
-                )}
+
+                  <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '1.5rem', marginBottom: '1.5rem', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+                    <h3 style={{ fontSize: '1.125rem', fontWeight: '800', color: '#1e293b', marginBottom: '1.25rem' }}>Location</h3>
+                    <div className="form-field">
+                      <label>WHERE TO MEET (COORDINATES)</label>
+                      <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+                        <input type="text" value={coordinates} placeholder="Click map button to set..." readOnly style={{ flex: 1, background: '#f8fafc', color: '#64748b' }} />
+                        <button 
+                          type="button"
+                          className="btn-add-primary" 
+                          style={{ whiteSpace: 'nowrap', borderRadius: '12px' }}
+                          onClick={() => setCoordinates('6.4654° N, 3.4064° E')}
+                        >
+                          <MapPin size={18} /> Select on Map
+                        </button>
+                      </div>
+                      <div style={{ marginTop: '1rem', width: '100%', height: '140px', background: '#e2e8f0', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', position: 'relative' }}>
+                        {coordinates ? (
+                          <div style={{ width: '100%', height: '100%', background: '#d1d5db', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <MapPin size={32} color="#dc2626" />
+                            <span style={{ position: 'absolute', bottom: '10px', right: '10px', background: 'white', padding: '4px 8px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: '700' }}>Selected</span>
+                          </div>
+                        ) : (
+                          <span style={{ color: '#64748b', fontSize: '0.875rem', fontWeight: '600' }}>Map Preview (Click Select)</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="add-modal-actions" style={{ marginTop: '1.5rem', position: 'sticky', bottom: 0, background: 'white', padding: '1rem 0', borderTop: '1px solid #f1f5f9' }}>
+                    <button className="btn-confirm-large" onClick={handleAddSubmit}>Create Appointment</button>
+                    <button className="btn-cancel-large" onClick={resetAddModal}>Cancel</button>
+                  </div>
+                </div>
               </div>
             )}
           </Modal>
@@ -779,6 +757,10 @@ const ResidentAppointments = () => {
                 <div className="detail-row">
                   <label className="detail-label" style={{ display: 'block', fontSize: '0.75rem', fontWeight: '800', color: '#94a3b8', marginBottom: '0.25rem' }}>PHONE NUMBER</label>
                   <span className="detail-value" style={{ fontSize: '1rem', fontWeight: '700', color: '#0d2331' }}>{selectedAppointment?.phone || '+234 814 609 2019'}</span>
+                </div>
+                <div className="detail-row">
+                  <label className="detail-label" style={{ display: 'block', fontSize: '0.75rem', fontWeight: '800', color: '#94a3b8', marginBottom: '0.25rem' }}>ADDRESS</label>
+                  <span className="detail-value" style={{ fontSize: '1rem', fontWeight: '700', color: '#0d2331' }}>{selectedAppointment?.address || '123 Visitor St, Lagos'}</span>
                 </div>
                 <div className="detail-row">
                   <label className="detail-label" style={{ display: 'block', fontSize: '0.75rem', fontWeight: '800', color: '#94a3b8', marginBottom: '0.25rem' }}>GENDER</label>

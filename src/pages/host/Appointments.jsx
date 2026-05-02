@@ -781,6 +781,10 @@ const HostAppointments = () => {
                   <span className="detail-value" style={{ fontSize: '1rem', fontWeight: '700', color: '#0d2331' }}>{selectedAppointment?.phone || '+234 814 609 2019'}</span>
                 </div>
                 <div className="detail-row">
+                  <label className="detail-label" style={{ display: 'block', fontSize: '0.75rem', fontWeight: '800', color: '#94a3b8', marginBottom: '0.25rem' }}>ADDRESS</label>
+                  <span className="detail-value" style={{ fontSize: '1rem', fontWeight: '700', color: '#0d2331' }}>{selectedAppointment?.address || '123 Visitor St, Lagos'}</span>
+                </div>
+                <div className="detail-row">
                   <label className="detail-label" style={{ display: 'block', fontSize: '0.75rem', fontWeight: '800', color: '#94a3b8', marginBottom: '0.25rem' }}>GENDER</label>
                   <span className="detail-value" style={{ fontSize: '1rem', fontWeight: '700', color: '#0d2331' }}>{selectedAppointment?.gender || 'Male'}</span>
                 </div>

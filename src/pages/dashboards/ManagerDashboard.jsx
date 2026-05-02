@@ -149,6 +149,28 @@ const ManagerDashboard = () => {
         </div>
 
         <div className="md-side-panel">
+          <div className="md-subscription-card">
+            <div className="md-sub-header">
+              <h3>Subscription Overview</h3>
+              <span className="md-sub-badge">Premium</span>
+            </div>
+            <div className="md-sub-details">
+              <div className="md-sub-item">
+                <span className="md-sub-label">Current Plan</span>
+                <strong className="md-sub-value">Estate Pro (Annual)</strong>
+              </div>
+              <div className="md-sub-item">
+                <span className="md-sub-label">Expires On</span>
+                <strong className="md-sub-value" style={{ color: '#dc2626' }}>Dec 31, 2026</strong>
+              </div>
+            </div>
+            <div className="md-sub-progress">
+              <div className="md-sub-progress-bar" style={{ width: '65%' }}></div>
+            </div>
+            <p className="md-sub-text">124 days remaining in your current cycle</p>
+            <button className="md-btn-renew">Manage Subscription</button>
+          </div>
+
           <div className="md-quick-actions">
             <h3>Quick Actions</h3>
             <div className="md-action-grid">
@@ -278,6 +300,21 @@ const ManagerDashboard = () => {
         .md-status-pill { font-size: 0.7rem; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em; }
         
         .md-side-panel { display: flex; flex-direction: column; gap: 1.5rem; }
+        
+        .md-subscription-card { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 20px; padding: 1.5rem; color: white; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15); }
+        .md-sub-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+        .md-sub-header h3 { font-size: 1.125rem; font-weight: 800; margin: 0; color: white; }
+        .md-sub-badge { background: rgba(245, 158, 11, 0.2); color: #fbbf24; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .md-sub-details { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem; }
+        .md-sub-item { display: flex; flex-direction: column; gap: 0.25rem; }
+        .md-sub-label { font-size: 0.75rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
+        .md-sub-value { font-size: 0.9375rem; font-weight: 700; color: white; }
+        .md-sub-progress { height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-bottom: 0.5rem; overflow: hidden; }
+        .md-sub-progress-bar { height: '100%'; background: #3b82f6; border-radius: 10px; }
+        .md-sub-text { font-size: 0.75rem; color: #94a3b8; margin: 0 0 1.25rem 0; }
+        .md-btn-renew { width: 100%; background: white; color: #0f172a; border: none; padding: 0.875rem; border-radius: 12px; font-weight: 800; font-size: 0.875rem; cursor: pointer; transition: background 0.2s; }
+        .md-btn-renew:hover { background: #f8fafc; }
+
         .md-quick-actions, .md-system-status { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; }
         .md-quick-actions h3, .md-system-status h3 { font-size: 1.125rem; font-weight: 800; color: #1e293b; margin: 0 0 1.25rem 0; }
         .md-action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
