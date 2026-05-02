@@ -214,18 +214,17 @@ const SignupWizard = () => {
                    <label>Primary Contact Position</label>
                    <input type="text" placeholder="e.g. CEO, Manager" />
                  </div>
-                 <div className="form-group">
-                   <label>Contact Phone Number (WhatsApp preferred)</label>
-                   <div style={{ display: 'flex', gap: '0.5rem' }}>
-                      <select style={{ width: '100px', flexShrink: 0 }}>
-                        <option>+234</option>
-                        <option>+1</option>
-                        <option>+44</option>
-                        <option>+233</option>
-                      </select>
-                      <input type="text" placeholder="800 000 0000" style={{ flex: 1 }} />
-                   </div>
-                 </div>
+                  <div className="form-group">
+                    <label>Contact Phone Number (WhatsApp preferred)</label>
+                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                       <select style={{ width: '100px', flexShrink: 0, padding: '0.625rem', border: '1px solid #e2e8f0', borderRadius: '8px' }}>
+                         <option>+234</option>
+                         <option>+1</option>
+                         <option>+44</option>
+                       </select>
+                       <input type="text" placeholder="814 609 2019" style={{ flex: 1, padding: '0.625rem', border: '1px solid #e2e8f0', borderRadius: '8px' }} />
+                    </div>
+                  </div>
                  <div className="form-group" style={{ gridColumn: 'span 2' }}>
                    <label>Contact Address</label>
                    <div style={{ position: 'relative' }}>
@@ -250,18 +249,17 @@ const SignupWizard = () => {
                     <User size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
                    </div>
                  </div>
-                 <div className="form-group">
-                   <label>Manager Phone Number (WhatsApp preferred)</label>
-                   <div style={{ display: 'flex', gap: '0.5rem' }}>
-                      <select style={{ width: '100px', flexShrink: 0 }}>
-                        <option>+234</option>
-                        <option>+1</option>
-                        <option>+44</option>
-                        <option>+233</option>
-                      </select>
-                      <input type="text" placeholder="800 000 0000" style={{ flex: 1 }} />
-                   </div>
-                 </div>
+                  <div className="form-group">
+                    <label>Manager Phone Number (WhatsApp preferred)</label>
+                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                       <select style={{ width: '100px', flexShrink: 0, padding: '0.625rem', border: '1px solid #e2e8f0', borderRadius: '8px' }}>
+                         <option>+234</option>
+                         <option>+1</option>
+                         <option>+44</option>
+                       </select>
+                       <input type="text" placeholder="814 609 2019" style={{ flex: 1, padding: '0.625rem', border: '1px solid #e2e8f0', borderRadius: '8px' }} />
+                    </div>
+                  </div>
                  <div className="form-group">
                    <label>Manager Email Address</label>
                    <div style={{ position: 'relative' }}>
@@ -276,18 +274,17 @@ const SignupWizard = () => {
                     <Shield size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
                    </div>
                  </div>
-                 <div className="form-group">
-                   <label>Emergency Contact Phone</label>
-                   <div style={{ display: 'flex', gap: '0.5rem' }}>
-                      <select style={{ width: '100px', flexShrink: 0 }}>
-                        <option>+234</option>
-                        <option>+1</option>
-                        <option>+44</option>
-                        <option>+233</option>
-                      </select>
-                      <input type="text" placeholder="800..." style={{ flex: 1 }} />
-                   </div>
-                 </div>
+                  <div className="form-group">
+                    <label>Emergency Contact Phone</label>
+                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                       <select style={{ width: '100px', flexShrink: 0, padding: '0.625rem', border: '1px solid #e2e8f0', borderRadius: '8px' }}>
+                         <option>+234</option>
+                         <option>+1</option>
+                         <option>+44</option>
+                       </select>
+                       <input type="text" placeholder="814 609 2019" style={{ flex: 1, padding: '0.625rem', border: '1px solid #e2e8f0', borderRadius: '8px' }} />
+                    </div>
+                  </div>
                </div>
              )}
           </div>

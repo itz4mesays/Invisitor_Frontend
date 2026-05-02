@@ -598,9 +598,19 @@ const AdminDashboard = () => {
         }
 
         @media (max-width: 1024px) {
-          .dashboard-grid {
-            grid-template-columns: 1fr;
-          }
+          .dashboard-grid { grid-template-columns: 1fr; }
+          .stats-row { grid-template-columns: repeat(2, 1fr); }
+          .sub-content { grid-template-columns: 1fr; }
+          .sub-details { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+          .admin-dashboard { padding: 1rem; gap: 1.5rem; }
+          .dashboard-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+          .dashboard-header h1 { font-size: 1.4rem; }
+          .stats-row { grid-template-columns: 1fr; }
+          .sub-details { grid-template-columns: 1fr; }
+          .focus-actions { grid-template-columns: 1fr; }
         }
       `}</style>
     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Search, 
@@ -23,6 +23,7 @@ import {
   Upload,
   Check
 } from 'lucide-react';
+import Pagination from '../../components/Pagination';
 
 // Reusable Modal Component
 const Modal = ({ isOpen, onClose, title, children }) => {
@@ -132,6 +133,8 @@ const HostVisitors = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isAddSuccess, setIsAddSuccess] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   const handleViewDetails = (visitor) => {
     setSelectedVisitor(visitor);
@@ -176,6 +179,17 @@ const HostVisitors = () => {
     }
     return true;
   });
+
+  const currentTableData = useMemo(() => {
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    return filteredVisitors.slice(startIndex, endIndex);
+  }, [filteredVisitors, currentPage, pageSize]);
+
+  const handlePageSizeChange = (newPageSize) => {
+    setPageSize(newPageSize);
+    setCurrentPage(1); // Reset to first page when page size changes
+  };
 
   const recentCount = visitors.filter(v => v.isRecent).length;
 
@@ -239,8 +253,8 @@ const HostVisitors = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredVisitors.length > 0 ? (
-              filteredVisitors.map((visitor) => (
+            {currentTableData.length > 0 ? (
+              currentTableData.map((visitor) => (
                 <tr key={visitor.id}>
                   <td>
                     <div className="user-cell">
@@ -297,6 +311,14 @@ const HostVisitors = () => {
             )}
           </tbody>
         </table>
+
+        <Pagination
+          currentPage={currentPage}
+          totalCount={filteredVisitors.length}
+          pageSize={pageSize}
+          onPageChange={setCurrentPage}
+          onPageSizeChange={handlePageSizeChange}
+        />
       </div>
 
       {/* Add Visitor Modal */}
@@ -363,7 +385,14 @@ const HostVisitors = () => {
 
                     <div className="form-field">
                       <label>PHONE NUMBER</label>
-                      <input type="text" placeholder="0814 609 2019" />
+                      <div style={{ display: 'flex', gap: '0.5rem' }}>
+                        <select style={{ width: '80px', padding: '0.625rem', border: '1px solid #e2e8f0', borderRadius: '12px' }}>
+                          <option>+234</option>
+                          <option>+1</option>
+                          <option>+44</option>
+                        </select>
+                        <input type="text" placeholder="814 609 2019" style={{ flex: 1, padding: '0.625rem', border: '1px solid #e2e8f0', borderRadius: '12px' }} />
+                      </div>
                     </div>
                     <div className="form-field">
                       <label>COMPANY NAME (Optional)</label>
@@ -520,7 +549,14 @@ const HostVisitors = () => {
 
                     <div className="form-field">
                       <label>PHONE NUMBER</label>
-                      <input type="text" defaultValue={selectedVisitor?.phone} readOnly={!isEditing} />
+                      <div style={{ display: 'flex', gap: '0.5rem' }}>
+                        <select style={{ width: '80px', padding: '0.625rem', border: '1px solid #e2e8f0', borderRadius: '12px' }} disabled={!isEditing}>
+                          <option>+234</option>
+                          <option>+1</option>
+                          <option>+44</option>
+                        </select>
+                        <input type="text" defaultValue={selectedVisitor?.phone} readOnly={!isEditing} style={{ flex: 1, padding: '0.625rem', border: '1px solid #e2e8f0', borderRadius: '12px' }} />
+                      </div>
                     </div>
                     <div className="form-field">
                       <label>COMPANY NAME (Optional)</label>

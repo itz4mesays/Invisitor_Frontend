@@ -21,6 +21,8 @@ import {
 const DashboardLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const [openDropdowns, setOpenDropdowns] = useState({});
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -37,14 +39,71 @@ const DashboardLayout = () => {
   
   // Get active role from URL
   const role = location.pathname.split('/')[1];
-  
-  const menuItems = [
-    { icon: <Home size={20} />, label: 'Dashboard', path: `/${role}/dashboard` },
-    { icon: <Users size={20} />, label: 'Visitors', path: `/${role}/visitors` },
-    { icon: <Calendar size={20} />, label: 'Appointments', path: `/${role}/appointments` },
-    { icon: <ShieldCheck size={20} />, label: 'Front-Desk Officers', path: `/${role}/front-desk` },
-    { icon: <BarChart2 size={20} />, label: 'Reports', path: `/${role}/reports` },
-  ];
+  const getMenuItems = (currentRole) => {
+    const baseMenus = [{ icon: <Home size={20} />, label: 'Dashboard', path: `/${currentRole}/dashboard` }];
+    const supportArea = { 
+      icon: <ShieldCheck size={20} />, 
+      label: 'Support Area', 
+      isDropdown: true,
+      children: [
+        { label: 'Support Dashboard', path: `/${currentRole}/support/dashboard` },
+        { label: 'Manage Tickets', path: `/${currentRole}/support/tickets` }
+      ]
+    };
+
+    switch (currentRole) {
+      case 'admin':
+        return [
+          ...baseMenus,
+          { icon: <BarChart2 size={20} />, label: 'Activity Log', path: `/${currentRole}/activity-log` },
+        ];
+      case 'manager':
+        return [
+          ...baseMenus,
+          { icon: <Users size={20} />, label: 'Residents', path: `/${currentRole}/residents` },
+          { icon: <ShieldCheck size={20} />, label: 'Security', path: `/${currentRole}/security` },
+          { icon: <Calendar size={20} />, label: 'Appointments', path: `/${currentRole}/appointments` },
+          { icon: <BarChart2 size={20} />, label: 'Reports', path: `/${currentRole}/reports` },
+          { icon: <BarChart2 size={20} />, label: 'Transactions', path: `/${currentRole}/transactions` },
+          supportArea,
+          { icon: <BarChart2 size={20} />, label: 'Activity Log', path: `/${currentRole}/activity-log` },
+        ];
+      case 'resident':
+        return [
+          ...baseMenus,
+          { icon: <Calendar size={20} />, label: 'Appointments', path: `/${currentRole}/appointments` },
+          { icon: <BarChart2 size={20} />, label: 'Reports', path: `/${currentRole}/reports` },
+          supportArea,
+          { icon: <BarChart2 size={20} />, label: 'Activity Log', path: `/${currentRole}/activity-log` },
+        ];
+      case 'host':
+        return [
+          ...baseMenus,
+          { icon: <Users size={20} />, label: 'Visitors', path: `/${currentRole}/visitors` },
+          { icon: <Calendar size={20} />, label: 'Appointments', path: `/${currentRole}/appointments` },
+          { icon: <ShieldCheck size={20} />, label: 'Front-Desk Officers', path: `/${currentRole}/front-desk` },
+          { icon: <BarChart2 size={20} />, label: 'Transactions', path: `/${currentRole}/transactions` },
+          supportArea,
+          { icon: <BarChart2 size={20} />, label: 'Activity Log', path: `/${currentRole}/activity-log` },
+        ];
+      case 'visitor':
+      case 'frontdesk':
+        return [
+          ...baseMenus,
+          { icon: <BarChart2 size={20} />, label: 'Transactions', path: `/${currentRole}/transactions` },
+          supportArea,
+          { icon: <BarChart2 size={20} />, label: 'Activity Log', path: `/${currentRole}/activity-log` },
+        ];
+      default:
+        return baseMenus;
+    }
+  };
+
+  const menuItems = getMenuItems(role);
+
+  const toggleDropdown = (label) => {
+    setOpenDropdowns(prev => ({ ...prev, [label]: !prev[label] }));
+  };
 
   const handleLogout = () => {
     // Basic logout simulation
@@ -72,14 +131,50 @@ const DashboardLayout = () => {
         <nav className="sidebar-nav">
           <ul className="nav-list">
             {menuItems.map((item) => (
-              <li key={item.path} className="nav-item">
-                <Link 
-                  to={item.path} 
-                  className={`nav-link ${location.pathname === item.path ? 'active' : ''}`}
-                >
-                  <span className="nav-icon">{item.icon}</span>
-                  <span className="nav-label">{item.label}</span>
-                </Link>
+              <li key={item.label} className="nav-item">
+                {item.isDropdown ? (
+                  <>
+                    <button 
+                      className={`nav-link w-full ${location.pathname.includes('/support/') ? 'active' : ''}`}
+                      onClick={() => toggleDropdown(item.label)}
+                    >
+                      <span className="nav-icon">{item.icon}</span>
+                      <span className="nav-label" style={{ flex: 1, textAlign: 'left' }}>{item.label}</span>
+                      <span className="nav-icon" style={{ minWidth: 'auto', display: isSidebarOpen ? 'flex' : 'none' }}>
+                        <ChevronRight size={16} style={{ transform: openDropdowns[item.label] ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }} />
+                      </span>
+                    </button>
+                    <AnimatePresence>
+                      {openDropdowns[item.label] && isSidebarOpen && (
+                        <motion.ul 
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          style={{ listStyle: 'none', padding: '0 0 0 3.25rem', margin: '0.25rem 0', overflow: 'hidden' }}
+                        >
+                          {item.children.map(child => (
+                            <li key={child.path} style={{ margin: '0.25rem 0' }}>
+                              <Link 
+                                to={child.path} 
+                                className={`nav-link-sub ${location.pathname === child.path ? 'active' : ''}`}
+                              >
+                                {child.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </motion.ul>
+                      )}
+                    </AnimatePresence>
+                  </>
+                ) : (
+                  <Link 
+                    to={item.path} 
+                    className={`nav-link ${location.pathname === item.path ? 'active' : ''}`}
+                  >
+                    <span className="nav-icon">{item.icon}</span>
+                    <span className="nav-label">{item.label}</span>
+                  </Link>
+                )}
               </li>
             ))}
           </ul>
@@ -112,10 +207,7 @@ const DashboardLayout = () => {
       <main className="main-content">
         {/* Top Header */}
         <header className="top-header">
-          <div className="search-bar">
-            <Search size={18} className="search-icon" />
-            <input type="text" placeholder="Search here..." />
-          </div>
+          <div style={{ flex: 1 }}></div>
           <div className="header-actions">
             <span className="header-user-name" style={{ fontSize: '0.875rem', fontWeight: '700', color: '#1e293b' }}>David Fayemi</span>
             <button className="theme-toggle-btn" onClick={() => setIsDarkMode(!isDarkMode)} style={{ background: 'none', border: 'none', color: '#64748b', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
@@ -125,8 +217,28 @@ const DashboardLayout = () => {
               <Bell size={20} />
               <span className="notification-dot"></span>
             </button>
-            <div className="user-profile-circle">
-              <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${role}`} alt="Profile" />
+            <div className="user-profile-container" style={{ position: 'relative' }}>
+              <div className="user-profile-circle" onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}>
+                <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${role}`} alt="Profile" />
+              </div>
+              <AnimatePresence>
+                {isProfileDropdownOpen && (
+                  <>
+                    <div style={{ position: 'fixed', inset: 0, zIndex: 45 }} onClick={() => setIsProfileDropdownOpen(false)} />
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}
+                      className="profile-dropdown"
+                    >
+                      <button onClick={() => { setIsProfileDropdownOpen(false); navigate(`/${role}/profile`); }}>
+                        <Settings size={16} /> Your Profile
+                      </button>
+                      <button className="logout-btn-drop" onClick={handleLogout}>
+                        <LogOut size={16} /> Logout
+                      </button>
+                    </motion.div>
+                  </>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </header>
@@ -273,6 +385,11 @@ const DashboardLayout = () => {
           display: none;
         }
 
+        .nav-link.w-full { width: 100%; border: none; background: transparent; cursor: pointer; font-family: inherit; font-size: 1rem; }
+        .nav-link-sub { display: block; padding: 0.5rem 1rem; color: #64748b; text-decoration: none; border-radius: 8px; font-size: 0.875rem; transition: all 0.2s; }
+        .nav-link-sub:hover { color: #0d2331; background: #f8fafc; }
+        .nav-link-sub.active { color: #0d2331; font-weight: 700; background: #f1f5f9; }
+
         .sidebar-footer {
           padding: 1.5rem;
           border-top: 1px solid #e2e8f0;
@@ -375,30 +492,6 @@ const DashboardLayout = () => {
           z-index: 40;
         }
 
-        .search-bar {
-          background: #f1f5f9;
-          display: flex;
-          align-items: center;
-          padding: 0.625rem 1rem;
-          border-radius: 12px;
-          width: 100%;
-          max-width: 400px;
-          gap: 0.75rem;
-        }
-
-        .search-icon {
-          color: #94a3b8;
-        }
-
-        .search-bar input {
-          background: none;
-          border: none;
-          outline: none;
-          width: 100%;
-          font-size: 0.875rem;
-          color: #1e293b;
-        }
-
         .header-actions {
           display: flex;
           align-items: center;
@@ -440,6 +533,50 @@ const DashboardLayout = () => {
           width: 100%;
           height: 100%;
           object-fit: cover;
+        }
+
+        .profile-dropdown {
+          position: absolute;
+          right: 0;
+          top: calc(100% + 10px);
+          background: white;
+          border: 1px solid #e2e8f0;
+          border-radius: 12px;
+          box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+          min-width: 180px;
+          z-index: 50;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .profile-dropdown button {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 0.875rem 1.25rem;
+          border: none;
+          background: none;
+          width: 100%;
+          text-align: left;
+          font-size: 0.875rem;
+          font-weight: 600;
+          color: #1e293b;
+          cursor: pointer;
+          transition: background 0.2s;
+        }
+
+        .profile-dropdown button:hover {
+          background: #f8fafc;
+        }
+
+        .profile-dropdown button.logout-btn-drop {
+          color: #ef4444;
+          border-top: 1px solid #f1f5f9;
+        }
+
+        .profile-dropdown button.logout-btn-drop:hover {
+          background: #fef2f2;
         }
 
         .content-area {

@@ -87,7 +87,14 @@ const Registration = () => {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
               <div className="form-group">
                 <label>Contact Phone</label>
-                <input type="text" placeholder="+1 (555) 000-0000" />
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <select style={{ width: '100px', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--input-border)' }}>
+                    <option>+234</option>
+                    <option>+1</option>
+                    <option>+44</option>
+                  </select>
+                  <input type="text" placeholder="814 609 2019" style={{ flex: 1 }} />
+                </div>
               </div>
               <div className="form-group">
                 <label>Work Email</label>

@@ -49,7 +49,7 @@ const Modal = ({ isOpen, onClose, children, maxWidth = '850px' }) => {
   );
 };
 
-const HostAppointments = () => {
+const ResidentAppointments = () => {
   const [activeTab, setActiveTab] = React.useState('All');
   const [activePage, setActivePage] = React.useState(3);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = React.useState(false);
@@ -1611,4 +1611,4 @@ const HostAppointments = () => {
   );
 };
 
-export default HostAppointments;
+export default ResidentAppointments;

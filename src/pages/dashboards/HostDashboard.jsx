@@ -390,6 +390,8 @@ const HostDashboard = () => {
                         <select defaultValue="Business Meeting">
                           <option>Business Meeting</option>
                           <option>Personal</option>
+                          <option>Interview</option>
+                          <option value="Delivery">Delivery</option>
                         </select>
                       </div>
                       <div className="form-field">
@@ -477,7 +479,14 @@ const HostDashboard = () => {
                     </div>
                     <div className="form-field">
                       <label>PHONE NUMBER</label>
-                      <input type="text" placeholder="0814 609 2019" />
+                      <div style={{ display: 'flex', gap: '0.5rem' }}>
+                        <select style={{ width: '80px', padding: '0.5rem', border: '1px solid #e2e8f0', borderRadius: '8px' }}>
+                          <option>+234</option>
+                          <option>+1</option>
+                          <option>+44</option>
+                        </select>
+                        <input type="text" placeholder="814 609 2019" style={{ flex: 1, padding: '0.5rem', border: '1px solid #e2e8f0', borderRadius: '8px' }} />
+                      </div>
                     </div>
                     <div className="form-field">
                       <label>EMAIL ADDRESS (Optional)</label>
