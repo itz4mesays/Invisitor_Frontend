@@ -50,7 +50,7 @@ const Security = () => {
         <select className="sec-select" value={filterType} onChange={e => setFilterType(e.target.value)}>
           <option value="all">All Types</option>
           <option value="Security Officer">Security Officer</option>
-          <option value="Front Desk Officer">Front Desk Officer</option>
+          {/* <option value="Front Desk Officer">Front Desk Officer</option> */}
         </select>
       </div>
 

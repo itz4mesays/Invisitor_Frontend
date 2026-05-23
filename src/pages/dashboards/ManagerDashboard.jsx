@@ -270,7 +270,8 @@ const ManagerDashboard = () => {
         .md-text-gray { color: #94a3b8; }
         
         .md-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
-        .md-stat-card { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1.25rem; }
+        .md-stat-card { background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1.25rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); transition: all 0.2s ease; }
+        .md-stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.04); }
         .md-stat-top { display: flex; justify-content: space-between; align-items: flex-start; }
         .md-stat-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; }
         .md-stat-trend { font-size: 0.75rem; font-weight: 600; color: #64748b; background: #f8fafc; padding: 4px 10px; border-radius: 20px; }
@@ -279,11 +280,11 @@ const ManagerDashboard = () => {
         .md-stat-value { font-size: 1.875rem; font-weight: 800; color: #1e293b; line-height: 1; }
 
         .md-graphs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-        .md-graph-card { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; display: flex; flex-direction: column; }
+        .md-graph-card { background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 2rem; display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
         .md-graph-container { flex: 1; width: 100%; min-height: 250px; }
 
         .md-main-grid { display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; }
-        .md-recent-appointments { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; }
+        .md-recent-appointments { background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
         .md-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
         .md-card-header h3 { font-size: 1.125rem; font-weight: 800; color: #1e293b; margin: 0; }
         .md-btn-link { background: none; border: none; color: #3b82f6; font-weight: 700; font-size: 0.875rem; display: flex; align-items: center; gap: 4px; cursor: pointer; }
@@ -301,7 +302,7 @@ const ManagerDashboard = () => {
         
         .md-side-panel { display: flex; flex-direction: column; gap: 1.5rem; }
         
-        .md-subscription-card { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 20px; padding: 1.5rem; color: white; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15); }
+        .md-subscription-card { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 24px; padding: 2rem; color: white; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15); }
         .md-sub-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
         .md-sub-header h3 { font-size: 1.125rem; font-weight: 800; margin: 0; color: white; }
         .md-sub-badge { background: rgba(245, 158, 11, 0.2); color: #fbbf24; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; border: 1px solid rgba(245, 158, 11, 0.3); }
@@ -315,7 +316,7 @@ const ManagerDashboard = () => {
         .md-btn-renew { width: 100%; background: white; color: #0f172a; border: none; padding: 0.875rem; border-radius: 12px; font-weight: 800; font-size: 0.875rem; cursor: pointer; transition: background 0.2s; }
         .md-btn-renew:hover { background: #f8fafc; }
 
-        .md-quick-actions, .md-system-status { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; }
+        .md-quick-actions, .md-system-status { background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
         .md-quick-actions h3, .md-system-status h3 { font-size: 1.125rem; font-weight: 800; color: #1e293b; margin: 0 0 1.25rem 0; }
         .md-action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
         .md-action-btn { background: #f8fafc; border: 1px solid #f1f5f9; border-radius: 16px; padding: 1.25rem 1rem; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; cursor: pointer; transition: all 0.2s; }

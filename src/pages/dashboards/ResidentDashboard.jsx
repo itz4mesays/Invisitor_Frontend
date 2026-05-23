@@ -249,15 +249,16 @@ const ResidentDashboard = () => {
         .resd-text-light { color: #cbd5e1; }
         
         .resd-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
-        .resd-stat-card { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; display: flex; align-items: center; gap: 1.25rem; }
+        .resd-stat-card { background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 1.5rem; display: flex; align-items: center; gap: 1.25rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); transition: all 0.2s ease; }
+        .resd-stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.04); }
         .resd-stat-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; }
         .resd-stat-info { display: flex; flex-direction: column; gap: 0.25rem; }
         .resd-stat-label { font-size: 0.8125rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
         .resd-stat-value { font-size: 1.875rem; font-weight: 800; color: #1e293b; line-height: 1; }
 
         .resd-main-grid { display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; }
-        .resd-chart-card { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; }
-        .resd-recent-appointments { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; }
+        .resd-chart-card { background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+        .resd-recent-appointments { background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
         .resd-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
         .resd-card-header h3 { font-size: 1.125rem; font-weight: 800; color: #1e293b; margin: 0; }
         .resd-btn-link { background: none; border: none; color: #3b82f6; font-weight: 700; font-size: 0.875rem; display: flex; align-items: center; gap: 4px; cursor: pointer; }
@@ -275,7 +276,7 @@ const ResidentDashboard = () => {
         .resd-empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem 0; gap: 1rem; color: #94a3b8; font-weight: 600; }
         
         .resd-side-panel { display: flex; flex-direction: column; gap: 1.5rem; }
-        .resd-invite-box, .resd-support-box, .resd-doughnut-card { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; text-align: center; }
+        .resd-invite-box, .resd-support-box, .resd-doughnut-card { background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 2rem; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
         .resd-invite-box h3, .resd-support-box h3, .resd-doughnut-card h3 { font-size: 1.125rem; font-weight: 800; color: #1e293b; margin: 0 0 0.5rem 0; }
         .resd-invite-box p, .resd-support-box p, .resd-doughnut-card p { font-size: 0.875rem; color: #64748b; margin: 0 0 1.5rem 0; line-height: 1.5; }
         .resd-quick-code { font-size: 1.5rem; font-weight: 900; color: #0d2331; letter-spacing: 4px; background: #f8fafc; padding: 1rem; border-radius: 12px; border: 1px dashed #cbd5e1; margin-bottom: 1rem; }

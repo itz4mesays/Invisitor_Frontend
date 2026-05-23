@@ -226,11 +226,18 @@ const AdminDashboard = () => {
         .stat-card {
           background: white;
           padding: 1.5rem;
-          border-radius: 16px;
+          border-radius: 24px;
           border: 1px solid #e2e8f0;
           display: flex;
           justify-content: space-between;
           align-items: center;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+          transition: all 0.2s ease;
+        }
+
+        .stat-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(0,0,0,0.04);
         }
 
         .stat-info {
@@ -271,9 +278,10 @@ const AdminDashboard = () => {
 
         .subscription-card {
           background: white;
-          padding: 1.5rem;
-          border-radius: 16px;
+          padding: 2rem;
+          border-radius: 24px;
           border: 1px solid #e2e8f0;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
         .subscription-card h3 {
@@ -358,9 +366,10 @@ const AdminDashboard = () => {
 
         .quick-actions-section {
           background: white;
-          padding: 1.5rem;
-          border-radius: 16px;
+          padding: 2rem;
+          border-radius: 24px;
           border: 1px solid #e2e8f0;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
         .actions-list {
@@ -375,15 +384,18 @@ const AdminDashboard = () => {
           align-items: center;
           padding: 1.25rem;
           background: #f8fafc;
-          border-radius: 12px;
+          border-radius: 16px;
           cursor: pointer;
-          transition: all 0.2s;
+          transition: all 0.2s ease;
           gap: 1rem;
+          border: 1px solid transparent;
         }
 
         .action-item:hover {
-          background: #f1f5f9;
-          transform: translateX(4px);
+          background: white;
+          border-color: #e2e8f0;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 16px rgba(0,0,0,0.04);
         }
 
         .action-icon {
@@ -425,9 +437,10 @@ const AdminDashboard = () => {
 
         .appointment-focus-card {
           background: white;
-          padding: 1.5rem;
-          border-radius: 16px;
+          padding: 2rem;
+          border-radius: 24px;
           border: 1px solid #e2e8f0;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
         .appointment-focus-card h3 {
@@ -510,9 +523,10 @@ const AdminDashboard = () => {
 
         .upcoming-appointments-card {
           background: white;
-          padding: 1.5rem;
-          border-radius: 16px;
+          padding: 2rem;
+          border-radius: 24px;
           border: 1px solid #e2e8f0;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
         .section-header {

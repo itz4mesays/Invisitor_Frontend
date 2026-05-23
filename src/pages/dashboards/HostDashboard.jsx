@@ -681,9 +681,11 @@ const HostDashboard = () => {
         
         .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
         .stat-card {
-           background: white; border: 1px solid #e2e8f0; border-radius: 20px;
+           background: white; border: 1px solid #e2e8f0; border-radius: 24px;
            padding: 1.5rem; display: flex; justify-content: space-between; align-items: center;
+           box-shadow: 0 4px 12px rgba(0,0,0,0.02); transition: all 0.2s ease;
         }
+        .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.04); }
         .stat-label { font-size: 0.875rem; color: #94a3b8; font-weight: 600; display: block; margin-bottom: 0.5rem; }
         .stat-value { font-size: 1.75rem; font-weight: 800; color: #1e293b; display: block; }
         .stat-meta { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; }
@@ -691,7 +693,7 @@ const HostDashboard = () => {
         .meta-period { font-size: 0.75rem; color: #94a3b8; font-weight: 500; }
         .stat-icon-wrapper { background: #f8fafc; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #1e293b; border: 1px solid #e2e8f0; }
 
-        .subscription-section { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; }
+        .subscription-section { background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
         .subscription-section h3 { font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; }
         .subscription-card-detailed { display: grid; grid-template-columns: 240px 1fr; border: 1px solid #f1f5f9; border-radius: 16px; overflow: hidden; }
         .sub-main-info { padding: 1.5rem; background: white; border-right: 1px solid #f1f5f9; display: flex; flex-direction: column; gap: 1rem; }
@@ -704,7 +706,7 @@ const HostDashboard = () => {
         .status-pill { background: #dcfce7; color: #15803d; padding: 2px 10px; border-radius: 20px; width: fit-content; font-size: 0.75rem !important; font-weight: 700; }
 
         .dashboard-row-split { display: grid; grid-template-columns: 1fr 1.2fr; gap: 1.5rem; }
-        .quick-actions-box, .upcoming-box { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; }
+        .quick-actions-box, .upcoming-box { background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
         .quick-actions-box h3, .upcoming-box h3 { font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; }
         
         .actions-list { display: flex; flex-direction: column; gap: 1rem; }
@@ -726,7 +728,7 @@ const HostDashboard = () => {
         .appt-meta .appt-time { font-size: 0.6875rem; color: #94a3b8; font-weight: 600; }
         .btn-reschedule-mini { margin-left: auto; background: white; border: 1px solid #e2e8f0; padding: 4px 12px; border-radius: 8px; font-size: 0.6875rem; font-weight: 700; color: #64748b; cursor: pointer; }
 
-        .next-appointment-card { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; }
+        .next-appointment-card { background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
         .next-appointment-card h3 { font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; }
         .appointment-focus h4 { font-size: 1.125rem; font-weight: 800; color: #1e293b; margin-bottom: 1rem; }
         .focus-row { display: flex; align-items: center; gap: 0.75rem; color: #64748b; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; }

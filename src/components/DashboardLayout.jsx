@@ -217,11 +217,24 @@ const DashboardLayout = () => {
         </div>
       </aside>
 
+      {/* Mobile Sidebar Overlay */}
+      {isSidebarOpen && (
+        <div 
+          className="sidebar-overlay"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       {/* Main Content */}
       <main className="main-content">
         {/* Top Header */}
         <header className="top-header">
-          <div style={{ flex: 1 }}></div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: 1 }}>
+            <button className="mobile-dashboard-menu-btn" onClick={() => setIsSidebarOpen(true)}>
+              <Menu size={24} color="#64748b" />
+            </button>
+            <div style={{ flex: 1 }}></div>
+          </div>
           <div className="header-actions">
             <span className="header-user-name" style={{ fontSize: '0.875rem', fontWeight: '700', color: '#1e293b' }}>David Fayemi</span>
             <button className="theme-toggle-btn" onClick={() => setIsDarkMode(!isDarkMode)} style={{ background: 'none', border: 'none', color: '#64748b', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
@@ -660,6 +673,21 @@ const DashboardLayout = () => {
           padding: 2rem;
         }
 
+        .mobile-dashboard-menu-btn {
+          display: none;
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 0;
+          align-items: center;
+          justify-content: center;
+          -webkit-appearance: none;
+        }
+
+        .sidebar-overlay {
+          display: none;
+        }
+
         @media (max-width: 768px) {
           .sidebar {
             position: fixed;
@@ -670,6 +698,17 @@ const DashboardLayout = () => {
           }
           .main-content {
             margin-left: 0;
+          }
+          .mobile-dashboard-menu-btn {
+            display: flex;
+          }
+          .sidebar-overlay {
+            display: block;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 45; /* Below sidebar's 50 */
+            backdrop-filter: blur(2px);
           }
         }
       `}</style>

@@ -81,7 +81,7 @@ const AddOfficer = () => {
               <label>Officer Role</label>
               <select name="role" value={formData.role} onChange={handleChange}>
                 <option value="Security Officer">Security Officer</option>
-                <option value="Front Desk Officer">Front Desk Officer</option>
+                {/* <option value="Front Desk Officer">Front Desk Officer</option> */}
               </select>
             </div>
             <div className="ao-field">
