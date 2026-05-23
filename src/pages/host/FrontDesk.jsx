@@ -280,6 +280,16 @@ const FrontDeskOfficers = () => {
                 </div>
 
                 <div className="form-field" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                  <label style={{ fontSize: '0.75rem', fontWeight: '800', color: '#1e293b' }}>SHIFT</label>
+                  <select style={{ padding: '0.875rem', border: '1.5px solid #e2e8f0', borderRadius: '12px', fontSize: '0.875rem', color: '#1e293b', outline: 'none' }}>
+                    <option value="">Select shift...</option>
+                    <option value="Morning">Morning (6AM – 2PM)</option>
+                    <option value="Afternoon">Afternoon (2PM – 10PM)</option>
+                    <option value="Night">Night (10PM – 6AM)</option>
+                  </select>
+                </div>
+
+                <div className="form-field" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                   <label style={{ fontSize: '0.75rem', fontWeight: '800', color: '#1e293b' }}>IDENTIFICATION DOCUMENT</label>
                   <select style={{ padding: '0.875rem', border: '1.5px solid #e2e8f0', borderRadius: '12px', fontSize: '0.875rem', color: '#1e293b', outline: 'none' }}>
                     <option>Passport</option>
@@ -397,6 +407,15 @@ const FrontDeskOfficers = () => {
                 <div className="form-field" style={{ gridColumn: '1 / -1', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                   <label style={{ fontSize: '0.75rem', fontWeight: '800', color: '#1e293b' }}>COMPANY NAME (Optional)</label>
                   <input type="text" readOnly={!isEditMode} defaultValue="Invisitor" style={{ padding: '0.875rem', border: isEditMode ? '1.5px solid #e2e8f0' : '1px solid #f1f5f9', background: isEditMode ? 'white' : '#f8fafc', borderRadius: '12px', fontSize: '0.875rem', color: '#1e293b', outline: 'none' }} />
+                </div>
+
+                <div className="form-field" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                  <label style={{ fontSize: '0.75rem', fontWeight: '800', color: '#1e293b' }}>SHIFT</label>
+                  <select disabled={!isEditMode} defaultValue="Morning" style={{ padding: '0.875rem', border: isEditMode ? '1.5px solid #e2e8f0' : '1px solid #f1f5f9', background: isEditMode ? 'white' : '#f8fafc', borderRadius: '12px', fontSize: '0.875rem', color: '#1e293b', outline: 'none', opacity: 1, appearance: isEditMode ? 'auto' : 'none' }}>
+                    <option value="Morning">Morning (6AM – 2PM)</option>
+                    <option value="Afternoon">Afternoon (2PM – 10PM)</option>
+                    <option value="Night">Night (10PM – 6AM)</option>
+                  </select>
                 </div>
 
                 <div className="form-field" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>

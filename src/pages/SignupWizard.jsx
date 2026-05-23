@@ -7,14 +7,21 @@ const SignupWizard = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [step, setStep] = useState(1);
-  const [selectedType, setSelectedType] = useState('private');
+  const [selectedType, setSelectedType] = useState(location.state?.planType || 'private');
   const [paymentMethod, setPaymentMethod] = useState('Paystack');
   const [isVerifying, setIsVerifying] = useState(false);
+  
+  // Extract number of units from residents string if available
+  const initialUnits = location.state?.residents ? location.state.residents.replace(/[^0-9]/g, '') : '';
+  const [units, setUnits] = useState(initialUnits);
 
   // Handle initial step from route if needed
   useEffect(() => {
     if (location.state?.step) {
       setStep(location.state.step);
+    }
+    if (location.state?.planType) {
+      setSelectedType(location.state.planType);
     }
   }, [location.state]);
 
@@ -78,7 +85,7 @@ const SignupWizard = () => {
         return (
           <div className="step-content">
              {selectedType === 'private' ? (
-               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+               <div className="form-grid">
                  <div className="form-group" style={{ gridColumn: 'span 2' }}>
                    <label>Organization/Business Name</label>
                    <div style={{ position: 'relative' }}>
@@ -143,7 +150,7 @@ const SignupWizard = () => {
                  </div>
                </div>
              ) : (
-               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+               <div className="form-grid">
                  <div className="form-group" style={{ gridColumn: 'span 2' }}>
                    <label>Legal Entity Name</label>
                    <div style={{ position: 'relative' }}>
@@ -180,7 +187,7 @@ const SignupWizard = () => {
                  </div>
                  <div className="form-group">
                    <label>Number of Units</label>
-                   <input type="number" placeholder="0" min="1" style={{ width: '100%' }} />
+                   <input type="number" placeholder="0" min="1" style={{ width: '100%' }} value={units} onChange={(e) => setUnits(e.target.value)} />
                  </div>
                  <div className="form-group">
                    <label>Primary Industry (Optional)</label>
@@ -202,7 +209,7 @@ const SignupWizard = () => {
         return (
           <div className="step-content">
              {selectedType === 'private' ? (
-               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+               <div className="form-grid">
                  <div className="form-group" style={{ gridColumn: 'span 2' }}>
                    <label>Primary Contact Person</label>
                    <div style={{ position: 'relative' }}>
@@ -241,7 +248,7 @@ const SignupWizard = () => {
                  </div>
                </div>
              ) : (
-               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+               <div className="form-grid">
                  <div className="form-group" style={{ gridColumn: 'span 2' }}>
                    <label>Estate Manager Name</label>
                    <div style={{ position: 'relative' }}>
@@ -300,7 +307,7 @@ const SignupWizard = () => {
                </div>
                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', fontSize: '0.9rem' }}>
                   <span style={{ color: '#64748b' }}>Selected Plan</span>
-                  <span style={{ fontWeight: 600 }}>Starter Plan — Monthly</span>
+                  <span style={{ fontWeight: 600 }}>{location.state?.planTier || 'Starter Plan'} — Monthly</span>
                </div>
                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 800, fontSize: '1.2rem', color: '#0d2331', borderTop: '1px dashed #cbd5e1', paddingTop: '1rem' }}>
                   <span>Total Due</span>
@@ -310,7 +317,7 @@ const SignupWizard = () => {
 
             <div className="form-group">
                <label>Select Payment Method</label>
-               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
+               <div className="payment-grid">
                   {[
                     { name: 'Paystack', logo: 'https://paystack.com/assets/img/login/paystack-logo.png' },
                     { name: 'Flutterwave', logo: 'https://flutterwave.com/images/logo/logo-blue.svg' },
@@ -430,6 +437,17 @@ const SignupWizard = () => {
           {step === 4 ? `Pay with ${paymentMethod}` : 'Proceed'}
         </button>
       </div>
+      
+      <style jsx>{`
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .payment-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+        @media (max-width: 768px) {
+          .form-grid { grid-template-columns: 1fr; }
+          .payment-grid { grid-template-columns: 1fr; }
+          .step-label { display: none; }
+          .card-title { font-size: 2rem !important; }
+        }
+      `}</style>
     </div>
   );
 };

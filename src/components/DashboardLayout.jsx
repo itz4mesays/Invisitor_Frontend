@@ -15,7 +15,9 @@ import {
   ChevronLeft,
   ChevronRight,
   Sun,
-  Moon
+  Moon,
+  AlertTriangle,
+  FileText
 } from 'lucide-react';
 
 const DashboardLayout = () => {
@@ -51,10 +53,12 @@ const DashboardLayout = () => {
     return () => document.body.classList.remove('dark-mode');
   }, [isDarkMode]);
   
-  // Get active role from URL
   const role = location.pathname.split('/')[1];
   const getMenuItems = (currentRole) => {
-    const baseMenus = [{ icon: <Home size={20} />, label: 'Dashboard', path: `/${currentRole}/dashboard` }];
+    const baseMenus = [
+      { icon: <Home size={20} />, label: 'Dashboard', path: `/${currentRole}/dashboard` },
+      { icon: <Calendar size={20} />, label: 'Calendar', path: `/${currentRole}/calendar` }
+    ];
     const supportArea = { 
       icon: <ShieldCheck size={20} />, 
       label: 'Support Area', 
@@ -77,6 +81,7 @@ const DashboardLayout = () => {
           { icon: <Users size={20} />, label: 'Residents', path: `/${currentRole}/residents` },
           { icon: <ShieldCheck size={20} />, label: 'Security', path: `/${currentRole}/security` },
           { icon: <Calendar size={20} />, label: 'Appointments', path: `/${currentRole}/appointments` },
+          { icon: <FileText size={20} />, label: 'Invoices', path: `/${currentRole}/invoices` },
           { icon: <BarChart2 size={20} />, label: 'Reports', path: `/${currentRole}/reports` },
           { icon: <BarChart2 size={20} />, label: 'Transactions', path: `/${currentRole}/transactions` },
           supportArea,
@@ -96,11 +101,17 @@ const DashboardLayout = () => {
           { icon: <Users size={20} />, label: 'Visitors', path: `/${currentRole}/visitors` },
           { icon: <Calendar size={20} />, label: 'Appointments', path: `/${currentRole}/appointments` },
           { icon: <ShieldCheck size={20} />, label: 'Front-Desk Officers', path: `/${currentRole}/front-desk` },
+          { icon: <FileText size={20} />, label: 'Invoices', path: `/${currentRole}/invoices` },
           { icon: <BarChart2 size={20} />, label: 'Transactions', path: `/${currentRole}/transactions` },
           supportArea,
           { icon: <BarChart2 size={20} />, label: 'Activity Log', path: `/${currentRole}/activity-log` },
         ];
       case 'visitor':
+        return [
+          ...baseMenus,
+          { icon: <Calendar size={20} />, label: 'Appointments', path: `/${currentRole}/appointments` },
+          { icon: <BarChart2 size={20} />, label: 'Activity Log', path: `/${currentRole}/activity-log` },
+        ];
       case 'frontdesk':
         return [
           ...baseMenus,
@@ -195,10 +206,12 @@ const DashboardLayout = () => {
         </nav>
 
         <div className="sidebar-footer">
-          <Link to={`/${role}/settings`} className="nav-link">
-            <span className="nav-icon"><Settings size={20} /></span>
-            <span className="nav-label">Settings</span>
-          </Link>
+          {role !== 'visitor' && (
+            <Link to={`/${role}/settings`} className="nav-link">
+              <span className="nav-icon"><Settings size={20} /></span>
+              <span className="nav-label">Settings</span>
+            </Link>
+          )}
           
           <div className="user-profile-mini">
             <img 
@@ -236,6 +249,11 @@ const DashboardLayout = () => {
             <div style={{ flex: 1 }}></div>
           </div>
           <div className="header-actions">
+            {role === 'resident' && (
+              <button className="btn-emergency" onClick={() => alert('EMERGENCY TRIGGERED!')}>
+                <AlertTriangle size={16} /> SOS
+              </button>
+            )}
             <span className="header-user-name" style={{ fontSize: '0.875rem', fontWeight: '700', color: '#1e293b' }}>David Fayemi</span>
             <button className="theme-toggle-btn" onClick={() => setIsDarkMode(!isDarkMode)} style={{ background: 'none', border: 'none', color: '#64748b', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
               {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
@@ -554,6 +572,34 @@ const DashboardLayout = () => {
           display: flex;
           align-items: center;
           gap: 1.5rem;
+        }
+
+        .btn-emergency {
+          background: #ef4444;
+          color: white;
+          border: none;
+          padding: 0.5rem 1rem;
+          border-radius: 8px;
+          font-weight: 800;
+          font-size: 0.875rem;
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+          cursor: pointer;
+          animation: pulse 2s infinite;
+          box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+          transition: all 0.2s;
+        }
+
+        .btn-emergency:hover {
+          background: #dc2626;
+          transform: translateY(-1px);
+        }
+
+        @keyframes pulse {
+          0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+          70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+          100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
         }
 
         .notification-btn {

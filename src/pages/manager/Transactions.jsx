@@ -69,7 +69,7 @@ const ManagerTransactions = () => {
         <div style={{ overflowX: 'auto' }}>
           <table className="mtx-table">
             <thead>
-              <tr><th>Transaction ID</th><th>Plan</th><th>Amount</th><th>Date</th><th>Method</th><th>Status</th></tr>
+              <tr><th>Transaction ID</th><th>Plan</th><th>Amount</th><th>Date</th><th>Method</th><th>Status</th><th>Receipt</th></tr>
             </thead>
             <tbody>
               {paginated.map(t => {
@@ -82,11 +82,18 @@ const ManagerTransactions = () => {
                     <td style={{ color: '#64748b' }}>{t.date}</td>
                     <td style={{ color: '#64748b' }}>{t.method}</td>
                     <td><span style={{ background: sc.bg, color: sc.color, padding: '4px 12px', borderRadius: 20, fontSize: '0.75rem', fontWeight: 700 }}>{t.status.charAt(0).toUpperCase() + t.status.slice(1)}</span></td>
+                    <td>
+                      {t.status === 'successful' && (
+                        <button className="btn-dl-receipt" title="Download Receipt">
+                          <Download size={16} />
+                        </button>
+                      )}
+                    </td>
                   </tr>
                 );
               })}
               {paginated.length === 0 && (
-                <tr><td colSpan="6" style={{ textAlign: 'center', padding: '3rem', color: '#94a3b8' }}>No transactions found.</td></tr>
+                <tr><td colSpan="7" style={{ textAlign: 'center', padding: '3rem', color: '#94a3b8' }}>No transactions found.</td></tr>
               )}
             </tbody>
           </table>
@@ -114,6 +121,8 @@ const ManagerTransactions = () => {
         .mtx-table th { padding: 0.875rem 0; font-size: 0.75rem; font-weight: 600; color: #94a3b8; border-bottom: 1px solid #f1f5f9; text-align: left; }
         .mtx-table td { padding: 1rem 0; font-size: 0.875rem; border-bottom: 1px solid #f8fafc; }
         .mtx-table tbody tr:last-child td { border-bottom: none; }
+        .btn-dl-receipt { background: none; border: none; color: #00a3ff; cursor: pointer; padding: 0.4rem; border-radius: 8px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+        .btn-dl-receipt:hover { background: #e0f2fe; color: #0369a1; }
         @media (max-width: 1100px) { .mtx-stats { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 768px) {
           .mtx-header { flex-direction: column; }

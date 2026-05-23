@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { 
   Search, 
   Filter, 
@@ -21,7 +22,8 @@ import {
   List,
   Calendar,
   Upload,
-  Check
+  Check,
+  Ban
 } from 'lucide-react';
 import Pagination from '../../components/Pagination';
 
@@ -104,10 +106,8 @@ const Modal = ({ isOpen, onClose, title, children }) => {
 };
 
 const HostVisitors = () => {
-  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
-  const [selectedVisitor, setSelectedVisitor] = useState(null);
+  const navigate = useNavigate();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('Profile');
 
   const trackingData = [
     { date: '12th July, 2023', checkIn: '09:00 AM', checkOut: '05:00 PM', duration: '8h 0m', status: 'Completed', gate: 'Main Gate' },
@@ -133,14 +133,13 @@ const HostVisitors = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isAddSuccess, setIsAddSuccess] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [blacklisted, setBlacklisted] = useState(new Set());
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
   const handleViewDetails = (visitor) => {
-    setSelectedVisitor(visitor);
-    setIsDetailModalOpen(true);
+    navigate(`/host/visitors/${visitor.id}`);
     setActiveDropdown(null);
-    setIsEditing(false); // Default to view mode
   };
 
   const handleAddSubmit = () => {
@@ -215,7 +214,7 @@ const HostVisitors = () => {
             <span className={`badge-count ${recentCount === 0 ? 'empty' : ''}`}>{recentCount}</span>
           </button>
         </div>
-        <button className="btn-add-visitor" onClick={() => setIsAddModalOpen(true)}>
+        <button className="btn-add-visitor" onClick={() => navigate('/host/visitors/add')}>
           <Plus size={18} />
           Add New Visitor
         </button>
@@ -288,8 +287,22 @@ const HostVisitors = () => {
                               <button className="dropdown-item" onClick={() => handleViewDetails(visitor)}>
                                 <Eye size={16} /> View Profile
                               </button>
-                              <button className="dropdown-item" onClick={() => { handleViewDetails(visitor); setActiveTab('Profile'); }}>
+                              <button className="dropdown-item" onClick={() => { navigate(`/host/visitors/${visitor.id}`); setActiveDropdown(null); }}>
                                 <Edit size={16} /> Update Info
+                              </button>
+                              <button 
+                                className={`dropdown-item ${blacklisted.has(visitor.id) ? 'whitelist' : 'blacklist'}`}
+                                onClick={() => {
+                                  setBlacklisted(prev => {
+                                    const next = new Set(prev);
+                                    if (next.has(visitor.id)) next.delete(visitor.id);
+                                    else next.add(visitor.id);
+                                    return next;
+                                  });
+                                  setActiveDropdown(null);
+                                }}
+                              >
+                                <Ban size={16} /> {blacklisted.has(visitor.id) ? 'Whitelist Visitor' : 'Blacklist Visitor'}
                               </button>
                               <button className="dropdown-item delete" onClick={() => handleDeleteClick(visitor)}>
                                 <Trash2 size={16} /> Delete Account
@@ -927,6 +940,19 @@ const HostVisitors = () => {
 
         .dropdown-item.delete svg {
           color: #ef4444;
+        }
+
+        .dropdown-item.blacklist {
+          color: #dc2626;
+        }
+        .dropdown-item.blacklist:hover {
+          background: #fef2f2;
+        }
+        .dropdown-item.whitelist {
+          color: #16a34a;
+        }
+        .dropdown-item.whitelist:hover {
+          background: #f0fdf4;
         }
 
         .dropdown-overlay {

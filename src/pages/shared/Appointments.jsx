@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Eye, Trash2, Calendar, QrCode, User, Clock, Briefcase, Check } from 'lucide-react';
+import { Search, Eye, Trash2, Calendar, QrCode, User, Clock, Briefcase, Check, RotateCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 import Pagination from '../../components/Pagination';
 
 const STATUSES = { all: 'All', scheduled: 'Scheduled', completed: 'Completed', cancelled: 'Cancelled', pending: 'Pending' };
@@ -20,17 +21,26 @@ const APPOINTMENTS = [
   { id: 'APT-005', code: 'INV-5NB6', visitor: 'Mr. Victor Salisu', visitorPhone: '+234 905 000 5555', visitorAddress: '654 Delivery Blvd, Kano', resident: 'John Smith', residentAddress: 'Block A, Apt 101', residentPhone: '+234 805 678 9012', purpose: 'Package Delivery', date: '2024-11-24', time: '10:30 AM', status: 'scheduled', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Victor' },
 ];
 
-const ManagerAppointments = () => {
+const Appointments = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const role = location.pathname.split('/')[1];
+  
   const [search, setSearch] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [viewAppt, setViewAppt] = useState(null);
   const [deleteAppt, setDeleteAppt] = useState(null);
+  const [rescheduleAppt, setRescheduleAppt] = useState(null);
+  const [rescheduleDate, setRescheduleDate] = useState('');
+  const [rescheduleTime, setRescheduleTime] = useState('');
   const [appointments, setAppointments] = useState(APPOINTMENTS);
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 5;
 
   const filtered = appointments.filter(a => {
+    // Visitor constraint: only show historical appointments
+    if (role === 'visitor' && (a.status === 'scheduled' || a.status === 'pending')) return false;
+    
     if (filterStatus !== 'all' && a.status !== filterStatus) return false;
     const q = search.toLowerCase();
     if (q && !a.visitor.toLowerCase().includes(q) && !a.resident.toLowerCase().includes(q) && !a.code.toLowerCase().includes(q)) return false;
@@ -48,10 +58,26 @@ const ManagerAppointments = () => {
     setAppointments(p => p.map(a => a.id === appt.id ? { ...a, status: 'scheduled' } : a));
   };
 
+  const handleReschedule = () => {
+    if (!rescheduleDate || !rescheduleTime) return;
+    setAppointments(p =>
+      p.map(a => a.id === rescheduleAppt.id
+        ? { ...a, date: rescheduleDate, time: rescheduleTime, status: 'scheduled' }
+        : a
+      )
+    );
+    setRescheduleAppt(null);
+    setRescheduleDate('');
+    setRescheduleTime('');
+  };
+
   return (
     <div className="ma-page">
       <div className="ma-header">
-        <div><h1>Appointments</h1><p>All estate appointments — read-only view.</p></div>
+        <div>
+          <h1>{role === 'visitor' ? 'Appointments History' : 'Appointments'}</h1>
+          <p>{role === 'visitor' ? 'Your historical appointments and visits.' : 'Manage and view all estate appointments.'}</p>
+        </div>
       </div>
 
       <div className="ma-controls">
@@ -86,15 +112,26 @@ const ManagerAppointments = () => {
                 <div className="ma-detail"><Briefcase size={14} /><span>Purpose: {a.purpose}</span></div>
               </div>
               <div className="ma-card-actions">
-                <button 
-                  className={`ma-btn-confirm ${a.status !== 'pending' ? 'disabled' : ''}`} 
-                  onClick={() => a.status === 'pending' && handleConfirm(a)} 
-                  title="Confirm Appointment"
-                >
-                  <Check size={15} /> Confirm
-                </button>
+                {role !== 'visitor' && (
+                  <>
+                    <button 
+                      className={`ma-btn-confirm ${a.status !== 'pending' ? 'disabled' : ''}`} 
+                      onClick={() => a.status === 'pending' && handleConfirm(a)} 
+                      title="Confirm Appointment"
+                    >
+                      <Check size={15} /> Confirm
+                    </button>
+                    <button 
+                      className="ma-btn-reschedule" 
+                      title="Reschedule" 
+                      onClick={() => { setRescheduleAppt(a); setRescheduleDate(a.date); setRescheduleTime(''); }}
+                    >
+                      <RotateCcw size={15} />
+                    </button>
+                    <button className="ma-btn-delete" onClick={() => setDeleteAppt(a)} title="Delete Appointment"><Trash2 size={15} /></button>
+                  </>
+                )}
                 <button className="ma-btn-view" onClick={() => setViewAppt(a)}><Eye size={15} /> View</button>
-                <button className="ma-btn-delete" onClick={() => setDeleteAppt(a)} title="Delete Appointment"><Trash2 size={15} /></button>
               </div>
             </motion.div>
           );
@@ -153,6 +190,43 @@ const ManagerAppointments = () => {
         </div>
       )}
 
+      {/* Reschedule Modal */}
+      {rescheduleAppt && (
+        <div className="ma-modal-overlay" onClick={() => setRescheduleAppt(null)}>
+          <div className="ma-modal" onClick={e => e.stopPropagation()} style={{ maxWidth: 420 }}>
+            <div style={{ width: 56, height: 56, background: '#eff6ff', color: '#2563eb', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem' }}>
+              <RotateCcw size={28} />
+            </div>
+            <h3 style={{ textAlign: 'center', fontSize: '1.25rem', fontWeight: 800, marginBottom: '0.25rem' }}>Reschedule Appointment</h3>
+            <p style={{ textAlign: 'center', color: '#64748b', marginBottom: '1.5rem', fontSize: '0.9rem' }}>Choose a new date and time for <strong>{rescheduleAppt.visitor}</strong>.</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>New Date</label>
+                <input
+                  type="date"
+                  value={rescheduleDate}
+                  onChange={e => setRescheduleDate(e.target.value)}
+                  style={{ width: '100%', padding: '0.75rem 1rem', border: '1px solid #cbd5e1', borderRadius: 8, fontSize: '0.95rem', color: '#1e293b', boxSizing: 'border-box' }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>New Time</label>
+                <input
+                  type="time"
+                  value={rescheduleTime}
+                  onChange={e => setRescheduleTime(e.target.value)}
+                  style={{ width: '100%', padding: '0.75rem 1rem', border: '1px solid #cbd5e1', borderRadius: 8, fontSize: '0.95rem', color: '#1e293b', boxSizing: 'border-box' }}
+                />
+              </div>
+            </div>
+            <div style={{ display: 'flex', gap: '0.75rem' }}>
+              <button style={{ flex: 1, background: '#0d2331', color: 'white', border: 'none', padding: '0.875rem', borderRadius: 12, fontWeight: 700, cursor: 'pointer' }} onClick={handleReschedule}>Confirm Reschedule</button>
+              <button style={{ flex: 1, background: 'white', border: '1px solid #e2e8f0', color: '#1e293b', padding: '0.875rem', borderRadius: 12, fontWeight: 700, cursor: 'pointer' }} onClick={() => setRescheduleAppt(null)}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <style jsx>{`
         .ma-page { display: flex; flex-direction: column; gap: 1.5rem; padding-bottom: 3rem; }
         .ma-header { display: flex; justify-content: space-between; align-items: flex-start; }
@@ -176,6 +250,8 @@ const ManagerAppointments = () => {
         .ma-detail { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: #64748b; }
         .ma-detail span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .ma-card-actions { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+        .ma-btn-reschedule { background: #eff6ff; color: #2563eb; border: none; padding: 0.625rem; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+        .ma-btn-reschedule:hover { background: #dbeafe; }
         .ma-btn-view { flex: 1; background: #0d2331; color: white; border: none; padding: 0.625rem; border-radius: 10px; font-weight: 700; font-size: 0.8125rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.4rem; }
         .ma-btn-delete { background: #fef2f2; color: #ef4444; border: none; padding: 0.625rem; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .ma-btn-confirm { flex: 1; background: #dcfce7; color: #15803d; border: none; padding: 0.625rem; border-radius: 10px; font-weight: 700; font-size: 0.8125rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.4rem; transition: all 0.2s; }
@@ -209,4 +285,4 @@ const ManagerAppointments = () => {
   );
 };
 
-export default ManagerAppointments;
+export default Appointments;

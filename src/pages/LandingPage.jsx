@@ -230,6 +230,12 @@ const LandingPage = () => {
               {item}
             </button>
           ))}
+          <button 
+            onClick={() => navigate('/blog')}
+            style={{ background: 'none', border: 'none', color: 'white', fontWeight: 500, cursor: 'pointer', opacity: 0.8 }}
+          >
+            Blog
+          </button>
           <button onClick={() => navigate('/login')} className="btn btn-primary" style={{ width: 'auto', padding: '0.6rem 1.5rem', fontSize: '0.9rem', background: '#00a3ff' }}>
             Login
           </button>
@@ -317,6 +323,17 @@ const LandingPage = () => {
             {item}
           </button>
         ))}
+        <button
+            onClick={() => navigate('/blog')}
+            style={{
+              background: 'none', border: 'none', color: 'white',
+              fontSize: '1.1rem', textAlign: 'left', fontWeight: 600,
+              padding: '0.5rem 0', cursor: 'pointer', opacity: 0.85,
+              WebkitAppearance: 'none', touchAction: 'manipulation'
+            }}
+          >
+            Blog
+        </button>
         <button onClick={() => navigate('/login')} className="btn btn-primary" style={{ marginTop: 'auto' }}>Login</button>
       </div>
 
@@ -614,7 +631,7 @@ const LandingPage = () => {
                         </ul>
                       </div>
                       <button
-                        onClick={() => navigate('/register')}
+                        onClick={() => navigate('/register', { state: { planType: 'private', planTier: plan.name } })}
                         className="btn"
                         style={{ marginTop: '2rem', background: plan.popular ? '#00a3ff' : '#0d2331', color: 'white' }}
                       >
@@ -686,7 +703,7 @@ const LandingPage = () => {
                           </ul>
                         </div>
                         <button
-                          onClick={() => navigate('/register')}
+                          onClick={() => navigate('/register', { state: { planType: 'real-estate', planTier: plan.name, residents: plan.residents } })}
                           className="btn"
                           style={{ marginTop: '2rem', background: plan.popular ? plan.color : '#0d2331', color: 'white' }}
                         >

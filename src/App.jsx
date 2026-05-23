@@ -10,6 +10,10 @@ import Success from './pages/Success';
 import VerifyingPayment from './pages/VerifyingPayment';
 import PaymentFailed from './pages/PaymentFailed';
 
+// Public Pages
+import Blog from './pages/shared/Blog';
+import BlogPost from './pages/shared/BlogPost';
+
 // Dashboard Imports
 import AdminDashboard from './pages/dashboards/AdminDashboard';
 import ResidentDashboard from './pages/dashboards/ResidentDashboard';
@@ -19,12 +23,10 @@ import HostDashboard from './pages/dashboards/HostDashboard';
 import FrontDeskDashboard from './pages/dashboards/FrontDeskDashboard';
 
 // Resident Pages
-import ResidentAppointments from './pages/resident/Appointments';
 import ResidentReports from './pages/resident/Reports';
 
 // Host Pages
 import HostVisitors from './pages/host/Visitors';
-import HostAppointments from './pages/host/Appointments';
 import HostFrontDesk from './pages/host/FrontDesk';
 
 // Shared Pages
@@ -32,9 +34,13 @@ import ActivityLog from './pages/shared/ActivityLog';
 import Profile from './pages/shared/Profile';
 import Notifications from './pages/shared/Notifications';
 import Transactions from './pages/financial/Transactions';
+import Appointments from './pages/shared/Appointments';
+import Settings from './pages/shared/Settings';
+import Calendar from './pages/shared/Calendar';
+import Invoices from './pages/shared/Invoices';
+import InvoiceDetails from './pages/shared/InvoiceDetails';
 
 // Manager Pages
-import ManagerAppointments from './pages/manager/Appointments';
 import ManagerReports from './pages/manager/Reports';
 import ManagerTransactions from './pages/manager/Transactions';
 import ManagerSecurity from './pages/manager/Security';
@@ -54,6 +60,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:id" element={<BlogPost />} />
         
         {/* Auth Layout Routes */}
         <Route element={<Layout />}>
@@ -70,16 +78,20 @@ function App() {
         <Route path="/admin" element={<DashboardLayout />}>
           <Route index element={<Navigate to="/admin/dashboard" replace />} />
           <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="appointments" element={<Appointments />} />
+          <Route path="calendar" element={<Calendar />} />
           <Route path="activity-log" element={<ActivityLog />} />
           <Route path="notifications" element={<Notifications />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="settings" element={<Settings />} />
           <Route path="*" element={<div>Coming Soon</div>} />
         </Route>
 
         <Route path="/resident" element={<DashboardLayout />}>
           <Route index element={<Navigate to="/resident/dashboard" replace />} />
           <Route path="dashboard" element={<ResidentDashboard />} />
-          <Route path="appointments" element={<ResidentAppointments />} />
+          <Route path="appointments" element={<Appointments />} />
+          <Route path="calendar" element={<Calendar />} />
           <Route path="reports" element={<ResidentReports />} />
           <Route path="transactions" element={<Transactions />} />
           <Route path="activity-log" element={<ActivityLog />} />
@@ -88,6 +100,7 @@ function App() {
           <Route path="support/tickets" element={<ManageTickets />} />
           <Route path="support/tickets/:ticketId" element={<TicketView />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="settings" element={<Settings />} />
           <Route path="*" element={<div>Coming Soon</div>} />
         </Route>
 
@@ -96,7 +109,10 @@ function App() {
           <Route path="dashboard" element={<ManagerDashboard />} />
           <Route path="activity-log" element={<ActivityLog />} />
           <Route path="notifications" element={<Notifications />} />
-          <Route path="appointments" element={<ManagerAppointments />} />
+          <Route path="appointments" element={<Appointments />} />
+          <Route path="calendar" element={<Calendar />} />
+          <Route path="invoices" element={<Invoices />} />
+          <Route path="invoices/:id" element={<InvoiceDetails />} />
           <Route path="reports" element={<ManagerReports />} />
           <Route path="support/dashboard" element={<SupportDashboard />} />
           <Route path="support/tickets" element={<ManageTickets />} />
@@ -109,18 +125,17 @@ function App() {
           <Route path="residents/add" element={<AddResident />} />
           <Route path="residents/:residentId" element={<ResidentDetails />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="settings" element={<Settings />} />
           <Route path="*" element={<div>Coming Soon</div>} />
         </Route>
 
         <Route path="/visitor" element={<DashboardLayout />}>
           <Route index element={<Navigate to="/visitor/dashboard" replace />} />
           <Route path="dashboard" element={<VisitorDashboard />} />
-          <Route path="transactions" element={<Transactions />} />
+          <Route path="appointments" element={<Appointments />} />
+          <Route path="calendar" element={<Calendar />} />
           <Route path="activity-log" element={<ActivityLog />} />
           <Route path="notifications" element={<Notifications />} />
-          <Route path="support/dashboard" element={<SupportDashboard />} />
-          <Route path="support/tickets" element={<ManageTickets />} />
-          <Route path="support/tickets/:ticketId" element={<TicketView />} />
           <Route path="profile" element={<Profile />} />
           <Route path="*" element={<div>Coming Soon</div>} />
         </Route>
@@ -132,18 +147,24 @@ function App() {
           <Route path="activity-log" element={<ActivityLog />} />
           <Route path="notifications" element={<Notifications />} />
           <Route path="visitors" element={<HostVisitors />} />
-          <Route path="appointments" element={<HostAppointments />} />
+          <Route path="appointments" element={<Appointments />} />
+          <Route path="calendar" element={<Calendar />} />
+          <Route path="invoices" element={<Invoices />} />
+          <Route path="invoices/:id" element={<InvoiceDetails />} />
           <Route path="front-desk" element={<HostFrontDesk />} />
           <Route path="support/dashboard" element={<SupportDashboard />} />
           <Route path="support/tickets" element={<ManageTickets />} />
           <Route path="support/tickets/:ticketId" element={<TicketView />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="settings" element={<Settings />} />
           <Route path="*" element={<div>Coming Soon</div>} />
         </Route>
 
         <Route path="/frontdesk" element={<DashboardLayout />}>
           <Route index element={<Navigate to="/frontdesk/dashboard" replace />} />
           <Route path="dashboard" element={<FrontDeskDashboard />} />
+          <Route path="appointments" element={<Appointments />} />
+          <Route path="calendar" element={<Calendar />} />
           <Route path="transactions" element={<Transactions />} />
           <Route path="activity-log" element={<ActivityLog />} />
           <Route path="notifications" element={<Notifications />} />
@@ -151,6 +172,7 @@ function App() {
           <Route path="support/tickets" element={<ManageTickets />} />
           <Route path="support/tickets/:ticketId" element={<TicketView />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="settings" element={<Settings />} />
           <Route path="*" element={<div>Coming Soon</div>} />
         </Route>
       </Routes>
