@@ -103,7 +103,7 @@ const ResidentDashboard = () => {
           <p>Manage your visitors and view upcoming appointments.</p>
         </div>
         <button className="resd-btn-primary" onClick={() => navigate('/resident/appointments')}>
-          <Plus size={18} /> Book Appointment
+          <Plus size={18} /> New Appointment
         </button>
       </div>
 
