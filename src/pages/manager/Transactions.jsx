@@ -14,7 +14,7 @@ const TRANSACTIONS = [
 
 const STATUS_COLORS = {
   successful: { bg: '#f0fdf4', color: '#16a34a' },
-  failed: { bg: '#fef2f2', color: '#dc2626' },
+  failed: { bg: 'var(--bg-danger-subtle)', color: '#dc2626' },
   pending: { bg: '#fffbeb', color: '#d97706' },
 };
 
@@ -33,9 +33,9 @@ const ManagerTransactions = () => {
 
   const stats = [
     { label: 'Total Payments', value: '₦1,110,000', icon: <CreditCard size={20} />, color: '#6366f1', bg: '#eef2ff' },
-    { label: 'Successful', value: '5', icon: <TrendingUp size={20} />, color: '#22c55e', bg: '#f0fdf4' },
+    { label: 'Successful', value: '5', icon: <TrendingUp size={20} />, color: 'var(--text-success)', bg: '#f0fdf4' },
     { label: 'Current Plan', value: 'Enterprise', icon: <CreditCard size={20} />, color: '#f59e0b', bg: '#fffbeb' },
-    { label: 'Next Renewal', value: 'May 1, 2027', icon: <Filter size={20} />, color: '#0d2331', bg: '#f1f5f9' },
+    { label: 'Next Renewal', value: 'May 1, 2027', icon: <Filter size={20} />, color: 'var(--bg-brand)', bg: 'var(--bg-muted)' },
   ];
 
   return (
@@ -76,11 +76,11 @@ const ManagerTransactions = () => {
                 const sc = STATUS_COLORS[t.status] || {};
                 return (
                   <tr key={t.id}>
-                    <td><code style={{ background: '#f1f5f9', padding: '3px 8px', borderRadius: 6, fontWeight: 700 }}>{t.id}</code></td>
+                    <td><code style={{ background: 'var(--bg-muted)', padding: '3px 8px', borderRadius: 6, fontWeight: 700 }}>{t.id}</code></td>
                     <td style={{ fontWeight: 600 }}>{t.plan}</td>
-                    <td style={{ fontWeight: 700, color: '#0d2331' }}>{t.amount}</td>
-                    <td style={{ color: '#64748b' }}>{t.date}</td>
-                    <td style={{ color: '#64748b' }}>{t.method}</td>
+                    <td style={{ fontWeight: 700, color: 'var(--bg-brand)' }}>{t.amount}</td>
+                    <td style={{ color: 'var(--text-tertiary)' }}>{t.date}</td>
+                    <td style={{ color: 'var(--text-tertiary)' }}>{t.method}</td>
                     <td><span style={{ background: sc.bg, color: sc.color, padding: '4px 12px', borderRadius: 20, fontSize: '0.75rem', fontWeight: 700 }}>{t.status.charAt(0).toUpperCase() + t.status.slice(1)}</span></td>
                     <td>
                       {t.status === 'successful' && (
@@ -93,7 +93,7 @@ const ManagerTransactions = () => {
                 );
               })}
               {paginated.length === 0 && (
-                <tr><td colSpan="7" style={{ textAlign: 'center', padding: '3rem', color: '#94a3b8' }}>No transactions found.</td></tr>
+                <tr><td colSpan="7" style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-quaternary)' }}>No transactions found.</td></tr>
               )}
             </tbody>
           </table>
@@ -104,24 +104,24 @@ const ManagerTransactions = () => {
       <style jsx>{`
         .mtx-page { display: flex; flex-direction: column; gap: 1.5rem; padding-bottom: 3rem; }
         .mtx-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; }
-        .mtx-header h1 { font-size: 1.75rem; font-weight: 800; color: #1e293b; margin-bottom: 0.25rem; }
-        .mtx-header p { color: #64748b; }
-        .mtx-btn-export { background: white; border: 1px solid #e2e8f0; padding: 0.75rem 1.25rem; border-radius: 12px; font-weight: 700; color: #0d2331; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; }
+        .mtx-header h1 { font-size: 1.75rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.25rem; }
+        .mtx-header p { color: var(--text-tertiary); }
+        .mtx-btn-export { background: var(--bg-surface); border: 1px solid var(--border-default); padding: 0.75rem 1.25rem; border-radius: 12px; font-weight: 700; color: var(--bg-brand); cursor: pointer; display: flex; align-items: center; gap: 0.5rem; }
         .mtx-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
-        .mtx-stat-card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; }
+        .mtx-stat-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 16px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; }
         .mtx-stat-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .mtx-stat-label { display: block; font-size: 0.75rem; color: #94a3b8; font-weight: 600; }
-        .mtx-stat-value { display: block; font-size: 1.25rem; font-weight: 800; color: #1e293b; }
-        .mtx-table-card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.5rem; }
+        .mtx-stat-label { display: block; font-size: 0.75rem; color: var(--text-quaternary); font-weight: 600; }
+        .mtx-stat-value { display: block; font-size: 1.25rem; font-weight: 800; color: var(--text-primary); }
+        .mtx-table-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 16px; padding: 1.5rem; }
         .mtx-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem; }
-        .mtx-toolbar h2 { font-size: 1.125rem; font-weight: 800; color: #1e293b; }
-        .mtx-search { display: flex; align-items: center; gap: 0.5rem; background: #f8fafc; border: 1px solid #e2e8f0; padding: 0.5rem 1rem; border-radius: 8px; color: #94a3b8; }
-        .mtx-search input { border: none; background: none; outline: none; font-size: 0.8125rem; width: 200px; color: #1e293b; }
+        .mtx-toolbar h2 { font-size: 1.125rem; font-weight: 800; color: var(--text-primary); }
+        .mtx-search { display: flex; align-items: center; gap: 0.5rem; background: var(--bg-subtle); border: 1px solid var(--border-default); padding: 0.5rem 1rem; border-radius: 8px; color: var(--text-quaternary); }
+        .mtx-search input { border: none; background: none; outline: none; font-size: 0.8125rem; width: 200px; color: var(--text-primary); }
         .mtx-table { width: 100%; border-collapse: collapse; min-width: 580px; }
-        .mtx-table th { padding: 0.875rem 0; font-size: 0.75rem; font-weight: 600; color: #94a3b8; border-bottom: 1px solid #f1f5f9; text-align: left; }
-        .mtx-table td { padding: 1rem 0; font-size: 0.875rem; border-bottom: 1px solid #f8fafc; }
+        .mtx-table th { padding: 0.875rem 0; font-size: 0.75rem; font-weight: 600; color: var(--text-quaternary); border-bottom: 1px solid var(--bg-muted); text-align: left; }
+        .mtx-table td { padding: 1rem 0; font-size: 0.875rem; border-bottom: 1px solid var(--bg-subtle); }
         .mtx-table tbody tr:last-child td { border-bottom: none; }
-        .btn-dl-receipt { background: none; border: none; color: #00a3ff; cursor: pointer; padding: 0.4rem; border-radius: 8px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+        .btn-dl-receipt { background: none; border: none; color: var(--accent-primary); cursor: pointer; padding: 0.4rem; border-radius: 8px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
         .btn-dl-receipt:hover { background: #e0f2fe; color: #0369a1; }
         @media (max-width: 1100px) { .mtx-stats { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 768px) {

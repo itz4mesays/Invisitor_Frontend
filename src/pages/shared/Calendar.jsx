@@ -63,7 +63,6 @@ const Calendar = () => {
           <h1>Calendar</h1>
           <p>Manage and view your schedule and estate events.</p>
         </div>
-        <button className="btn-add-event"><Plus size={16} /> New Event</button>
       </div>
 
       <div className="cal-layout">
@@ -115,29 +114,29 @@ const Calendar = () => {
       <style jsx>{`
         .cal-page { padding-bottom: 3rem; }
         .cal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; }
-        .cal-header h1 { font-size: 1.75rem; font-weight: 800; color: #1e293b; margin-bottom: 0.25rem; }
-        .cal-header p { color: #64748b; }
-        .btn-add-event { background: #0d2331; color: white; border: none; padding: 0.6rem 1.25rem; border-radius: 10px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: background 0.2s; }
-        .btn-add-event:hover { background: #1a3c52; }
+        .cal-header h1 { font-size: 1.75rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.25rem; }
+        .cal-header p { color: var(--text-tertiary); }
+        .btn-add-event { background: var(--bg-brand); color: var(--text-inverse); border: none; padding: 0.6rem 1.25rem; border-radius: 10px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: background 0.2s; }
+        .btn-add-event:hover { background: var(--bg-brand-hover); }
         
         .cal-layout { display: flex; gap: 2rem; align-items: flex-start; }
-        .cal-main-card { flex: 1; background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-        .cal-sidebar { width: 320px; background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.5rem; }
-        .cal-sidebar h3 { font-size: 1.1rem; font-weight: 800; color: #1e293b; margin-bottom: 1.25rem; }
+        .cal-main-card { flex: 1; background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .cal-sidebar { width: 320px; background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 16px; padding: 1.5rem; }
+        .cal-sidebar h3 { font-size: 1.1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 1.25rem; }
         
         .cal-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
-        .cal-toolbar h2 { font-size: 1.5rem; font-weight: 800; color: #0d2331; margin: 0; }
+        .cal-toolbar h2 { font-size: 1.5rem; font-weight: 800; color: var(--bg-brand); margin: 0; }
         .cal-nav { display: flex; align-items: center; gap: 0.5rem; }
-        .cal-nav button { background: white; border: 1px solid #e2e8f0; padding: 0.5rem; border-radius: 8px; cursor: pointer; color: #64748b; font-weight: 600; display: flex; align-items: center; transition: all 0.2s; }
-        .cal-nav button:hover { background: #f8fafc; color: #1e293b; }
+        .cal-nav button { background: var(--bg-surface); border: 1px solid var(--border-default); padding: 0.5rem; border-radius: 8px; cursor: pointer; color: var(--text-tertiary); font-weight: 600; display: flex; align-items: center; transition: all 0.2s; }
+        .cal-nav button:hover { background: var(--bg-subtle); color: var(--text-primary); }
         
         .cal-grid-header { display: grid; grid-template-columns: repeat(7, 1fr); margin-bottom: 0.5rem; }
-        .cal-grid-hcell { text-align: right; padding: 0.5rem; font-size: 0.75rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; }
+        .cal-grid-hcell { text-align: right; padding: 0.5rem; font-size: 0.75rem; font-weight: 700; color: var(--text-quaternary); text-transform: uppercase; }
         
-        .cal-grid-body { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: #e2e8f0; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; }
-        .cal-cell { background: white; min-height: 120px; padding: 0.5rem; display: flex; flex-direction: column; transition: background 0.2s; }
-        .cal-cell:hover:not(.empty) { background: #f8fafc; cursor: pointer; }
-        .cal-day-num { font-size: 0.875rem; font-weight: 600; color: #334155; align-self: flex-end; margin-bottom: 0.5rem; }
+        .cal-grid-body { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border-default); border: 1px solid var(--border-default); border-radius: 8px; overflow: hidden; }
+        .cal-cell { background: var(--bg-surface); min-height: 120px; padding: 0.5rem; display: flex; flex-direction: column; transition: background 0.2s; }
+        .cal-cell:hover:not(.empty) { background: var(--bg-subtle); cursor: pointer; }
+        .cal-day-num { font-size: 0.875rem; font-weight: 600; color: var(--text-primary); align-self: flex-end; margin-bottom: 0.5rem; }
         .cal-events-container { display: flex; flex-direction: column; gap: 0.25rem; flex: 1; overflow-y: auto; }
         
         .cal-event-pill { font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.5rem; border-radius: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -146,14 +145,14 @@ const Calendar = () => {
         .cal-event-pill.event { background: #f3e8ff; color: #7e22ce; border-left: 3px solid #a855f7; }
         
         .upcoming-list { display: flex; flex-direction: column; gap: 1rem; }
-        .upcoming-card { display: flex; gap: 0.75rem; padding: 1rem; border: 1px solid #f1f5f9; border-radius: 12px; transition: all 0.2s; cursor: pointer; }
-        .upcoming-card:hover { border-color: #cbd5e1; background: #f8fafc; }
+        .upcoming-card { display: flex; gap: 0.75rem; padding: 1rem; border: 1px solid var(--bg-muted); border-radius: 12px; transition: all 0.2s; cursor: pointer; }
+        .upcoming-card:hover { border-color: var(--border-heavy); background: var(--bg-subtle); }
         .upcoming-indicator { width: 4px; border-radius: 4px; }
         .upcoming-indicator.meeting { background: #0ea5e9; }
         .upcoming-indicator.maintenance { background: #f59e0b; }
         .upcoming-indicator.event { background: #a855f7; }
-        .upcoming-info h4 { font-size: 0.9rem; font-weight: 700; color: #1e293b; margin: 0 0 0.25rem 0; }
-        .upcoming-meta { display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.75rem; color: #64748b; font-weight: 500; }
+        .upcoming-info h4 { font-size: 0.9rem; font-weight: 700; color: var(--text-primary); margin: 0 0 0.25rem 0; }
+        .upcoming-meta { display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.75rem; color: var(--text-tertiary); font-weight: 500; }
         .upcoming-meta span { display: flex; align-items: center; gap: 0.4rem; }
         
         @media (max-width: 1024px) {

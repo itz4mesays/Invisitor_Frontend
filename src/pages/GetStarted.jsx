@@ -40,8 +40,8 @@ const GetStarted = () => {
           className={`option-card ${selected === 'individual' ? 'selected' : ''}`}
           onClick={() => setSelected('individual')}
         >
-          <div className="option-icon" style={{ backgroundColor: selected === 'individual' ? '#fff4eb' : '#f1f5f9' }}>
-            <User size={32} color={selected === 'individual' ? '#f97316' : '#64748b'} />
+          <div className="option-icon" style={{ backgroundColor: selected === 'individual' ? '#fff4eb' : 'var(--bg-muted)' }}>
+            <User size={32} color={selected === 'individual' ? '#f97316' : 'var(--text-tertiary)'} />
           </div>
           <span className="option-title">Individual Account</span>
         </motion.div>
@@ -52,8 +52,8 @@ const GetStarted = () => {
           className={`option-card ${selected === 'business' ? 'selected' : ''}`}
           onClick={() => setSelected('business')}
         >
-          <div className="option-icon" style={{ backgroundColor: selected === 'business' ? '#eff6ff' : '#f1f5f9' }}>
-            <Briefcase size={32} color={selected === 'business' ? '#3b82f6' : '#64748b'} />
+          <div className="option-icon" style={{ backgroundColor: selected === 'business' ? '#eff6ff' : 'var(--bg-muted)' }}>
+            <Briefcase size={32} color={selected === 'business' ? '#3b82f6' : 'var(--text-tertiary)'} />
           </div>
           <span className="option-title">Business Account</span>
         </motion.div>

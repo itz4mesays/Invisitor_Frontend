@@ -69,9 +69,11 @@ const HostDashboard = () => {
 
   const handleQuickAction = (action) => {
     if (action.title.includes('Appointment')) {
-      setIsAddModalOpen(true);
+      navigate('/host/appointments/add');
     } else if (action.title.includes('Add a Visitor')) {
-      setIsAddVisitorModalOpen(true);
+      navigate('/host/visitors/add');
+    } else if (action.title.includes('Add a Front Desk Officer')) {
+      navigate('/host/front-desk/add');
     }
   };
 
@@ -98,8 +100,8 @@ const HostDashboard = () => {
     }, 300);
   };
   const stats = [
-    { label: 'Visitors', value: '1250', change: '5%', color: '#22c55e', icon: <Users size={20} /> },
-    { label: 'Front Desk Officer', value: '50', change: '5%', color: '#00a3ff', icon: <UserCheck size={20} /> },
+    { label: 'Visitors', value: '1250', change: '5%', color: 'var(--text-success)', icon: <Users size={20} /> },
+    { label: 'Front Desk Officer', value: '50', change: '5%', color: 'var(--accent-primary)', icon: <UserCheck size={20} /> },
     { label: 'Appointments', value: '50', change: '5%', color: '#f59e0b', icon: <Calendar size={20} /> },
   ];
 
@@ -480,12 +482,12 @@ const HostDashboard = () => {
                     <div className="form-field">
                       <label>PHONE NUMBER</label>
                       <div style={{ display: 'flex', gap: '0.5rem' }}>
-                        <select style={{ width: '80px', padding: '0.5rem', border: '1px solid #e2e8f0', borderRadius: '8px' }}>
+                        <select style={{ width: '80px', padding: '0.5rem', border: '1px solid var(--border-default)', borderRadius: '8px' }}>
                           <option>+234</option>
                           <option>+1</option>
                           <option>+44</option>
                         </select>
-                        <input type="text" placeholder="814 609 2019" style={{ flex: 1, padding: '0.5rem', border: '1px solid #e2e8f0', borderRadius: '8px' }} />
+                        <input type="text" placeholder="814 609 2019" style={{ flex: 1, padding: '0.5rem', border: '1px solid var(--border-default)', borderRadius: '8px' }} />
                       </div>
                     </div>
                     <div className="form-field">
@@ -533,7 +535,7 @@ const HostDashboard = () => {
               <h2 className="confirm-title">Appointment Confirmed</h2>
               <p className="confirm-subtext">Invitation code has been sent</p>
 
-              <div className="visitor-confirm-card" style={{ boxShadow: 'none', border: '1px solid #f1f5f9' }}>
+              <div className="visitor-confirm-card" style={{ boxShadow: 'none', border: '1px solid var(--bg-muted)' }}>
                 <div className="avatar-wrapper larger" style={{ margin: '0 auto' }}>
                   <img src={selectedAppointment?.avatar} alt="" className="v-avatar" style={{ borderRadius: '50%' }} />
                 </div>
@@ -608,140 +610,140 @@ const HostDashboard = () => {
           display: flex; align-items: center; justify-content: center; z-index: 1000;
         }
         .modal-container {
-          background: white; width: 100%; border-radius: 40px;
+          background: var(--bg-surface); width: 100%; border-radius: 40px;
           box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15); position: relative;
         }
         .modal-header-simple { position: absolute; top: 1.5rem; right: 1.5rem; z-index: 100; }
         .btn-close-circle {
-          background: white; border: 1px solid #e2e8f0; border-radius: 50%;
+          background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 50%;
           width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
-          cursor: pointer; color: #1e293b;
+          cursor: pointer; color: var(--text-primary);
         }
         .modal-body-p-0 { padding: 0; }
 
         .add-appointment-modal-content { padding: 3rem; display: flex; flex-direction: column; gap: 2rem; }
-        .add-modal-title { font-size: 1.5rem; font-weight: 800; color: #0d2331; margin-bottom: 0.5rem; }
-        .add-modal-subtitle { color: #94a3b8; font-size: 1rem; font-weight: 600; }
+        .add-modal-title { font-size: 1.5rem; font-weight: 800; color: var(--bg-brand); margin-bottom: 0.5rem; }
+        .add-modal-subtitle { color: var(--text-quaternary); font-size: 1rem; font-weight: 600; }
         
-        .add-modal-tabs { display: flex; gap: 3rem; border-bottom: 1px solid #f1f5f9; }
+        .add-modal-tabs { display: flex; gap: 3rem; border-bottom: 1px solid var(--bg-muted); }
         .add-modal-tab {
           background: none; border: none; padding: 1rem 0; display: flex; align-items: center; gap: 0.75rem;
-          font-weight: 700; font-size: 1.125rem; color: #94a3b8; cursor: pointer; position: relative;
+          font-weight: 700; font-size: 1.125rem; color: var(--text-quaternary); cursor: pointer; position: relative;
         }
-        .add-modal-tab.active { color: #0d2331; }
+        .add-modal-tab.active { color: var(--bg-brand); }
         .add-modal-tab.active::after {
           content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
-          background: #0d2331; border-radius: 3px 3px 0 0;
+          background: var(--bg-brand); border-radius: 3px 3px 0 0;
         }
 
         .form-grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 2rem; }
         .form-field { display: flex; flex-direction: column; gap: 0.5rem; }
-        .form-field label { font-size: 0.75rem; font-weight: 800; color: #1e293b; letter-spacing: 0.5px; }
+        .form-field label { font-size: 0.75rem; font-weight: 800; color: var(--text-primary); letter-spacing: 0.5px; }
         .form-field select, .form-field input {
-          width: 100%; padding: 0.875rem; border-radius: 10px; border: 1.5px solid #e2e8f0;
-          font-size: 0.875rem; color: #1e293b; font-weight: 600; outline: none;
+          width: 100%; padding: 0.875rem; border-radius: 10px; border: 1.5px solid var(--border-default);
+          font-size: 0.875rem; color: var(--text-primary); font-weight: 600; outline: none;
         }
         .input-with-icon { position: relative; }
-        .input-with-icon .field-icon { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); color: #94a3b8; }
+        .input-with-icon .field-icon { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-quaternary); }
 
         .add-modal-actions { display: flex; gap: 1rem; margin-top: 3rem; }
-        .btn-confirm-large { background: #0d2331; color: white; border: none; padding: 1.125rem 2rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
-        .btn-cancel-large { background: white; border: 1px solid #e2e8f0; color: #1e293b; padding: 1.125rem 2rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
+        .btn-confirm-large { background: var(--bg-brand); color: var(--text-inverse); border: none; padding: 1.125rem 2rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
+        .btn-cancel-large { background: var(--bg-surface); border: 1px solid var(--border-default); color: var(--text-primary); padding: 1.125rem 2rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
 
         .success-modal-content-compact { padding: 3rem 2rem; text-align: center; display: flex; flex-direction: column; align-items: center; }
         .success-icon-container { margin: 1.5rem 0 2.5rem; }
-        .success-circle-large.green { background: #22c55e; width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; }
-        .btn-view-appointments { background: white; border: 1px solid #e2e8f0; color: #0d2331; padding: 0.875rem 2rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
+        .success-circle-large.green { background: var(--text-success); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-inverse); }
+        .btn-view-appointments { background: var(--bg-surface); border: 1px solid var(--border-default); color: var(--bg-brand); padding: 0.875rem 2rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
 
         .confirmation-modal-content { padding: 4rem 3rem; text-align: center; }
-        .confirm-title { font-size: 2rem; font-weight: 800; color: #0d2331; }
-        .confirm-subtext { color: #475569; font-weight: 600; margin: 1rem 0 2rem; }
-        .invite-code-display { font-weight: 800; color: #0d2331; letter-spacing: 2px; }
+        .confirm-title { font-size: 2rem; font-weight: 800; color: var(--bg-brand); }
+        .confirm-subtext { color: var(--text-secondary); font-weight: 600; margin: 1rem 0 2rem; }
+        .invite-code-display { font-weight: 800; color: var(--bg-brand); letter-spacing: 2px; }
         .modal-footer-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; width: 100%; }
-        .btn-footer-primary { background: #0d2331; color: white; border: none; padding: 1rem; border-radius: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 0.5rem; cursor: pointer; }
-        .btn-footer-outline { background: white; border: 1px solid #e2e8f0; color: #0d2331; padding: 1rem; border-radius: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 0.5rem; cursor: pointer; }
+        .btn-footer-primary { background: var(--bg-brand); color: var(--text-inverse); border: none; padding: 1rem; border-radius: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 0.5rem; cursor: pointer; }
+        .btn-footer-outline { background: var(--bg-surface); border: 1px solid var(--border-default); color: var(--bg-brand); padding: 1rem; border-radius: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 0.5rem; cursor: pointer; }
 
         /* Dashboard Styles */
         .dashboard-header { display: flex; justify-content: space-between; align-items: flex-start; }
-        .dashboard-header h1 { font-size: 1.5rem; font-weight: 800; color: #1a202c; }
+        .dashboard-header h1 { font-size: 1.5rem; font-weight: 800; color: var(--text-primary); }
         
         .date-badge {
-          background: white; border: 1px solid #e2e8f0; border-radius: 16px;
+          background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 16px;
           display: flex; align-items: center; padding: 0.75rem 1.25rem; gap: 1rem;
         }
         .calendar-icon-box {
-          background: #f8fafc; color: #64748b; padding: 0.5rem; border-radius: 10px;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-subtle); color: var(--text-tertiary); padding: 0.5rem; border-radius: 10px;
+          border: 1px solid var(--border-default);
         }
-        .date-text span { display: block; font-size: 0.75rem; color: #94a3b8; font-weight: 500; }
-        .date-text strong { display: block; font-size: 0.875rem; color: #1e293b; }
+        .date-text span { display: block; font-size: 0.75rem; color: var(--text-quaternary); font-weight: 500; }
+        .date-text strong { display: block; font-size: 0.875rem; color: var(--text-primary); }
 
         .dashboard-grid { display: grid; grid-template-columns: 1fr 320px; gap: 1.5rem; }
         .main-col { display: flex; flex-direction: column; gap: 1.5rem; }
         
         .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
         .stat-card {
-           background: white; border: 1px solid #e2e8f0; border-radius: 24px;
+           background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 24px;
            padding: 1.5rem; display: flex; justify-content: space-between; align-items: center;
            box-shadow: 0 4px 12px rgba(0,0,0,0.02); transition: all 0.2s ease;
         }
         .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.04); }
-        .stat-label { font-size: 0.875rem; color: #94a3b8; font-weight: 600; display: block; margin-bottom: 0.5rem; }
-        .stat-value { font-size: 1.75rem; font-weight: 800; color: #1e293b; display: block; }
+        .stat-label { font-size: 0.875rem; color: var(--text-quaternary); font-weight: 600; display: block; margin-bottom: 0.5rem; }
+        .stat-value { font-size: 1.75rem; font-weight: 800; color: var(--text-primary); display: block; }
         .stat-meta { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; }
         .change-badge { font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; gap: 2px; border-radius: 6px; }
-        .meta-period { font-size: 0.75rem; color: #94a3b8; font-weight: 500; }
-        .stat-icon-wrapper { background: #f8fafc; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #1e293b; border: 1px solid #e2e8f0; }
+        .meta-period { font-size: 0.75rem; color: var(--text-quaternary); font-weight: 500; }
+        .stat-icon-wrapper { background: var(--bg-subtle); width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--text-primary); border: 1px solid var(--border-default); }
 
-        .subscription-section { background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+        .subscription-section { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 24px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
         .subscription-section h3 { font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; }
-        .subscription-card-detailed { display: grid; grid-template-columns: 240px 1fr; border: 1px solid #f1f5f9; border-radius: 16px; overflow: hidden; }
-        .sub-main-info { padding: 1.5rem; background: white; border-right: 1px solid #f1f5f9; display: flex; flex-direction: column; gap: 1rem; }
-        .sub-card-icon { background: #1a202c; color: white; width: 56px; height: 56px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
-        .sub-card-text h4 { font-size: 0.8125rem; font-weight: 800; color: #1e293b; margin-bottom: 2px; }
-        .sub-card-text p { font-size: 0.75rem; color: #94a3b8; }
-        .sub-metrics { padding: 1.5rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; background: white; }
-        .metric-item label { display: block; font-size: 0.625rem; color: #94a3b8; text-transform: uppercase; font-weight: 700; margin-bottom: 0.5rem; }
-        .metric-item span { display: block; font-size: 0.875rem; font-weight: 800; color: #1a202c; }
-        .status-pill { background: #dcfce7; color: #15803d; padding: 2px 10px; border-radius: 20px; width: fit-content; font-size: 0.75rem !important; font-weight: 700; }
+        .subscription-card-detailed { display: grid; grid-template-columns: 240px 1fr; border: 1px solid var(--bg-muted); border-radius: 16px; overflow: hidden; }
+        .sub-main-info { padding: 1.5rem; background: var(--bg-surface); border-right: 1px solid var(--bg-muted); display: flex; flex-direction: column; gap: 1rem; }
+        .sub-card-icon { background: #1a202c; color: var(--text-inverse); width: 56px; height: 56px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+        .sub-card-text h4 { font-size: 0.8125rem; font-weight: 800; color: var(--text-primary); margin-bottom: 2px; }
+        .sub-card-text p { font-size: 0.75rem; color: var(--text-quaternary); }
+        .sub-metrics { padding: 1.5rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; background: var(--bg-surface); }
+        .metric-item label { display: block; font-size: 0.625rem; color: var(--text-quaternary); text-transform: uppercase; font-weight: 700; margin-bottom: 0.5rem; }
+        .metric-item span { display: block; font-size: 0.875rem; font-weight: 800; color: var(--text-primary); }
+        .status-pill { background: var(--bg-success-subtle); color: var(--text-success); padding: 2px 10px; border-radius: 20px; width: fit-content; font-size: 0.75rem !important; font-weight: 700; }
 
         .dashboard-row-split { display: grid; grid-template-columns: 1fr 1.2fr; gap: 1.5rem; }
-        .quick-actions-box, .upcoming-box { background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+        .quick-actions-box, .upcoming-box { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 24px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
         .quick-actions-box h3, .upcoming-box h3 { font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; }
         
         .actions-list { display: flex; flex-direction: column; gap: 1rem; }
-        .action-row { display: flex; align-items: center; gap: 1rem; padding: 1rem; background: #f8fafc; border-radius: 16px; cursor: pointer; transition: all 0.2s; }
-        .action-row:hover { transform: translateX(4px); background: #f1f5f9; }
-        .action-icon-circle { background: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #1a202c; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-        .action-meta h5 { font-size: 0.875rem; font-weight: 800; color: #1a202c; }
-        .action-meta p { font-size: 0.75rem; color: #94a3b8; }
-        .row-arrow { color: #cbd5e1; margin-left: auto; }
+        .action-row { display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--bg-subtle); border-radius: 16px; cursor: pointer; transition: all 0.2s; }
+        .action-row:hover { transform: translateX(4px); background: var(--bg-muted); }
+        .action-icon-circle { background: var(--bg-surface); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--bg-brand); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .action-meta h5 { font-size: 0.875rem; font-weight: 800; color: var(--text-primary); }
+        .action-meta p { font-size: 0.75rem; color: var(--text-quaternary); }
+        .row-arrow { color: var(--border-heavy); margin-left: auto; }
 
         .box-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
-        .btn-see-all { background: none; border: none; font-size: 0.8125rem; font-weight: 700; color: #64748b; display: flex; align-items: center; gap: 4px; cursor: pointer; }
+        .btn-see-all { background: none; border: none; font-size: 0.8125rem; font-weight: 700; color: var(--text-tertiary); display: flex; align-items: center; gap: 4px; cursor: pointer; }
         .upcoming-list { display: flex; flex-direction: column; gap: 1rem; }
-        .upcoming-item { display: flex; align-items: center; gap: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #f1f5f9; }
+        .upcoming-item { display: flex; align-items: center; gap: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--bg-muted); }
         .upcoming-item:last-child { border-bottom: none; padding-bottom: 0; }
         .upcoming-item img { width: 44px; height: 44px; border-radius: 12px; }
-        .appt-meta h5 { font-size: 0.8125rem; font-weight: 800; color: #1a202c; }
-        .appt-meta p { font-size: 0.75rem; color: #94a3b8; }
-        .appt-meta .appt-time { font-size: 0.6875rem; color: #94a3b8; font-weight: 600; }
-        .btn-reschedule-mini { margin-left: auto; background: white; border: 1px solid #e2e8f0; padding: 4px 12px; border-radius: 8px; font-size: 0.6875rem; font-weight: 700; color: #64748b; cursor: pointer; }
+        .appt-meta h5 { font-size: 0.8125rem; font-weight: 800; color: var(--text-primary); }
+        .appt-meta p { font-size: 0.75rem; color: var(--text-quaternary); }
+        .appt-meta .appt-time { font-size: 0.6875rem; color: var(--text-quaternary); font-weight: 600; }
+        .btn-reschedule-mini { margin-left: auto; background: var(--bg-surface); border: 1px solid var(--border-default); padding: 4px 12px; border-radius: 8px; font-size: 0.6875rem; font-weight: 700; color: var(--text-primary); cursor: pointer; }
 
-        .next-appointment-card { background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+        .next-appointment-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 24px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
         .next-appointment-card h3 { font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; }
-        .appointment-focus h4 { font-size: 1.125rem; font-weight: 800; color: #1e293b; margin-bottom: 1rem; }
-        .focus-row { display: flex; align-items: center; gap: 0.75rem; color: #64748b; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; }
+        .appointment-focus h4 { font-size: 1.125rem; font-weight: 800; color: var(--text-primary); margin-bottom: 1rem; }
+        .focus-row { display: flex; align-items: center; gap: 0.75rem; color: var(--text-tertiary); font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; }
         
-        .invitee-box { margin: 1.5rem 0; background: #f8fafc; padding: 1rem; border-radius: 16px; border: 1px solid #f1f5f9; display: flex; align-items: center; gap: 1rem; position: relative; }
+        .invitee-box { margin: 1.5rem 0; background: var(--bg-subtle); padding: 1rem; border-radius: 16px; border: 1px solid var(--bg-muted); display: flex; align-items: center; gap: 1rem; position: relative; }
         .invitee-box img { width: 44px; height: 44px; border-radius: 50%; }
-        .invitee-meta h5 { font-size: 0.8125rem; font-weight: 800; color: #1a202c; }
-        .invitee-meta p { font-size: 0.75rem; color: #94a3b8; }
-        .check-mark { position: absolute; right: 1rem; color: #00a3ff; font-weight: 800; }
+        .invitee-meta h5 { font-size: 0.8125rem; font-weight: 800; color: var(--text-primary); }
+        .invitee-meta p { font-size: 0.75rem; color: var(--text-quaternary); }
+        .check-mark { position: absolute; right: 1rem; color: var(--accent-primary); font-weight: 800; }
 
         .focus-actions-vertical { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 2rem; }
-        .btn-light { background: white; border: 1px solid #e2e8f0; padding: 0.75rem; border-radius: 12px; font-size: 0.8125rem; font-weight: 800; color: #64748b; cursor: pointer; }
-        .btn-dark { background: #013745; color: white; border: none; padding: 0.75rem; border-radius: 12px; font-size: 0.8125rem; font-weight: 800; cursor: pointer; }
+        .btn-light { background: var(--bg-surface); border: 1px solid var(--border-default); padding: 0.75rem; border-radius: 12px; font-size: 0.8125rem; font-weight: 800; color: var(--text-tertiary); cursor: pointer; }
+        .btn-dark { background: #013745; color: var(--text-inverse); border: none; padding: 0.75rem; border-radius: 12px; font-size: 0.8125rem; font-weight: 800; cursor: pointer; }
 
         @media (max-width: 1200px) {
           .dashboard-grid { grid-template-columns: 1fr; }

@@ -7,9 +7,9 @@ import Pagination from '../../components/Pagination';
 
 const STATUSES = { all: 'All', scheduled: 'Scheduled', completed: 'Completed', cancelled: 'Cancelled', pending: 'Pending' };
 const STATUS_COLORS = {
-  scheduled: { bg: '#eff6ff', color: '#2563eb' },
+  scheduled: { bg: '#eff6ff', color: 'var(--accent-primary)' },
   completed: { bg: '#f0fdf4', color: '#16a34a' },
-  cancelled: { bg: '#fef2f2', color: '#dc2626' },
+  cancelled: { bg: 'var(--bg-danger-subtle)', color: '#dc2626' },
   pending: { bg: '#fffbeb', color: '#d97706' },
 };
 
@@ -78,6 +78,14 @@ const Appointments = () => {
           <h1>{role === 'visitor' ? 'Appointments History' : 'Appointments'}</h1>
           <p>{role === 'visitor' ? 'Your historical appointments and visits.' : 'Manage and view all estate appointments.'}</p>
         </div>
+        {role !== 'visitor' && (
+          <button 
+            className="ma-btn-add" 
+            onClick={() => navigate(`/${role}/appointments/add`)}
+          >
+            + Add Appointment
+          </button>
+        )}
       </div>
 
       <div className="ma-controls">
@@ -139,7 +147,7 @@ const Appointments = () => {
       </div>
 
       {filtered.length === 0 && (
-        <div style={{ textAlign: 'center', padding: '3rem', color: '#94a3b8' }}>No appointments found.</div>
+        <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-quaternary)' }}>No appointments found.</div>
       )}
 
       {filtered.length > 0 && (
@@ -158,7 +166,7 @@ const Appointments = () => {
             <div className="ma-modal-code-section">
               <div className="ma-modal-code">{viewAppt.code}</div>
               <p>Scan QR at gate entry</p>
-              <div className="ma-qr-placeholder"><QrCode size={80} color="#0d2331" /></div>
+              <div className="ma-qr-placeholder"><QrCode size={80} color="var(--bg-brand)" /></div>
             </div>
             <div className="ma-modal-details">
               {[['Visitor Phone', viewAppt.visitorPhone], ['Visitor Address', viewAppt.visitorAddress], ['Resident', viewAppt.resident], ['Phone', viewAppt.residentPhone], ['Address', viewAppt.residentAddress], ['Purpose', viewAppt.purpose], ['Date', viewAppt.date], ['Time', viewAppt.time]].map(([k, v]) => (
@@ -177,14 +185,14 @@ const Appointments = () => {
       {deleteAppt && (
         <div className="ma-modal-overlay" onClick={() => setDeleteAppt(null)}>
           <div className="ma-modal" onClick={e => e.stopPropagation()} style={{ maxWidth: 380 }}>
-            <div style={{ width: 64, height: 64, background: '#fef2f2', color: '#ef4444', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem' }}>
+            <div style={{ width: 64, height: 64, background: 'var(--bg-danger-subtle)', color: 'var(--text-danger)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem' }}>
               <Trash2 size={32} />
             </div>
             <h3 style={{ textAlign: 'center', fontSize: '1.25rem', fontWeight: 800, marginBottom: '0.75rem' }}>Delete Appointment?</h3>
-            <p style={{ textAlign: 'center', color: '#64748b', marginBottom: '1.5rem' }}>This will permanently remove the appointment for <strong>{deleteAppt.visitor}</strong>.</p>
+            <p style={{ textAlign: 'center', color: 'var(--text-tertiary)', marginBottom: '1.5rem' }}>This will permanently remove the appointment for <strong>{deleteAppt.visitor}</strong>.</p>
             <div style={{ display: 'flex', gap: '0.75rem' }}>
-              <button style={{ flex: 1, background: '#ef4444', color: 'white', border: 'none', padding: '0.875rem', borderRadius: 12, fontWeight: 700, cursor: 'pointer' }} onClick={handleDelete}>Delete</button>
-              <button style={{ flex: 1, background: 'white', border: '1px solid #e2e8f0', color: '#1e293b', padding: '0.875rem', borderRadius: 12, fontWeight: 700, cursor: 'pointer' }} onClick={() => setDeleteAppt(null)}>Cancel</button>
+              <button style={{ flex: 1, background: 'var(--text-danger)', color: 'white', border: 'none', padding: '0.875rem', borderRadius: 12, fontWeight: 700, cursor: 'pointer' }} onClick={handleDelete}>Delete</button>
+              <button style={{ flex: 1, background: 'var(--bg-surface)', border: '1px solid var(--border-default)', color: 'var(--text-primary)', padding: '0.875rem', borderRadius: 12, fontWeight: 700, cursor: 'pointer' }} onClick={() => setDeleteAppt(null)}>Cancel</button>
             </div>
           </div>
         </div>
@@ -194,34 +202,34 @@ const Appointments = () => {
       {rescheduleAppt && (
         <div className="ma-modal-overlay" onClick={() => setRescheduleAppt(null)}>
           <div className="ma-modal" onClick={e => e.stopPropagation()} style={{ maxWidth: 420 }}>
-            <div style={{ width: 56, height: 56, background: '#eff6ff', color: '#2563eb', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem' }}>
+            <div style={{ width: 56, height: 56, background: '#eff6ff', color: 'var(--accent-primary)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem' }}>
               <RotateCcw size={28} />
             </div>
             <h3 style={{ textAlign: 'center', fontSize: '1.25rem', fontWeight: 800, marginBottom: '0.25rem' }}>Reschedule Appointment</h3>
-            <p style={{ textAlign: 'center', color: '#64748b', marginBottom: '1.5rem', fontSize: '0.9rem' }}>Choose a new date and time for <strong>{rescheduleAppt.visitor}</strong>.</p>
+            <p style={{ textAlign: 'center', color: 'var(--text-tertiary)', marginBottom: '1.5rem', fontSize: '0.9rem' }}>Choose a new date and time for <strong>{rescheduleAppt.visitor}</strong>.</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>New Date</label>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-quaternary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>New Date</label>
                 <input
                   type="date"
                   value={rescheduleDate}
                   onChange={e => setRescheduleDate(e.target.value)}
-                  style={{ width: '100%', padding: '0.75rem 1rem', border: '1px solid #cbd5e1', borderRadius: 8, fontSize: '0.95rem', color: '#1e293b', boxSizing: 'border-box' }}
+                  style={{ width: '100%', padding: '0.75rem 1rem', border: '1px solid var(--border-heavy)', borderRadius: 8, fontSize: '0.95rem', color: 'var(--text-primary)', boxSizing: 'border-box' }}
                 />
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>New Time</label>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-quaternary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>New Time</label>
                 <input
                   type="time"
                   value={rescheduleTime}
                   onChange={e => setRescheduleTime(e.target.value)}
-                  style={{ width: '100%', padding: '0.75rem 1rem', border: '1px solid #cbd5e1', borderRadius: 8, fontSize: '0.95rem', color: '#1e293b', boxSizing: 'border-box' }}
+                  style={{ width: '100%', padding: '0.75rem 1rem', border: '1px solid var(--border-heavy)', borderRadius: 8, fontSize: '0.95rem', color: 'var(--text-primary)', boxSizing: 'border-box' }}
                 />
               </div>
             </div>
             <div style={{ display: 'flex', gap: '0.75rem' }}>
-              <button style={{ flex: 1, background: '#0d2331', color: 'white', border: 'none', padding: '0.875rem', borderRadius: 12, fontWeight: 700, cursor: 'pointer' }} onClick={handleReschedule}>Confirm Reschedule</button>
-              <button style={{ flex: 1, background: 'white', border: '1px solid #e2e8f0', color: '#1e293b', padding: '0.875rem', borderRadius: 12, fontWeight: 700, cursor: 'pointer' }} onClick={() => setRescheduleAppt(null)}>Cancel</button>
+              <button style={{ flex: 1, background: 'var(--bg-brand)', color: 'var(--text-inverse)', border: 'none', padding: '0.875rem', borderRadius: 12, fontWeight: 700, cursor: 'pointer' }} onClick={handleReschedule}>Confirm Reschedule</button>
+              <button style={{ flex: 1, background: 'var(--bg-surface)', border: '1px solid var(--border-default)', color: 'var(--text-primary)', padding: '0.875rem', borderRadius: 12, fontWeight: 700, cursor: 'pointer' }} onClick={() => setRescheduleAppt(null)}>Cancel</button>
             </div>
           </div>
         </div>
@@ -230,47 +238,50 @@ const Appointments = () => {
       <style jsx>{`
         .ma-page { display: flex; flex-direction: column; gap: 1.5rem; padding-bottom: 3rem; }
         .ma-header { display: flex; justify-content: space-between; align-items: flex-start; }
-        .ma-header h1 { font-size: 1.75rem; font-weight: 800; color: #1e293b; margin-bottom: 0.25rem; }
-        .ma-header p { color: #64748b; }
+        .ma-header h1 { font-size: 1.75rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.25rem; }
+        .ma-header p { color: var(--text-tertiary); }
+        .ma-btn-add { background: var(--bg-brand); color: var(--text-inverse); border: none; padding: 0.75rem 1.25rem; border-radius: 12px; font-weight: 700; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
+        .ma-btn-add:hover { background: var(--bg-brand-hover); }
         .ma-controls { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
-        .ma-search { flex: 1; min-width: 200px; display: flex; align-items: center; gap: 0.75rem; background: white; padding: 0.75rem 1rem; border: 1px solid #e2e8f0; border-radius: 10px; color: #94a3b8; }
-        .ma-search input { flex: 1; border: none; outline: none; background: none; font-size: 0.875rem; color: #1e293b; }
+        .ma-search { flex: 1; min-width: 200px; display: flex; align-items: center; gap: 0.75rem; background: var(--bg-surface); padding: 0.75rem 1rem; border: 1px solid var(--border-default); border-radius: 10px; color: var(--text-quaternary); }
+        .ma-search input { flex: 1; border: none; outline: none; background: none; font-size: 0.875rem; color: var(--text-primary); }
         .ma-status-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-        .ma-tab { background: white; border: 1px solid #e2e8f0; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.8125rem; font-weight: 600; color: #64748b; cursor: pointer; }
-        .ma-tab.active { background: #0d2331; color: white; border-color: #0d2331; }
+        .ma-tab { background: var(--bg-surface); border: 1px solid var(--border-default); padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.8125rem; font-weight: 600; color: var(--text-tertiary); cursor: pointer; }
+        .ma-tab.active { background: var(--bg-brand); color: var(--text-inverse); border-color: var(--bg-brand); }
         .ma-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
-        .ma-card { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+        .ma-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 20px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
         .ma-card-header { display: flex; align-items: center; gap: 1rem; }
-        .ma-avatar { width: 56px; height: 56px; border-radius: 50%; border: 3px solid #f1f5f9; flex-shrink: 0; }
+        .ma-avatar { width: 56px; height: 56px; border-radius: 50%; border: 3px solid var(--bg-muted); flex-shrink: 0; }
         .ma-card-info { flex: 1; }
-        .ma-card-info h3 { font-size: 1rem; font-weight: 800; color: #1e293b; margin-bottom: 4px; }
+        .ma-card-info h3 { font-size: 1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 4px; }
         .ma-status-badge { padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; text-transform: capitalize; display: inline-block; }
-        .ma-code-badge { background: #f1f5f9; color: #0d2331; padding: 4px 10px; border-radius: 6px; font-size: 0.8125rem; font-weight: 700; white-space: nowrap; }
+        .ma-code-badge { background: var(--bg-muted); color: var(--bg-brand); padding: 4px 10px; border-radius: 6px; font-size: 0.8125rem; font-weight: 700; white-space: nowrap; }
         .ma-card-details { display: flex; flex-direction: column; gap: 0.5rem; }
-        .ma-detail { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: #64748b; }
+        .ma-detail { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--text-tertiary); }
         .ma-detail span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .ma-card-actions { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
-        .ma-btn-reschedule { background: #eff6ff; color: #2563eb; border: none; padding: 0.625rem; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
-        .ma-btn-reschedule:hover { background: #dbeafe; }
-        .ma-btn-view { flex: 1; background: #0d2331; color: white; border: none; padding: 0.625rem; border-radius: 10px; font-weight: 700; font-size: 0.8125rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.4rem; }
-        .ma-btn-delete { background: #fef2f2; color: #ef4444; border: none; padding: 0.625rem; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .ma-btn-confirm { flex: 1; background: #dcfce7; color: #15803d; border: none; padding: 0.625rem; border-radius: 10px; font-weight: 700; font-size: 0.8125rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.4rem; transition: all 0.2s; }
-        .ma-btn-confirm.disabled { opacity: 0.5; cursor: not-allowed; background: #f1f5f9; color: #94a3b8; }
+        .ma-btn-reschedule { background: var(--bg-surface); color: var(--accent-primary); border: 1px solid var(--accent-primary); padding: 0.625rem; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+        .ma-btn-reschedule:hover { background: var(--bg-subtle); }
+        .ma-btn-view { flex: 1; background: var(--bg-brand); color: var(--text-inverse); border: none; padding: 0.625rem; border-radius: 10px; font-weight: 700; font-size: 0.8125rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.4rem; }
+        .ma-btn-delete { background: var(--bg-surface); color: var(--text-danger); border: 1px solid var(--text-danger); padding: 0.625rem; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+        .ma-btn-delete:hover { background: var(--bg-subtle); }
+        .ma-btn-confirm { flex: 1; background: var(--bg-success-subtle); color: var(--text-success); border: none; padding: 0.625rem; border-radius: 10px; font-weight: 700; font-size: 0.8125rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.4rem; transition: all 0.2s; }
+        .ma-btn-confirm.disabled { opacity: 0.5; cursor: not-allowed; background: var(--bg-muted); color: var(--text-quaternary); }
         .ma-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 1rem; }
-        .ma-modal { background: white; border-radius: 24px; padding: 2rem; max-width: 480px; width: 100%; position: relative; max-height: 90vh; overflow-y: auto; }
-        .ma-modal-close { position: absolute; top: 1.25rem; right: 1.25rem; background: #f1f5f9; border: none; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; font-size: 1rem; }
+        .ma-modal { background: var(--bg-surface); border-radius: 24px; padding: 2rem; max-width: 480px; width: 100%; position: relative; max-height: 90vh; overflow-y: auto; }
+        .ma-modal-close { position: absolute; top: 1.25rem; right: 1.25rem; background: var(--bg-muted); border: none; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; font-size: 1rem; }
         .ma-modal-avatar { text-align: center; margin-bottom: 1rem; }
-        .ma-modal-avatar img { width: 80px; height: 80px; border-radius: 50%; border: 4px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .ma-modal h2 { text-align: center; font-size: 1.375rem; font-weight: 800; color: #1e293b; margin-bottom: 1.25rem; }
-        .ma-modal-code-section { text-align: center; background: #f8fafc; padding: 1.25rem; border-radius: 16px; margin-bottom: 1.5rem; }
-        .ma-modal-code { font-size: 1.5rem; font-weight: 800; color: #0d2331; letter-spacing: 4px; margin-bottom: 0.25rem; }
-        .ma-modal-code-section p { font-size: 0.75rem; color: #94a3b8; margin: 0 0 1rem; }
+        .ma-modal-avatar img { width: 80px; height: 80px; border-radius: 50%; border: 4px solid var(--bg-surface); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .ma-modal h2 { text-align: center; font-size: 1.375rem; font-weight: 800; color: var(--text-primary); margin-bottom: 1.25rem; }
+        .ma-modal-code-section { text-align: center; background: var(--bg-subtle); padding: 1.25rem; border-radius: 16px; margin-bottom: 1.5rem; }
+        .ma-modal-code { font-size: 1.5rem; font-weight: 800; color: var(--bg-brand); letter-spacing: 4px; margin-bottom: 0.25rem; }
+        .ma-modal-code-section p { font-size: 0.75rem; color: var(--text-quaternary); margin: 0 0 1rem; }
         .ma-qr-placeholder { display: flex; justify-content: center; opacity: 0.5; }
         .ma-modal-details { display: flex; flex-direction: column; gap: 0.875rem; }
-        .ma-modal-row { display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.875rem; border-bottom: 1px solid #f1f5f9; }
+        .ma-modal-row { display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.875rem; border-bottom: 1px solid var(--bg-muted); }
         .ma-modal-row:last-child { border-bottom: none; }
-        .ma-modal-row span { font-size: 0.8125rem; color: #94a3b8; font-weight: 600; }
-        .ma-modal-row strong { font-size: 0.9375rem; color: #1e293b; }
+        .ma-modal-row span { font-size: 0.8125rem; color: var(--text-quaternary); font-weight: 600; }
+        .ma-modal-row strong { font-size: 0.9375rem; color: var(--text-primary); }
         @media (max-width: 1024px) {
           .ma-grid { grid-template-columns: repeat(2, 1fr); }
         }

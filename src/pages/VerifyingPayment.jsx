@@ -28,19 +28,19 @@ const VerifyingPayment = () => {
         transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
         style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'center' }}
       >
-        <Loader2 size={64} color="#00a3ff" />
+        <Loader2 size={64} color="var(--accent-primary)" />
       </motion.div>
       
-      <h2 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '1rem', color: '#0d2331' }}>
+      <h2 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '1rem', color: 'var(--bg-brand)' }}>
         Verifying Transaction
       </h2>
-      <p style={{ color: '#64748b', marginBottom: '2rem', lineHeight: 1.6 }}>
+      <p style={{ color: 'var(--text-tertiary)', marginBottom: '2rem', lineHeight: 1.6 }}>
         Your payment is being processed by secure gateways. Please do not refresh the page or click the back button.
       </p>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', justifyContent: 'center', background: '#f8fafc', padding: '1rem', borderRadius: '12px' }}>
-        <ShieldCheck size={20} color="#22c55e" />
-        <span style={{ fontSize: '0.85rem', color: '#64748b', fontWeight: 500 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', justifyContent: 'center', background: 'var(--bg-subtle)', padding: '1rem', borderRadius: '12px' }}>
+        <ShieldCheck size={20} color="var(--text-success)" />
+        <span style={{ fontSize: '0.85rem', color: 'var(--text-tertiary)', fontWeight: 500 }}>
           Secured by InVisitor Encryption
         </span>
       </div>

@@ -27,7 +27,7 @@ const PieChart = ({ segments, size = 200 }) => {
   if (total === 0) {
     return (
       <svg viewBox={`0 0 ${size} ${size}`} style={{ width: size, height: size }}>
-        <circle cx={cx} cy={cy} r={r} fill="#f1f5f9" />
+        <circle cx={cx} cy={cy} r={r} fill="var(--bg-muted)" />
       </svg>
     );
   }
@@ -74,7 +74,7 @@ const BarChart = ({ data, width = 400, height = 200 }) => {
               y1={y}
               x2={width - padding}
               y2={y}
-              stroke="#e2e8f0"
+              stroke="var(--border-default)"
               strokeWidth={1}
             />
             <text
@@ -82,7 +82,7 @@ const BarChart = ({ data, width = 400, height = 200 }) => {
               y={y + 4}
               textAnchor="end"
               fontSize="12"
-              fill="#64748b"
+              fill="var(--text-tertiary)"
             >
               ₦{(maxValue * ratio).toFixed(0)}
             </text>
@@ -104,7 +104,7 @@ const BarChart = ({ data, width = 400, height = 200 }) => {
               y={y}
               width={barWidth}
               height={barHeight}
-              fill="#00a3ff"
+              fill="var(--accent-primary)"
               rx={4}
             />
             <text
@@ -112,7 +112,7 @@ const BarChart = ({ data, width = 400, height = 200 }) => {
               y={y - 8}
               textAnchor="middle"
               fontSize="12"
-              fill="#1e293b"
+              fill="var(--text-primary)"
               fontWeight="600"
             >
               ₦{item.value.toFixed(0)}
@@ -122,7 +122,7 @@ const BarChart = ({ data, width = 400, height = 200 }) => {
               y={height - 10}
               textAnchor="middle"
               fontSize="12"
-              fill="#64748b"
+              fill="var(--text-tertiary)"
             >
               {item.label}
             </text>
@@ -136,9 +136,9 @@ const BarChart = ({ data, width = 400, height = 200 }) => {
 const STATUS_CONFIG = {
   Completed: { icon: <CheckCircle size={20} />, bg: '#f0fdf4', color: '#16a34a' },
   Pending: { icon: <Clock size={20} />, bg: '#fffbeb', color: '#d97706' },
-  Processing: { icon: <RefreshCw size={20} />, bg: '#eff6ff', color: '#2563eb' },
-  Failed: { icon: <AlertCircle size={20} />, bg: '#fef2f2', color: '#dc2626' },
-  Cancelled: { icon: <XCircle size={20} />, bg: '#f8fafc', color: '#64748b' }
+  Processing: { icon: <RefreshCw size={20} />, bg: '#eff6ff', color: 'var(--accent-primary)' },
+  Failed: { icon: <AlertCircle size={20} />, bg: 'var(--bg-danger-subtle)', color: '#dc2626' },
+  Cancelled: { icon: <XCircle size={20} />, bg: 'var(--bg-subtle)', color: 'var(--text-tertiary)' }
 };
 
 const MOCK_TRANSACTIONS = [
@@ -413,7 +413,7 @@ const Transactions = () => {
                 );
               }) : (
                 <tr>
-                  <td colSpan="6" style={{ textAlign: 'center', padding: '3rem', color: '#94a3b8' }}>
+                  <td colSpan="6" style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-quaternary)' }}>
                     No transactions found.
                   </td>
                 </tr>
@@ -517,7 +517,7 @@ const Transactions = () => {
         .tx-page-header h1 {
           font-size: 1.75rem;
           font-weight: 800;
-          color: #1e293b;
+          color: var(--text-primary);
           margin: 0;
         }
 
@@ -529,19 +529,19 @@ const Transactions = () => {
           display: flex;
           align-items: center;
           gap: 8px;
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-default);
           border-radius: 10px;
           padding: 8px 14px;
           font-size: 0.875rem;
           font-weight: 700;
-          color: #1e293b;
+          color: var(--text-primary);
           cursor: pointer;
           transition: border-color 0.2s;
         }
 
         .tx-year-picker-btn:hover {
-          border-color: #cbd5e1;
+          border-color: var(--border-heavy);
         }
 
         .tx-year-picker-btn .rotated {
@@ -558,8 +558,8 @@ const Transactions = () => {
           position: absolute;
           right: 0;
           top: calc(100% + 8px);
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-default);
           border-radius: 12px;
           box-shadow: 0 10px 25px rgba(0,0,0,0.1);
           z-index: 110;
@@ -575,17 +575,17 @@ const Transactions = () => {
           border: none;
           font-size: 0.875rem;
           font-weight: 600;
-          color: #475569;
+          color: var(--text-secondary);
           cursor: pointer;
         }
 
         .tx-year-item:hover {
-          background: #f8fafc;
+          background: var(--bg-subtle);
         }
 
         .tx-year-item.active {
-          background: #f1f5f9;
-          color: #0d2331;
+          background: var(--bg-muted);
+          color: var(--bg-brand);
           font-weight: 800;
         }
 
@@ -596,8 +596,8 @@ const Transactions = () => {
         }
 
         .tx-stat-card {
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-default);
           border-radius: 16px;
           padding: 1.25rem;
           display: flex;
@@ -622,14 +622,14 @@ const Transactions = () => {
 
         .tx-stat-label {
           font-size: 0.75rem;
-          color: #94a3b8;
+          color: var(--text-quaternary);
           font-weight: 700;
         }
 
         .tx-stat-value {
           font-size: 1.375rem;
           font-weight: 800;
-          color: #1e293b;
+          color: var(--text-primary);
         }
 
         .tx-charts-and-table {
@@ -639,8 +639,8 @@ const Transactions = () => {
         }
 
         .tx-table-card, .tx-chart-card, .tx-bar-chart-card {
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-default);
           border-radius: 16px;
           padding: 1.5rem;
         }
@@ -666,7 +666,7 @@ const Transactions = () => {
         .tx-table-title {
           font-size: 1.125rem;
           font-weight: 800;
-          color: #1e293b;
+          color: var(--text-primary);
           margin: 0;
         }
 
@@ -680,17 +680,17 @@ const Transactions = () => {
           left: 14px;
           top: 50%;
           transform: translateY(-50%);
-          color: #94a3b8;
+          color: var(--text-quaternary);
         }
 
         .tx-search-box input {
           width: 100%;
           padding: 10px 14px 10px 36px;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--border-default);
           border-radius: 10px;
           font-size: 0.8125rem;
           outline: none;
-          background: #f8fafc;
+          background: var(--bg-subtle);
         }
 
         .tx-table {
@@ -703,20 +703,20 @@ const Transactions = () => {
           padding: 14px 0;
           font-size: 0.75rem;
           font-weight: 700;
-          color: #64748b;
-          border-bottom: 1px solid #f1f5f9;
+          color: var(--text-tertiary);
+          border-bottom: 1px solid var(--bg-muted);
         }
 
         .tx-table td {
           padding: 18px 0;
           font-size: 0.875rem;
-          border-bottom: 1px solid #f1f5f9;
+          border-bottom: 1px solid var(--bg-muted);
         }
 
-        .tx-id-cell { font-weight: 700; color: #1e293b; }
-        .tx-text-gray { color: #64748b; font-weight: 500; }
-        .tx-subject-cell { font-weight: 600; color: #1e293b; }
-        .tx-amount-cell { font-weight: 800; color: #1e293b; }
+        .tx-id-cell { font-weight: 700; color: var(--text-primary); }
+        .tx-text-gray { color: var(--text-tertiary); font-weight: 500; }
+        .tx-subject-cell { font-weight: 600; color: var(--text-primary); }
+        .tx-amount-cell { font-weight: 800; color: var(--text-primary); }
 
         .tx-status-pill {
           padding: 4px 12px;
@@ -729,18 +729,18 @@ const Transactions = () => {
         .tx-dropdown-wrap { position: relative; }
         
         .tx-btn-dots {
-          background: none; border: none; color: #94a3b8;
+          background: none; border: none; color: var(--text-quaternary);
           cursor: pointer; padding: 4px; border-radius: 6px;
           display: flex; align-items: center; transition: background 0.2s;
         }
         
-        .tx-btn-dots:hover { background: #f1f5f9; color: #0d2331; }
+        .tx-btn-dots:hover { background: var(--bg-muted); color: var(--bg-brand); }
         
         .tx-dropdown-overlay { position: fixed; inset: 0; z-index: 90; }
         
         .tx-dropdown-menu {
           position: absolute; right: 0; top: calc(100% + 4px);
-          background: white; border: 1px solid #e2e8f0; border-radius: 12px;
+          background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 12px;
           box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 100; min-width: 160px;
           overflow: hidden;
         }
@@ -748,23 +748,23 @@ const Transactions = () => {
         .tx-dropdown-item {
           display: flex; align-items: center; gap: 8px;
           padding: 12px 16px; font-size: 0.875rem; font-weight: 600;
-          color: #1e293b; background: none; border: none; width: 100%;
+          color: var(--text-primary); background: none; border: none; width: 100%;
           cursor: pointer; text-align: left;
         }
 
-        .tx-dropdown-item:hover { background: #f8fafc; }
+        .tx-dropdown-item:hover { background: var(--bg-subtle); }
 
         /* Right Side Chart */
         .tx-chart-header h3 {
           font-size: 1rem;
           font-weight: 800;
-          color: #1e293b;
+          color: var(--text-primary);
           margin: 0 0 4px 0;
         }
 
         .tx-chart-header p {
           font-size: 0.75rem;
-          color: #94a3b8;
+          color: var(--text-quaternary);
           font-weight: 500;
           margin: 0;
         }
@@ -788,13 +788,13 @@ const Transactions = () => {
         .tx-pie-total {
           font-size: 2rem;
           font-weight: 800;
-          color: #1e293b;
+          color: var(--text-primary);
           line-height: 1;
         }
 
         .tx-pie-label-sm {
           font-size: 0.75rem;
-          color: #94a3b8;
+          color: var(--text-quaternary);
           font-weight: 600;
           margin-top: 4px;
         }
@@ -820,7 +820,7 @@ const Transactions = () => {
 
         .tx-legend-name {
           font-size: 0.8125rem;
-          color: #475569;
+          color: var(--text-secondary);
           font-weight: 600;
           flex: 1;
         }
@@ -828,7 +828,7 @@ const Transactions = () => {
         .tx-legend-val {
           font-size: 0.875rem;
           font-weight: 800;
-          color: #1e293b;
+          color: var(--text-primary);
         }
 
         /* Modal styling */
@@ -841,7 +841,7 @@ const Transactions = () => {
         }
 
         .tx-modal-container {
-          background: white; width: 100%; max-width: 440px;
+          background: var(--bg-surface); width: 100%; max-width: 440px;
           border-radius: 24px; position: relative;
           box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
           overflow: hidden;
@@ -849,34 +849,34 @@ const Transactions = () => {
 
         .tx-modal-close {
           position: absolute; top: 16px; right: 16px;
-          background: #f1f5f9; border: none; border-radius: 50%;
+          background: var(--bg-muted); border: none; border-radius: 50%;
           width: 36px; height: 36px; display: flex; align-items: center;
-          justify-content: center; cursor: pointer; color: #64748b;
+          justify-content: center; cursor: pointer; color: var(--text-tertiary);
           transition: all 0.2s;
         }
 
-        .tx-modal-close:hover { background: #e2e8f0; color: #1e293b; }
+        .tx-modal-close:hover { background: var(--border-default); color: var(--text-primary); }
 
         .tx-receipt-header {
           padding: 2.5rem 2rem 1.5rem;
           text-align: center;
-          background: #f8fafc;
-          border-bottom: 1px dashed #e2e8f0;
+          background: var(--bg-subtle);
+          border-bottom: 1px dashed var(--border-default);
         }
 
         .tx-receipt-icon {
           width: 64px; height: 64px; border-radius: 50%;
-          background: white; border: 2px solid #e2e8f0;
-          color: #0d2331; display: flex; align-items: center;
+          background: var(--bg-surface); border: 2px solid var(--border-default);
+          color: var(--bg-brand); display: flex; align-items: center;
           justify-content: center; margin: 0 auto 1rem;
         }
 
         .tx-receipt-header h2 {
-          font-size: 1.25rem; font-weight: 800; color: #1e293b; margin: 0 0 8px 0;
+          font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin: 0 0 8px 0;
         }
 
         .tx-receipt-id {
-          font-size: 0.875rem; color: #64748b; font-weight: 600; margin: 0;
+          font-size: 0.875rem; color: var(--text-tertiary); font-weight: 600; margin: 0;
         }
 
         .tx-receipt-body {
@@ -889,11 +889,11 @@ const Transactions = () => {
           font-size: 0.875rem;
         }
 
-        .tx-receipt-row span { color: #64748b; font-weight: 500; }
-        .tx-receipt-row strong { color: #1e293b; font-weight: 700; }
+        .tx-receipt-row span { color: var(--text-tertiary); font-weight: 500; }
+        .tx-receipt-row strong { color: var(--text-primary); font-weight: 700; }
 
         .tx-receipt-divider {
-          height: 1px; background: dashed 1px #e2e8f0;
+          height: 1px; background: dashed 1px var(--border-default);
           margin: 0.5rem 0;
         }
 
@@ -902,18 +902,18 @@ const Transactions = () => {
           margin-top: 0.5rem;
         }
 
-        .tx-receipt-total span { font-size: 1rem; font-weight: 700; color: #1e293b; }
-        .tx-receipt-total strong { font-size: 1.5rem; font-weight: 800; color: #0d2331; }
+        .tx-receipt-total span { font-size: 1rem; font-weight: 700; color: var(--text-primary); }
+        .tx-receipt-total strong { font-size: 1.5rem; font-weight: 800; color: var(--bg-brand); }
 
         .tx-modal-footer {
           padding: 1.5rem 2rem;
-          background: #f8fafc;
+          background: var(--bg-subtle);
           display: flex; justify-content: center;
         }
 
         .tx-btn-download {
           display: flex; align-items: center; gap: 8px;
-          background: #0d2331; color: white; border: none;
+          background: var(--bg-brand); color: var(--text-inverse); border: none;
           padding: 12px 24px; border-radius: 12px;
           font-size: 0.875rem; font-weight: 700;
           cursor: pointer; width: 100%; justify-content: center;

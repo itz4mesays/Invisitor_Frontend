@@ -20,11 +20,11 @@ const BlogPost = () => {
       {/* Navigation Bar */}
       <nav className="blog-nav">
         <div className="nav-content">
-          <div className="logo" onClick={() => navigate('/')} style={{ cursor: 'pointer', margin: 0, color: '#0d2331' }}>
+          <div className="logo" onClick={() => navigate('/')} style={{ cursor: 'pointer', margin: 0, color: 'var(--bg-brand)' }}>
             <svg width="30" height="30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="50" cy="25" r="15" fill="#0d2331" />
-              <path d="M20 55C20 49.4772 24.4772 45 30 45H70C75.5228 45 80 49.4772 80 55V60H20V55Z" fill="#0d2331" />
-              <path d="M20 65H80V75C80 80.5228 75.5228 85 70 85H30C24.4772 85 20 80.5228 20 75V65Z" fill="#0d2331" />
+              <circle cx="50" cy="25" r="15" fill="var(--bg-brand)" />
+              <path d="M20 55C20 49.4772 24.4772 45 30 45H70C75.5228 45 80 49.4772 80 55V60H20V55Z" fill="var(--bg-brand)" />
+              <path d="M20 65H80V75C80 80.5228 75.5228 85 70 85H30C24.4772 85 20 80.5228 20 75V65Z" fill="var(--bg-brand)" />
             </svg>
             <span style={{ fontSize: '1.25rem', fontWeight: 800 }}>InVisitor</span>
           </div>
@@ -78,13 +78,13 @@ const BlogPost = () => {
       <style jsx>{`
         .post-page {
           min-height: 100vh;
-          background: #ffffff;
+          background: var(--bg-surface);
           font-family: 'Plus Jakarta Sans', sans-serif;
         }
         .blog-nav {
-          background: white;
+          background: var(--bg-surface);
           padding: 1rem 2rem;
-          border-bottom: 1px solid #e2e8f0;
+          border-bottom: 1px solid var(--border-default);
           position: sticky;
           top: 0;
           z-index: 100;
@@ -99,7 +99,7 @@ const BlogPost = () => {
         .btn-back {
           background: none;
           border: none;
-          color: #64748b;
+          color: var(--text-tertiary);
           font-weight: 600;
           cursor: pointer;
           font-size: 0.9rem;
@@ -109,7 +109,7 @@ const BlogPost = () => {
           gap: 0.5rem;
         }
         .btn-back:hover {
-          color: #0d2331;
+          color: var(--bg-brand);
         }
         .post-main {
           max-width: 900px;
@@ -121,7 +121,7 @@ const BlogPost = () => {
           margin-bottom: 3rem;
         }
         .post-category {
-          color: #00a3ff;
+          color: var(--accent-primary);
           font-weight: 800;
           text-transform: uppercase;
           letter-spacing: 0.05em;
@@ -132,7 +132,7 @@ const BlogPost = () => {
         .post-title {
           font-size: 3.5rem;
           font-weight: 800;
-          color: #0d2331;
+          color: var(--bg-brand);
           line-height: 1.1;
           letter-spacing: -0.02em;
           margin-bottom: 2.5rem;
@@ -142,7 +142,7 @@ const BlogPost = () => {
           align-items: center;
           justify-content: space-between;
           padding-top: 2rem;
-          border-top: 1px solid #e2e8f0;
+          border-top: 1px solid var(--border-default);
           text-align: left;
         }
         .author-info {
@@ -153,8 +153,8 @@ const BlogPost = () => {
         .author-avatar {
           width: 48px;
           height: 48px;
-          background: #0d2331;
-          color: white;
+          background: var(--bg-brand);
+          color: var(--text-inverse);
           border-radius: 50%;
           display: flex;
           align-items: center;
@@ -164,16 +164,16 @@ const BlogPost = () => {
         }
         .author-name {
           font-weight: 700;
-          color: #1e293b;
+          color: var(--text-primary);
         }
         .author-role {
           font-size: 0.85rem;
-          color: #64748b;
+          color: var(--text-tertiary);
         }
         .post-stats {
           display: flex;
           gap: 1.5rem;
-          color: #64748b;
+          color: var(--text-tertiary);
           font-weight: 500;
           font-size: 0.9rem;
         }
@@ -211,9 +211,9 @@ const BlogPost = () => {
           width: 44px;
           height: 44px;
           border-radius: 50%;
-          border: 1px solid #e2e8f0;
-          background: white;
-          color: #64748b;
+          border: 1px solid var(--border-default);
+          background: var(--bg-surface);
+          color: var(--text-tertiary);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -221,14 +221,14 @@ const BlogPost = () => {
           transition: all 0.2s;
         }
         .action-btn:hover {
-          color: #0d2331;
-          border-color: #0d2331;
+          color: var(--bg-brand);
+          border-color: var(--bg-brand);
         }
         .post-body {
           flex: 1;
           font-size: 1.15rem;
           line-height: 1.8;
-          color: #334155;
+          color: var(--text-primary);
         }
         .post-body :global(p) {
           margin-bottom: 1.5rem;
@@ -236,7 +236,7 @@ const BlogPost = () => {
         .post-body :global(h2) {
           font-size: 2rem;
           font-weight: 800;
-          color: #0d2331;
+          color: var(--bg-brand);
           margin: 3rem 0 1.5rem;
           letter-spacing: -0.02em;
         }

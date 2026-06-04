@@ -32,7 +32,7 @@ const ManagerDashboard = () => {
     { label: 'Total Residents', value: '450', icon: <Users size={20} />, bg: '#eef2ff', color: '#6366f1', trend: '+12 this month' },
     { label: 'Active Appointments', value: '128', icon: <Calendar size={20} />, bg: '#f0fdf4', color: '#16a34a', trend: 'Today' },
     { label: 'Security Officers', value: '24', icon: <Shield size={20} />, bg: '#fffbeb', color: '#d97706', trend: '4 on duty' },
-    { label: 'Pending Support', value: '5', icon: <AlertCircle size={20} />, bg: '#fef2f2', color: '#dc2626', trend: 'Requires attention' },
+    { label: 'Pending Support', value: '5', icon: <AlertCircle size={20} />, bg: 'var(--bg-danger-subtle)', color: '#dc2626', trend: 'Requires attention' },
   ];
 
   const recentAppointments = [
@@ -44,10 +44,10 @@ const ManagerDashboard = () => {
 
   const getStatusColor = (status) => {
     switch(status) {
-      case 'completed': return { bg: '#dcfce7', color: '#166534' };
+      case 'completed': return { bg: 'var(--bg-success-subtle)', color: '#166534' };
       case 'scheduled': return { bg: '#e0f2fe', color: '#0369a1' };
       case 'pending': return { bg: '#fef3c7', color: '#b45309' };
-      default: return { bg: '#f1f5f9', color: '#475569' };
+      default: return { bg: 'var(--bg-muted)', color: 'var(--text-secondary)' };
     }
   };
 
@@ -87,10 +87,10 @@ const ManagerDashboard = () => {
           <div className="md-graph-container">
             <ResponsiveContainer width="100%" height={260}>
               <BarChart data={APPOINTMENTS_DATA} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#94a3b8' }} dy={10} />
-                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#94a3b8' }} />
-                <Tooltip cursor={{ fill: '#f8fafc' }} contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--bg-muted)" />
+                <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: 'var(--text-quaternary)' }} dy={10} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: 'var(--text-quaternary)' }} />
+                <Tooltip cursor={{ fill: 'var(--bg-subtle)' }} contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
                 <Bar dataKey="appointments" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={28} />
               </BarChart>
             </ResponsiveContainer>
@@ -110,9 +110,9 @@ const ManagerDashboard = () => {
                     <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#94a3b8' }} dy={10} />
-                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#94a3b8' }} />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--bg-muted)" />
+                <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: 'var(--text-quaternary)' }} dy={10} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: 'var(--text-quaternary)' }} />
                 <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
                 <Area type="monotone" dataKey="residents" stroke="#10b981" strokeWidth={3} fillOpacity={1} fill="url(#colorRes)" />
               </AreaChart>
@@ -183,7 +183,7 @@ const ManagerDashboard = () => {
                 <span>Add Officer</span>
               </button>
               <button className="md-action-btn" onClick={() => navigate('/manager/support/tickets')}>
-                <div className="md-action-icon" style={{ background: '#fef2f2', color: '#dc2626' }}><AlertCircle size={20} /></div>
+                <div className="md-action-icon" style={{ background: 'var(--bg-danger-subtle)', color: '#dc2626' }}><AlertCircle size={20} /></div>
                 <span>Support Tickets</span>
               </button>
               <button className="md-action-btn" onClick={() => navigate('/manager/transactions')}>
@@ -228,7 +228,7 @@ const ManagerDashboard = () => {
 
               <div className="md-qr-section">
                 <div className="md-qr-box">
-                  <QrCode size={100} color="#0d2331" />
+                  <QrCode size={100} color="var(--bg-brand)" />
                 </div>
                 <div className="md-code-display">
                   <p>APPOINTMENT CODE</p>
@@ -264,91 +264,91 @@ const ManagerDashboard = () => {
       <style jsx>{`
         .md-page { display: flex; flex-direction: column; gap: 1.5rem; padding-bottom: 3rem; }
         .md-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; }
-        .md-header h1 { font-size: 1.75rem; font-weight: 800; color: #1e293b; margin-bottom: 0.25rem; }
-        .md-header p { color: #64748b; font-size: 0.9375rem; }
-        .md-date-badge { display: flex; align-items: center; gap: 0.75rem; background: white; border: 1px solid #e2e8f0; padding: 0.75rem 1.25rem; border-radius: 12px; font-weight: 600; color: #1e293b; font-size: 0.875rem; }
-        .md-text-gray { color: #94a3b8; }
+        .md-header h1 { font-size: 1.75rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.25rem; }
+        .md-header p { color: var(--text-tertiary); font-size: 0.9375rem; }
+        .md-date-badge { display: flex; align-items: center; gap: 0.75rem; background: var(--bg-surface); border: 1px solid var(--border-default); padding: 0.75rem 1.25rem; border-radius: 12px; font-weight: 600; color: var(--text-primary); font-size: 0.875rem; }
+        .md-text-gray { color: var(--text-quaternary); }
         
         .md-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
-        .md-stat-card { background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1.25rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); transition: all 0.2s ease; }
+        .md-stat-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 24px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1.25rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); transition: all 0.2s ease; }
         .md-stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.04); }
         .md-stat-top { display: flex; justify-content: space-between; align-items: flex-start; }
         .md-stat-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; }
-        .md-stat-trend { font-size: 0.75rem; font-weight: 600; color: #64748b; background: #f8fafc; padding: 4px 10px; border-radius: 20px; }
+        .md-stat-trend { font-size: 0.75rem; font-weight: 600; color: var(--text-tertiary); background: var(--bg-subtle); padding: 4px 10px; border-radius: 20px; }
         .md-stat-info { display: flex; flex-direction: column; gap: 0.25rem; }
-        .md-stat-label { font-size: 0.8125rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
-        .md-stat-value { font-size: 1.875rem; font-weight: 800; color: #1e293b; line-height: 1; }
+        .md-stat-label { font-size: 0.8125rem; font-weight: 600; color: var(--text-quaternary); text-transform: uppercase; letter-spacing: 0.05em; }
+        .md-stat-value { font-size: 1.875rem; font-weight: 800; color: var(--text-primary); line-height: 1; }
 
         .md-graphs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-        .md-graph-card { background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 2rem; display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+        .md-graph-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 24px; padding: 2rem; display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
         .md-graph-container { flex: 1; width: 100%; min-height: 250px; }
 
         .md-main-grid { display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; }
-        .md-recent-appointments { background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+        .md-recent-appointments { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 24px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
         .md-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
-        .md-card-header h3 { font-size: 1.125rem; font-weight: 800; color: #1e293b; margin: 0; }
+        .md-card-header h3 { font-size: 1.125rem; font-weight: 800; color: var(--text-primary); margin: 0; }
         .md-btn-link { background: none; border: none; color: #3b82f6; font-weight: 700; font-size: 0.875rem; display: flex; align-items: center; gap: 4px; cursor: pointer; }
         
         .md-appt-list { display: flex; flex-direction: column; gap: 0.75rem; }
-        .md-appt-item { display: flex; align-items: center; gap: 1rem; padding: 1.25rem; border: 1px solid #f1f5f9; border-radius: 16px; cursor: pointer; transition: all 0.2s; background: #fcfcfd; }
-        .md-appt-item:hover { border-color: #e2e8f0; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.02); transform: translateY(-2px); }
-        .md-appt-icon { width: 40px; height: 40px; background: #f1f5f9; color: #64748b; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .md-appt-item { display: flex; align-items: center; gap: 1rem; padding: 1.25rem; border: 1px solid var(--bg-muted); border-radius: 16px; cursor: pointer; transition: all 0.2s; background: #fcfcfd; }
+        .md-appt-item:hover { border-color: var(--border-default); background: var(--bg-surface); box-shadow: 0 4px 12px rgba(0,0,0,0.02); transform: translateY(-2px); }
+        .md-appt-icon { width: 40px; height: 40px; background: var(--bg-muted); color: var(--text-tertiary); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .md-appt-details { flex: 1; }
-        .md-appt-details h4 { font-size: 0.9375rem; font-weight: 800; color: #1e293b; margin: 0 0 2px 0; }
-        .md-appt-details p { font-size: 0.8125rem; color: #64748b; margin: 0; }
+        .md-appt-details h4 { font-size: 0.9375rem; font-weight: 800; color: var(--text-primary); margin: 0 0 2px 0; }
+        .md-appt-details p { font-size: 0.8125rem; color: var(--text-tertiary); margin: 0; }
         .md-appt-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
-        .md-appt-time { font-size: 0.75rem; font-weight: 600; color: #94a3b8; }
+        .md-appt-time { font-size: 0.75rem; font-weight: 600; color: var(--text-quaternary); }
         .md-status-pill { font-size: 0.7rem; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em; }
         
         .md-side-panel { display: flex; flex-direction: column; gap: 1.5rem; }
         
-        .md-subscription-card { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 24px; padding: 2rem; color: white; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15); }
+        .md-subscription-card { background: linear-gradient(135deg, #0f172a 0%, var(--text-primary) 100%); border-radius: 24px; padding: 2rem; color: var(--text-inverse); box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15); }
         .md-sub-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
-        .md-sub-header h3 { font-size: 1.125rem; font-weight: 800; margin: 0; color: white; }
+        .md-sub-header h3 { font-size: 1.125rem; font-weight: 800; margin: 0; color: var(--text-inverse); }
         .md-sub-badge { background: rgba(245, 158, 11, 0.2); color: #fbbf24; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; border: 1px solid rgba(245, 158, 11, 0.3); }
         .md-sub-details { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem; }
         .md-sub-item { display: flex; flex-direction: column; gap: 0.25rem; }
-        .md-sub-label { font-size: 0.75rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
-        .md-sub-value { font-size: 0.9375rem; font-weight: 700; color: white; }
+        .md-sub-label { font-size: 0.75rem; font-weight: 600; color: var(--text-quaternary); text-transform: uppercase; letter-spacing: 0.05em; }
+        .md-sub-value { font-size: 0.9375rem; font-weight: 700; color: var(--text-inverse); }
         .md-sub-progress { height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-bottom: 0.5rem; overflow: hidden; }
         .md-sub-progress-bar { height: '100%'; background: #3b82f6; border-radius: 10px; }
-        .md-sub-text { font-size: 0.75rem; color: #94a3b8; margin: 0 0 1.25rem 0; }
-        .md-btn-renew { width: 100%; background: white; color: #0f172a; border: none; padding: 0.875rem; border-radius: 12px; font-weight: 800; font-size: 0.875rem; cursor: pointer; transition: background 0.2s; }
-        .md-btn-renew:hover { background: #f8fafc; }
+        .md-sub-text { font-size: 0.75rem; color: var(--text-quaternary); margin: 0 0 1.25rem 0; }
+        .md-btn-renew { width: 100%; background: var(--bg-surface); color: var(--text-primary); border: none; padding: 0.875rem; border-radius: 12px; font-weight: 800; font-size: 0.875rem; cursor: pointer; transition: background 0.2s; }
+        .md-btn-renew:hover { background: var(--bg-subtle); }
 
-        .md-quick-actions, .md-system-status { background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
-        .md-quick-actions h3, .md-system-status h3 { font-size: 1.125rem; font-weight: 800; color: #1e293b; margin: 0 0 1.25rem 0; }
+        .md-quick-actions, .md-system-status { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 24px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+        .md-quick-actions h3, .md-system-status h3 { font-size: 1.125rem; font-weight: 800; color: var(--text-primary); margin: 0 0 1.25rem 0; }
         .md-action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .md-action-btn { background: #f8fafc; border: 1px solid #f1f5f9; border-radius: 16px; padding: 1.25rem 1rem; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; cursor: pointer; transition: all 0.2s; }
-        .md-action-btn:hover { background: white; border-color: #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.03); transform: translateY(-2px); }
+        .md-action-btn { background: var(--bg-subtle); border: 1px solid var(--bg-muted); border-radius: 16px; padding: 1.25rem 1rem; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; cursor: pointer; transition: all 0.2s; }
+        .md-action-btn:hover { background: var(--bg-surface); border-color: var(--border-default); box-shadow: 0 4px 12px rgba(0,0,0,0.03); transform: translateY(-2px); }
         .md-action-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
-        .md-action-btn span { font-size: 0.8125rem; font-weight: 700; color: #1e293b; }
+        .md-action-btn span { font-size: 0.8125rem; font-weight: 700; color: var(--text-primary); }
 
-        .md-status-item { display: flex; align-items: center; gap: 1rem; padding: 1rem; border-bottom: 1px solid #f1f5f9; }
+        .md-status-item { display: flex; align-items: center; gap: 1rem; padding: 1rem; border-bottom: 1px solid var(--bg-muted); }
         .md-status-item:last-child { border-bottom: none; padding-bottom: 0; }
         .md-status-indicator { width: 12px; height: 12px; border-radius: 50%; }
-        .md-status-indicator.active { background: #22c55e; box-shadow: 0 0 0 4px #dcfce7; }
-        .md-status-item h4 { font-size: 0.875rem; font-weight: 700; color: #1e293b; margin: 0 0 2px 0; }
-        .md-status-item p { font-size: 0.75rem; color: #64748b; margin: 0; }
+        .md-status-indicator.active { background: var(--text-success); box-shadow: 0 0 0 4px var(--bg-success-subtle); }
+        .md-status-item h4 { font-size: 0.875rem; font-weight: 700; color: var(--text-primary); margin: 0 0 2px 0; }
+        .md-status-item p { font-size: 0.75rem; color: var(--text-tertiary); margin: 0; }
 
         /* Modal Styles */
         .md-modal-overlay { position: fixed; inset: 0; background: rgba(13, 35, 49, 0.4); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 1rem; }
-        .md-modal { background: white; border-radius: 24px; padding: 2rem; max-width: 480px; width: 100%; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .md-modal-close { position: absolute; top: 1.25rem; right: 1.25rem; background: #f1f5f9; border: none; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #475569; font-size: 1.1rem; font-weight: 700; transition: background 0.2s; }
-        .md-modal-close:hover { background: #e2e8f0; }
+        .md-modal { background: var(--bg-surface); border-radius: 24px; padding: 2rem; max-width: 480px; width: 100%; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .md-modal-close { position: absolute; top: 1.25rem; right: 1.25rem; background: var(--bg-muted); border: none; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-secondary); font-size: 1.1rem; font-weight: 700; transition: background 0.2s; }
+        .md-modal-close:hover { background: var(--border-default); }
         .md-modal-header { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; margin-bottom: 2rem; padding-top: 0.5rem; }
-        .md-modal-header h2 { font-size: 1.5rem; font-weight: 800; color: #0d2331; margin: 0; }
+        .md-modal-header h2 { font-size: 1.5rem; font-weight: 800; color: var(--bg-brand); margin: 0; }
         
-        .md-qr-section { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 20px; padding: 2rem; display: flex; flex-direction: column; align-items: center; margin-bottom: 2rem; text-align: center; }
-        .md-qr-box { background: white; padding: 1.5rem; border-radius: 16px; border: 1px solid #e2e8f0; display: inline-block; margin-bottom: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
-        .md-code-display p { font-size: 0.75rem; font-weight: 700; color: #64748b; margin: 0 0 0.25rem 0; text-transform: uppercase; letter-spacing: 0.05em; }
-        .md-code-display h3 { font-size: 2rem; font-weight: 900; color: #0d2331; letter-spacing: 4px; margin: 0; }
-        .md-qr-instruction { font-size: 0.875rem; color: #64748b; margin: 1rem 0 0 0; line-height: 1.5; max-width: 280px; }
+        .md-qr-section { background: var(--bg-subtle); border: 1px solid var(--border-default); border-radius: 20px; padding: 2rem; display: flex; flex-direction: column; align-items: center; margin-bottom: 2rem; text-align: center; }
+        .md-qr-box { background: var(--bg-surface); padding: 1.5rem; border-radius: 16px; border: 1px solid var(--border-default); display: inline-block; margin-bottom: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+        .md-code-display p { font-size: 0.75rem; font-weight: 700; color: var(--text-tertiary); margin: 0 0 0.25rem 0; text-transform: uppercase; letter-spacing: 0.05em; }
+        .md-code-display h3 { font-size: 2rem; font-weight: 900; color: var(--bg-brand); letter-spacing: 4px; margin: 0; }
+        .md-qr-instruction { font-size: 0.875rem; color: var(--text-tertiary); margin: 1rem 0 0 0; line-height: 1.5; max-width: 280px; }
 
-        .md-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; background: #fcfcfd; border: 1px solid #f1f5f9; padding: 1.5rem; border-radius: 16px; }
+        .md-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; background: #fcfcfd; border: 1px solid var(--bg-muted); padding: 1.5rem; border-radius: 16px; }
         .md-detail-item { display: flex; flex-direction: column; gap: 0.375rem; }
-        .md-detail-item span { font-size: 0.75rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
-        .md-detail-item strong { font-size: 0.9375rem; font-weight: 700; color: #1e293b; }
+        .md-detail-item span { font-size: 0.75rem; font-weight: 700; color: var(--text-quaternary); text-transform: uppercase; letter-spacing: 0.05em; }
+        .md-detail-item strong { font-size: 0.9375rem; font-weight: 700; color: var(--text-primary); }
 
         @media (max-width: 1024px) {
           .md-stats-grid { grid-template-columns: repeat(2, 1fr); }

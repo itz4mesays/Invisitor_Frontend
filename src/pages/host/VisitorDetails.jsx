@@ -180,7 +180,7 @@ const VisitorDetails = () => {
                   </div>
                 </div>
                 <div className="vd-doc-preview">
-                  <Shield size={18} color="#00a3ff" />
+                  <Shield size={18} color="var(--accent-primary)" />
                   <span>ID CARD.PDF</span>
                   <button className="btn-view-doc">View Document</button>
                 </div>
@@ -204,7 +204,7 @@ const VisitorDetails = () => {
                         <td style={{ color: '#dc2626', fontWeight: 600 }}>{log.checkOut}</td>
                         <td>{log.duration}</td>
                         <td><span className="vd-log-badge">{log.status}</span></td>
-                        <td style={{ color: '#64748b' }}>{log.gate}</td>
+                        <td style={{ color: 'var(--text-tertiary)' }}>{log.gate}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -220,7 +220,7 @@ const VisitorDetails = () => {
         {showBlacklist && (
           <div className="vd-overlay" onClick={() => setShowBlacklist(false)}>
             <motion.div className="vd-confirm-modal" onClick={e => e.stopPropagation()} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }}>
-              <div className="vd-modal-icon" style={{ background: isBlacklisted ? '#dcfce7' : '#fee2e2', color: isBlacklisted ? '#16a34a' : '#ef4444' }}>
+              <div className="vd-modal-icon" style={{ background: isBlacklisted ? 'var(--bg-success-subtle)' : '#fee2e2', color: isBlacklisted ? '#16a34a' : 'var(--text-danger)' }}>
                 <Ban size={32} />
               </div>
               <h3>{isBlacklisted ? 'Whitelist This Visitor?' : 'Blacklist This Visitor?'}</h3>
@@ -237,60 +237,60 @@ const VisitorDetails = () => {
       <style jsx>{`
         .vd-page { max-width: 900px; margin: 0 auto; padding-bottom: 4rem; display: flex; flex-direction: column; gap: 1.5rem; }
         .vd-topbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-        .vd-back { display: flex; align-items: center; gap: 0.5rem; background: none; border: none; color: #64748b; font-weight: 600; cursor: pointer; padding: 0; transition: color 0.2s; font-size: 0.9rem; }
-        .vd-back:hover { color: #0d2331; }
+        .vd-back { display: flex; align-items: center; gap: 0.5rem; background: none; border: none; color: var(--text-tertiary); font-weight: 600; cursor: pointer; padding: 0; transition: color 0.2s; font-size: 0.9rem; }
+        .vd-back:hover { color: var(--bg-brand); }
         .vd-topbar-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-        .vd-btn-blacklist { display: flex; align-items: center; gap: 0.5rem; border: 1px solid #fca5a5; background: #fef2f2; color: #dc2626; padding: 0.6rem 1.25rem; border-radius: 8px; font-weight: 700; font-size: 0.875rem; cursor: pointer; transition: all 0.2s; }
+        .vd-btn-blacklist { display: flex; align-items: center; gap: 0.5rem; border: 1px solid #fca5a5; background: var(--bg-danger-subtle); color: #dc2626; padding: 0.6rem 1.25rem; border-radius: 8px; font-weight: 700; font-size: 0.875rem; cursor: pointer; transition: all 0.2s; }
         .vd-btn-blacklist.whitelisted { background: #f0fdf4; border-color: #86efac; color: #16a34a; }
-        .vd-btn-edit { display: flex; align-items: center; gap: 0.5rem; background: white; border: 1px solid #e2e8f0; color: #0d2331; padding: 0.6rem 1.25rem; border-radius: 8px; font-weight: 700; font-size: 0.875rem; cursor: pointer; }
-        .vd-btn-save { display: flex; align-items: center; gap: 0.5rem; background: #0d2331; border: none; color: white; padding: 0.6rem 1.25rem; border-radius: 8px; font-weight: 700; font-size: 0.875rem; cursor: pointer; }
-        .vd-btn-cancel { display: flex; align-items: center; gap: 0.5rem; background: white; border: 1px solid #e2e8f0; color: #64748b; padding: 0.6rem 1.25rem; border-radius: 8px; font-weight: 700; font-size: 0.875rem; cursor: pointer; }
+        .vd-btn-edit { display: flex; align-items: center; gap: 0.5rem; background: var(--bg-surface); border: 1px solid var(--border-default); color: var(--bg-brand); padding: 0.6rem 1.25rem; border-radius: 8px; font-weight: 700; font-size: 0.875rem; cursor: pointer; }
+        .vd-btn-save { display: flex; align-items: center; gap: 0.5rem; background: var(--bg-brand); border: none; color: var(--text-inverse); padding: 0.6rem 1.25rem; border-radius: 8px; font-weight: 700; font-size: 0.875rem; cursor: pointer; }
+        .vd-btn-cancel { display: flex; align-items: center; gap: 0.5rem; background: var(--bg-surface); border: 1px solid var(--border-default); color: var(--text-tertiary); padding: 0.6rem 1.25rem; border-radius: 8px; font-weight: 700; font-size: 0.875rem; cursor: pointer; }
 
-        .vd-hero { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 2rem; display: flex; align-items: flex-start; gap: 2rem; }
+        .vd-hero { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 20px; padding: 2rem; display: flex; align-items: flex-start; gap: 2rem; }
         .vd-hero-avatar { position: relative; flex-shrink: 0; }
-        .vd-hero-avatar img { width: 100px; height: 100px; border-radius: 50%; border: 4px solid #f1f5f9; box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
-        .vd-blacklist-badge { position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%); background: #dc2626; color: white; font-size: 0.65rem; font-weight: 800; padding: 2px 8px; border-radius: 12px; display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+        .vd-hero-avatar img { width: 100px; height: 100px; border-radius: 50%; border: 4px solid var(--bg-muted); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+        .vd-blacklist-badge { position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%); background: #dc2626; color: var(--text-inverse); font-size: 0.65rem; font-weight: 800; padding: 2px 8px; border-radius: 12px; display: flex; align-items: center; gap: 4px; white-space: nowrap; }
         .vd-hero-info { flex: 1; }
-        .vd-hero-info h1 { font-size: 1.75rem; font-weight: 800; color: #1e293b; margin: 0 0 0.75rem 0; }
+        .vd-hero-info h1 { font-size: 1.75rem; font-weight: 800; color: var(--text-primary); margin: 0 0 0.75rem 0; }
         .vd-hero-meta { display: flex; gap: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
         .vd-type-pill { background: #e0f2fe; color: #0369a1; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
         .vd-bg-pill { display: flex; align-items: center; gap: 4px; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
         .vd-hero-contacts { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-        .vd-hero-contacts span { display: flex; align-items: center; gap: 0.4rem; font-size: 0.875rem; color: #64748b; font-weight: 500; }
+        .vd-hero-contacts span { display: flex; align-items: center; gap: 0.4rem; font-size: 0.875rem; color: var(--text-tertiary); font-weight: 500; }
 
-        .vd-tabs { display: flex; gap: 0.5rem; border-bottom: 2px solid #f1f5f9; }
-        .vd-tab { display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.25rem; background: none; border: none; font-weight: 700; font-size: 0.9rem; color: #64748b; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.2s; }
-        .vd-tab.active { color: #0d2331; border-bottom-color: #0d2331; }
+        .vd-tabs { display: flex; gap: 0.5rem; border-bottom: 2px solid var(--bg-muted); }
+        .vd-tab { display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.25rem; background: none; border: none; font-weight: 700; font-size: 0.9rem; color: var(--text-tertiary); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.2s; }
+        .vd-tab.active { color: var(--bg-brand); border-bottom-color: var(--bg-brand); }
 
         .vd-sections { display: flex; flex-direction: column; gap: 1.5rem; }
-        .vd-card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.75rem; }
-        .vd-card h3 { display: flex; align-items: center; gap: 0.5rem; font-size: 1rem; font-weight: 800; color: #1e293b; margin: 0 0 1.5rem 0; padding-bottom: 1rem; border-bottom: 1px solid #f1f5f9; }
+        .vd-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 16px; padding: 1.75rem; }
+        .vd-card h3 { display: flex; align-items: center; gap: 0.5rem; font-size: 1rem; font-weight: 800; color: var(--text-primary); margin: 0 0 1.5rem 0; padding-bottom: 1rem; border-bottom: 1px solid var(--bg-muted); }
         .vd-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
         .vd-field { display: flex; flex-direction: column; gap: 0.5rem; }
-        .vd-field label { font-size: 0.7rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
-        .vd-val { font-size: 0.95rem; font-weight: 600; color: #1e293b; padding: 0.6rem 0; }
-        .vd-field input, .vd-field select { padding: 0.75rem 1rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; color: #1e293b; transition: all 0.2s; }
-        .vd-field input:focus, .vd-field select:focus { outline: none; border-color: #00a3ff; box-shadow: 0 0 0 3px rgba(0,163,255,0.1); }
+        .vd-field label { font-size: 0.7rem; font-weight: 800; color: var(--text-quaternary); text-transform: uppercase; letter-spacing: 0.05em; }
+        .vd-val { font-size: 0.95rem; font-weight: 600; color: var(--text-primary); padding: 0.6rem 0; }
+        .vd-field input, .vd-field select { padding: 0.75rem 1rem; border: 1px solid var(--border-heavy); border-radius: 8px; font-size: 0.95rem; color: var(--text-primary); transition: all 0.2s; }
+        .vd-field input:focus, .vd-field select:focus { outline: none; border-color: var(--accent-primary); box-shadow: 0 0 0 3px rgba(0,163,255,0.1); }
 
-        .vd-doc-preview { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; background: #f8fafc; border-radius: 12px; margin-top: 1.5rem; }
-        .vd-doc-preview span { flex: 1; font-weight: 700; font-size: 0.875rem; color: #1e293b; }
-        .btn-view-doc { background: white; border: 1px solid #e2e8f0; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 700; font-size: 0.8125rem; cursor: pointer; color: #0d2331; }
+        .vd-doc-preview { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; background: var(--bg-subtle); border-radius: 12px; margin-top: 1.5rem; }
+        .vd-doc-preview span { flex: 1; font-weight: 700; font-size: 0.875rem; color: var(--text-primary); }
+        .btn-view-doc { background: var(--bg-surface); border: 1px solid var(--border-default); padding: 0.5rem 1rem; border-radius: 8px; font-weight: 700; font-size: 0.8125rem; cursor: pointer; color: var(--bg-brand); }
 
         .vd-table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        .vd-table th { padding: 0.875rem; font-size: 0.75rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; border-bottom: 1px solid #f1f5f9; text-align: left; }
-        .vd-table td { padding: 1rem 0.875rem; font-size: 0.875rem; color: #334155; border-bottom: 1px solid #f8fafc; }
+        .vd-table th { padding: 0.875rem; font-size: 0.75rem; font-weight: 700; color: var(--text-quaternary); text-transform: uppercase; border-bottom: 1px solid var(--bg-muted); text-align: left; }
+        .vd-table td { padding: 1rem 0.875rem; font-size: 0.875rem; color: var(--text-primary); border-bottom: 1px solid var(--bg-subtle); }
         .vd-table tbody tr:last-child td { border-bottom: none; }
         .vd-log-badge { background: #f0fdf4; color: #16a34a; padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
 
         .vd-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 1rem; backdrop-filter: blur(3px); }
-        .vd-confirm-modal { background: white; border-radius: 24px; padding: 2.5rem; max-width: 420px; width: 100%; text-align: center; }
+        .vd-confirm-modal { background: var(--bg-surface); border-radius: 24px; padding: 2.5rem; max-width: 420px; width: 100%; text-align: center; }
         .vd-modal-icon { width: 72px; height: 72px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; }
-        .vd-confirm-modal h3 { font-size: 1.375rem; font-weight: 800; color: #1e293b; margin: 0 0 0.75rem; }
-        .vd-confirm-modal p { color: #64748b; line-height: 1.5; margin: 0 0 2rem; font-size: 0.95rem; }
+        .vd-confirm-modal h3 { font-size: 1.375rem; font-weight: 800; color: var(--text-primary); margin: 0 0 0.75rem; }
+        .vd-confirm-modal p { color: var(--text-tertiary); line-height: 1.5; margin: 0 0 2rem; font-size: 0.95rem; }
         .vd-modal-actions { display: flex; flex-direction: column; gap: 0.75rem; }
-        .btn-confirm-red { background: #ef4444; color: white; border: none; padding: 0.875rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
-        .btn-confirm-white { background: #22c55e; color: white; border: none; padding: 0.875rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
-        .btn-confirm-outline { background: white; border: 1px solid #e2e8f0; color: #64748b; padding: 0.875rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
+        .btn-confirm-red { background: var(--text-danger); color: var(--text-inverse); border: none; padding: 0.875rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
+        .btn-confirm-white { background: var(--text-success); color: var(--text-inverse); border: none; padding: 0.875rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
+        .btn-confirm-outline { background: var(--bg-surface); border: 1px solid var(--border-default); color: var(--text-tertiary); padding: 0.875rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
 
         @media (max-width: 768px) {
           .vd-hero { flex-direction: column; align-items: center; text-align: center; }

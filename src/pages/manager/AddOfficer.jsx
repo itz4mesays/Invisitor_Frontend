@@ -127,31 +127,31 @@ const AddOfficer = () => {
       <style jsx>{`
         .add-officer-page { display: flex; flex-direction: column; gap: 1.5rem; padding-bottom: 3rem; max-width: 800px; margin: 0 auto; }
         .ao-header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 0.5rem; }
-        .ao-back-btn { background: white; border: 1px solid #e2e8f0; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #475569; cursor: pointer; transition: all 0.2s; flex-shrink: 0; }
-        .ao-back-btn:hover { background: #f8fafc; color: #0d2331; }
-        .ao-header h1 { font-size: 1.75rem; font-weight: 800; color: #1e293b; margin: 0 0 0.25rem 0; }
-        .ao-header p { color: #64748b; margin: 0; font-size: 0.9375rem; }
+        .ao-back-btn { background: var(--bg-surface); border: 1px solid var(--border-default); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; flex-shrink: 0; }
+        .ao-back-btn:hover { background: var(--bg-subtle); color: var(--bg-brand); }
+        .ao-header h1 { font-size: 1.75rem; font-weight: 800; color: var(--text-primary); margin: 0 0 0.25rem 0; }
+        .ao-header p { color: var(--text-tertiary); margin: 0; font-size: 0.9375rem; }
 
-        .ao-form-card { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 2rem; display: flex; flex-direction: column; gap: 2rem; }
-        .ao-section h3 { font-size: 1.125rem; font-weight: 700; color: #1e293b; margin: 0 0 1.25rem 0; display: flex; align-items: center; gap: 0.5rem; }
+        .ao-form-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 20px; padding: 2rem; display: flex; flex-direction: column; gap: 2rem; }
+        .ao-section h3 { font-size: 1.125rem; font-weight: 700; color: var(--text-primary); margin: 0 0 1.25rem 0; display: flex; align-items: center; gap: 0.5rem; }
         .ao-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
         
         .ao-field { display: flex; flex-direction: column; gap: 0.5rem; }
-        .ao-field label { font-size: 0.8125rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
-        .ao-field input, .ao-field select { padding: 0.75rem 1rem; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 0.9375rem; color: #1e293b; outline: none; transition: border 0.2s; width: 100%; box-sizing: border-box; font-family: inherit; }
+        .ao-field label { font-size: 0.8125rem; font-weight: 700; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.05em; }
+        .ao-field input, .ao-field select { padding: 0.75rem 1rem; border: 1px solid var(--border-default); border-radius: 10px; font-size: 0.9375rem; color: var(--text-primary); outline: none; transition: border 0.2s; width: 100%; box-sizing: border-box; font-family: inherit; }
         .ao-field input:focus, .ao-field select:focus { border-color: #3b82f6; }
         
         .ao-input-with-icon { position: relative; display: flex; align-items: center; }
-        .ao-input-with-icon svg { position: absolute; left: 1rem; color: #94a3b8; }
+        .ao-input-with-icon svg { position: absolute; left: 1rem; color: var(--text-quaternary); }
         .ao-input-with-icon input, .ao-input-with-icon select { padding-left: 2.75rem; width: 100%; }
 
-        .ao-divider { height: 1px; background: #f1f5f9; margin: 0.5rem 0; }
+        .ao-divider { height: 1px; background: var(--bg-muted); margin: 0.5rem 0; }
 
         .ao-form-actions { display: flex; justify-content: flex-end; gap: 1rem; padding-top: 1rem; }
-        .btn-cancel { padding: 0.875rem 1.5rem; background: white; border: 1px solid #e2e8f0; border-radius: 12px; font-weight: 700; color: #475569; cursor: pointer; transition: all 0.2s; }
-        .btn-cancel:hover { background: #f8fafc; color: #1e293b; }
-        .btn-submit { padding: 0.875rem 1.5rem; background: #0d2331; border: none; border-radius: 12px; font-weight: 700; color: white; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; }
-        .btn-submit:hover { background: #1e293b; transform: translateY(-1px); }
+        .btn-cancel { padding: 0.875rem 1.5rem; background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 12px; font-weight: 700; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; }
+        .btn-cancel:hover { background: var(--bg-subtle); color: var(--text-primary); }
+        .btn-submit { padding: 0.875rem 1.5rem; background: var(--bg-brand); border: none; border-radius: 12px; font-weight: 700; color: var(--text-inverse); cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; }
+        .btn-submit:hover { background: var(--text-primary); transform: translateY(-1px); }
 
         @media (max-width: 768px) {
           .ao-grid { grid-template-columns: 1fr; }

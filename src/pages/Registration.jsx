@@ -110,11 +110,11 @@ const Registration = () => {
       case 4:
         return (
           <div className="step-content">
-            <p style={{ marginBottom: '1.5rem', color: '#666' }}>Upload business registration documents and ID.</p>
+            <p style={{ marginBottom: '1.5rem', color: 'var(--text-secondary)' }}>Upload business registration documents and ID.</p>
             <div className="form-group">
               <label>CAC Documents / ID Proof</label>
-              <div style={{ border: '2px dashed #e2e8f0', borderRadius: '12px', padding: '2rem', textAlign: 'center', cursor: 'pointer' }}>
-                <p style={{ color: '#94a3b8' }}>Drag and drop or click to upload</p>
+              <div style={{ border: '2px dashed var(--border-default)', borderRadius: '12px', padding: '2rem', textAlign: 'center', cursor: 'pointer' }}>
+                <p style={{ color: 'var(--text-quaternary)' }}>Drag and drop or click to upload</p>
               </div>
             </div>
           </div>
@@ -123,8 +123,8 @@ const Registration = () => {
         return (
           <div className="step-content">
             <h3 style={{ marginBottom: '1rem' }}>Review your information</h3>
-            <p style={{ color: '#666' }}>Please ensure all details provided are accurate before proceeding to payment.</p>
-            <div style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '12px', marginTop: '1.5rem' }}>
+            <p style={{ color: 'var(--text-secondary)' }}>Please ensure all details provided are accurate before proceeding to payment.</p>
+            <div style={{ background: 'var(--bg-subtle)', padding: '1.5rem', borderRadius: '12px', marginTop: '1.5rem' }}>
               <div className="summary-row"><span>Account</span> <span>John Doe</span></div>
               <div className="summary-row"><span>Company</span> <span>InVisitor Tech</span></div>
               <div className="summary-row"><span>Type</span> <span>Business</span></div>

@@ -23,15 +23,15 @@ const AddResident = () => {
     return (
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '70vh', padding: '2rem' }}>
         <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
-          style={{ background: 'white', padding: '4rem 2rem', borderRadius: 24, boxShadow: '0 10px 25px rgba(0,0,0,0.05)', textAlign: 'center', maxWidth: 500, width: '100%', border: '1px solid #e2e8f0' }}>
-          <div style={{ width: 80, height: 80, background: '#dcfce7', color: '#16a34a', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem' }}>
+          style={{ background: 'white', padding: '4rem 2rem', borderRadius: 24, boxShadow: '0 10px 25px rgba(0,0,0,0.05)', textAlign: 'center', maxWidth: 500, width: '100%', border: '1px solid var(--border-default)' }}>
+          <div style={{ width: 80, height: 80, background: 'var(--bg-success-subtle)', color: '#16a34a', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem' }}>
             <Check size={40} strokeWidth={3} />
           </div>
-          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0d2331', marginBottom: '1rem' }}>Resident Added!</h2>
-          <p style={{ color: '#64748b', marginBottom: '2rem', lineHeight: 1.6 }}>The new resident has been registered successfully.</p>
+          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--bg-brand)', marginBottom: '1rem' }}>Resident Added!</h2>
+          <p style={{ color: 'var(--text-tertiary)', marginBottom: '2rem', lineHeight: 1.6 }}>The new resident has been registered successfully.</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-            <button style={{ background: '#0d2331', color: 'white', border: 'none', padding: '1rem', borderRadius: 12, fontWeight: 700, cursor: 'pointer' }} onClick={() => navigate('/manager/residents')}>View Residents</button>
-            <button style={{ background: 'white', color: '#0d2331', border: '1.5px solid #e2e8f0', padding: '1rem', borderRadius: 12, fontWeight: 700, cursor: 'pointer' }} onClick={() => navigate('/manager')}>Back to Dashboard</button>
+            <button style={{ background: 'var(--bg-brand)', color: 'white', border: 'none', padding: '1rem', borderRadius: 12, fontWeight: 700, cursor: 'pointer' }} onClick={() => navigate('/manager/residents')}>View Residents</button>
+            <button style={{ background: 'white', color: 'var(--bg-brand)', border: '1.5px solid var(--border-default)', padding: '1rem', borderRadius: 12, fontWeight: 700, cursor: 'pointer' }} onClick={() => navigate('/manager')}>Back to Dashboard</button>
           </div>
         </motion.div>
       </div>
@@ -40,12 +40,12 @@ const AddResident = () => {
 
   const Field = ({ label, children }) => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-      <label style={{ fontSize: '0.875rem', fontWeight: 600, color: '#0d2331' }}>{label}</label>
+      <label style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--bg-brand)' }}>{label}</label>
       {children}
     </div>
   );
 
-  const inputStyle = { width: '100%', padding: '0.875rem 1rem', border: '1px solid #e2e8f0', borderRadius: 12, fontSize: '0.95rem', outline: 'none', boxSizing: 'border-box' };
+  const inputStyle = { width: '100%', padding: '0.875rem 1rem', border: '1px solid var(--border-default)', borderRadius: 12, fontSize: '0.95rem', outline: 'none', boxSizing: 'border-box' };
 
   return (
     <div className="ar-page">
@@ -116,16 +116,16 @@ const AddResident = () => {
       <style jsx>{`
         .ar-page { padding: 2rem; max-width: 900px; margin: 0 auto; }
         .ar-header { margin-bottom: 2rem; }
-        .ar-back { display: flex; align-items: center; gap: 0.5rem; background: none; border: none; color: #64748b; font-weight: 600; cursor: pointer; padding: 0; margin-bottom: 1rem; }
-        .ar-header h1 { font-size: 2rem; font-weight: 800; color: #0d2331; margin: 0 0 0.5rem; }
-        .ar-header p { color: #64748b; margin: 0; }
+        .ar-back { display: flex; align-items: center; gap: 0.5rem; background: none; border: none; color: var(--text-tertiary); font-weight: 600; cursor: pointer; padding: 0; margin-bottom: 1rem; }
+        .ar-header h1 { font-size: 2rem; font-weight: 800; color: var(--bg-brand); margin: 0 0 0.5rem; }
+        .ar-header p { color: var(--text-tertiary); margin: 0; }
         .ar-form { display: flex; flex-direction: column; gap: 2rem; }
-        .ar-section { background: white; padding: 2rem; border-radius: 20px; border: 1px solid #e2e8f0; }
-        .ar-section h3 { font-size: 1rem; font-weight: 700; color: #0d2331; margin: 0 0 1.5rem; display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 1rem; }
+        .ar-section { background: var(--bg-surface); padding: 2rem; border-radius: 20px; border: 1px solid var(--border-default); }
+        .ar-section h3 { font-size: 1rem; font-weight: 700; color: var(--bg-brand); margin: 0 0 1.5rem; display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid var(--bg-muted); padding-bottom: 1rem; }
         .ar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
         .ar-actions { display: flex; justify-content: flex-end; gap: 1rem; }
-        .ar-btn-cancel { padding: 1rem 2rem; border: 1px solid #e2e8f0; border-radius: 12px; font-weight: 700; background: white; cursor: pointer; color: #64748b; }
-        .ar-btn-submit { padding: 1rem 3rem; border: none; border-radius: 12px; font-weight: 700; background: #0d2331; cursor: pointer; color: white; }
+        .ar-btn-cancel { padding: 1rem 2rem; border: 1px solid var(--border-default); border-radius: 12px; font-weight: 700; background: var(--bg-surface); cursor: pointer; color: var(--text-tertiary); }
+        .ar-btn-submit { padding: 1rem 3rem; border: none; border-radius: 12px; font-weight: 700; background: var(--bg-brand); cursor: pointer; color: var(--text-inverse); }
         @media (max-width: 768px) {
           .ar-page { padding: 1.5rem; }
           .ar-header h1 { font-size: 1.5rem; }

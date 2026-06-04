@@ -139,12 +139,12 @@ const Notifications = () => {
         .notif-header-section h1 {
           font-size: 1.75rem;
           font-weight: 800;
-          color: #1e293b;
+          color: var(--text-primary);
           margin: 0 0 0.25rem 0;
         }
 
         .notif-header-section p {
-          color: #64748b;
+          color: var(--text-tertiary);
           margin: 0;
         }
 
@@ -166,17 +166,17 @@ const Notifications = () => {
         }
 
         .btn-mark-read {
-          background: white;
-          border: 1px solid #e2e8f0;
-          color: #1e293b;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-default);
+          color: var(--text-primary);
         }
 
         .btn-mark-read:hover {
-          background: #f8fafc;
+          background: var(--bg-subtle);
         }
 
         .btn-clear {
-          background: #fef2f2;
+          background: var(--bg-danger-subtle);
           border: 1px solid #fecaca;
           color: #dc2626;
         }
@@ -188,7 +188,7 @@ const Notifications = () => {
         .notif-filter-tabs {
           display: flex;
           gap: 1rem;
-          border-bottom: 1px solid #e2e8f0;
+          border-bottom: 1px solid var(--border-default);
           padding-bottom: 0px;
         }
 
@@ -198,13 +198,13 @@ const Notifications = () => {
           padding: 0.75rem 1rem;
           font-size: 0.9375rem;
           font-weight: 600;
-          color: #64748b;
+          color: var(--text-tertiary);
           cursor: pointer;
           position: relative;
         }
 
         .notif-filter-tabs button.active {
-          color: #0d2331;
+          color: var(--bg-brand);
         }
 
         .notif-filter-tabs button.active::after {
@@ -214,7 +214,7 @@ const Notifications = () => {
           left: 0;
           right: 0;
           height: 2px;
-          background: #0d2331;
+          background: var(--bg-brand);
           border-radius: 2px 2px 0 0;
         }
 
@@ -225,8 +225,8 @@ const Notifications = () => {
         }
 
         .notif-card {
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-default);
           border-radius: 16px;
           padding: 1.25rem;
           display: flex;
@@ -236,8 +236,8 @@ const Notifications = () => {
         }
 
         .notif-card.unread {
-          background: #f8fafc;
-          border-color: #cbd5e1;
+          background: var(--bg-subtle);
+          border-color: var(--border-heavy);
         }
 
         .notif-card:hover {
@@ -249,7 +249,7 @@ const Notifications = () => {
           width: 48px;
           height: 48px;
           border-radius: 50%;
-          background: #f1f5f9;
+          background: var(--bg-muted);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -263,7 +263,7 @@ const Notifications = () => {
         .notif-text {
           font-size: 0.9375rem;
           font-weight: 600;
-          color: #1e293b;
+          color: var(--text-primary);
           margin: 0 0 0.5rem 0;
           line-height: 1.4;
         }
@@ -274,7 +274,7 @@ const Notifications = () => {
           gap: 0.375rem;
           font-size: 0.75rem;
           font-weight: 600;
-          color: #94a3b8;
+          color: var(--text-quaternary);
         }
 
         .unread-dot {
@@ -288,25 +288,25 @@ const Notifications = () => {
         .notif-empty-state {
           padding: 4rem 2rem;
           text-align: center;
-          background: white;
-          border: 1px dashed #cbd5e1;
+          background: var(--bg-surface);
+          border: 1px dashed var(--border-heavy);
           border-radius: 16px;
         }
 
         .empty-icon {
-          color: #cbd5e1;
+          color: var(--border-heavy);
           margin-bottom: 1rem;
         }
 
         .notif-empty-state h3 {
           font-size: 1.25rem;
           font-weight: 800;
-          color: #1e293b;
+          color: var(--text-primary);
           margin: 0 0 0.5rem 0;
         }
 
         .notif-empty-state p {
-          color: #64748b;
+          color: var(--text-tertiary);
           margin: 0;
         }
 

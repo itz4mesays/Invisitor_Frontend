@@ -28,7 +28,7 @@ const BarChart = ({ data, height = 220 }) => {
             transition={{ delay: i * 0.04, duration: 0.5 }}
             style={{ width: '100%', background: 'linear-gradient(180deg, #3b82f6, #1d4ed8)', borderRadius: '4px 4px 0 0', minHeight: d.count > 0 ? 4 : 0 }}
           />
-          <span style={{ fontSize: '0.6rem', color: '#94a3b8', fontWeight: 600 }}>{d.label}</span>
+          <span style={{ fontSize: '0.6rem', color: 'var(--text-quaternary)', fontWeight: 600 }}>{d.label}</span>
         </div>
       ))}
     </div>
@@ -72,9 +72,9 @@ const ManagerReports = () => {
   }));
 
   const pieSegments = [
-    { label: 'Completed', value: stats.completed, color: '#22c55e' },
+    { label: 'Completed', value: stats.completed, color: 'var(--text-success)' },
     { label: 'Scheduled', value: stats.scheduled, color: '#3b82f6' },
-    { label: 'Cancelled', value: stats.cancelled, color: '#ef4444' },
+    { label: 'Cancelled', value: stats.cancelled, color: 'var(--text-danger)' },
   ];
 
   const checkInCount = stats.completed + stats.scheduled;
@@ -91,9 +91,9 @@ const ManagerReports = () => {
       <div className="mr-stats-grid">
         {[
           { label: 'Total Appointments', value: stats.total, icon: <Calendar size={20} />, color: '#6366f1', bg: '#eef2ff' },
-          { label: 'Completed', value: stats.completed, icon: <CheckCircle size={20} />, color: '#22c55e', bg: '#f0fdf4' },
+          { label: 'Completed', value: stats.completed, icon: <CheckCircle size={20} />, color: 'var(--text-success)', bg: '#f0fdf4' },
           { label: 'Scheduled', value: stats.scheduled, icon: <Clock size={20} />, color: '#3b82f6', bg: '#eff6ff' },
-          { label: 'Cancelled', value: stats.cancelled, icon: <XCircle size={20} />, color: '#ef4444', bg: '#fef2f2' },
+          { label: 'Cancelled', value: stats.cancelled, icon: <XCircle size={20} />, color: 'var(--text-danger)', bg: 'var(--bg-danger-subtle)' },
         ].map((s, i) => (
           <motion.div key={i} className="mr-stat-card" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}>
             <div className="mr-stat-icon" style={{ background: s.bg, color: s.color }}>{s.icon}</div>
@@ -111,7 +111,7 @@ const ManagerReports = () => {
           <h3>Dashboard Overview</h3>
           <div className="mr-overview-items">
             <div className="mr-overview-item">
-              <TrendingUp size={18} style={{ color: '#22c55e' }} />
+              <TrendingUp size={18} style={{ color: 'var(--text-success)' }} />
               <div>
                 <p>Total Check-Ins</p>
                 <strong>{checkInCount}</strong>
@@ -135,7 +135,7 @@ const ManagerReports = () => {
             {pieSegments.map((s, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem' }}>
                 <span style={{ width: 10, height: 10, borderRadius: '50%', background: s.color, display: 'inline-block' }} />
-                <span style={{ flex: 1, color: '#64748b' }}>{s.label}</span>
+                <span style={{ flex: 1, color: 'var(--text-tertiary)' }}>{s.label}</span>
                 <strong>{s.value}</strong>
               </div>
             ))}
@@ -158,29 +158,73 @@ const ManagerReports = () => {
         <BarChart data={monthlyData} height={200} />
       </div>
 
+      {/* Recent Appointments Table */}
+      <div className="mr-table-card">
+        <h3>Last 10 Appointments</h3>
+        <div className="mr-table-container">
+          <table className="mr-table">
+            <thead>
+              <tr>
+                <th>Visitor</th>
+                <th>Resident</th>
+                <th>Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {APPOINTMENTS.slice(0, 10).map((apt) => (
+                <tr key={apt.id}>
+                  <td><strong>{apt.visitor}</strong></td>
+                  <td>{apt.resident}</td>
+                  <td>{apt.date}</td>
+                  <td>
+                    <span className={`mr-badge ${apt.status}`}>
+                      {apt.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <style jsx>{`
         .mr-page { display: flex; flex-direction: column; gap: 1.5rem; padding-bottom: 3rem; }
-        .mr-header h1 { font-size: 1.75rem; font-weight: 800; color: #1e293b; margin-bottom: 0.25rem; }
-        .mr-header p { color: #64748b; }
+        .mr-header h1 { font-size: 1.75rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.25rem; }
+        .mr-header p { color: var(--text-tertiary); }
         .mr-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
-        .mr-stat-card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; }
+        .mr-stat-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 16px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; }
         .mr-stat-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .mr-stat-label { display: block; font-size: 0.75rem; color: #94a3b8; font-weight: 600; }
-        .mr-stat-value { display: block; font-size: 1.75rem; font-weight: 800; color: #1e293b; line-height: 1; }
+        .mr-stat-label { display: block; font-size: 0.75rem; color: var(--text-quaternary); font-weight: 600; }
+        .mr-stat-value { display: block; font-size: 1.75rem; font-weight: 800; color: var(--text-primary); line-height: 1; }
         .mr-dashboard-row { display: grid; grid-template-columns: 1fr 280px; gap: 1.25rem; }
-        .mr-card { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; }
-        .mr-card h3 { font-size: 1rem; font-weight: 800; color: #1e293b; margin-bottom: 1.5rem; }
+        .mr-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 20px; padding: 1.5rem; }
+        .mr-card h3 { font-size: 1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 1.5rem; }
         .mr-overview-items { display: flex; flex-direction: column; gap: 1.25rem; }
-        .mr-overview-item { display: flex; align-items: center; gap: 1rem; background: #f8fafc; padding: 1rem; border-radius: 12px; }
-        .mr-overview-item p { font-size: 0.8rem; color: #64748b; margin: 0; }
-        .mr-overview-item strong { font-size: 1.5rem; font-weight: 800; color: #1e293b; display: block; }
-        .mr-chart-card { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; }
+        .mr-overview-item { display: flex; align-items: center; gap: 1rem; background: var(--bg-subtle); padding: 1rem; border-radius: 12px; }
+        .mr-overview-item p { font-size: 0.8rem; color: var(--text-tertiary); margin: 0; }
+        .mr-overview-item strong { font-size: 1.5rem; font-weight: 800; color: var(--text-primary); display: block; }
+        .mr-chart-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 20px; padding: 1.5rem; }
         .mr-chart-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem; }
-        .mr-chart-header h3 { font-size: 1rem; font-weight: 800; color: #1e293b; margin-bottom: 4px; }
-        .mr-chart-header p { font-size: 0.75rem; color: #94a3b8; margin: 0; }
+        .mr-chart-header h3 { font-size: 1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 4px; }
+        .mr-chart-header p { font-size: 0.75rem; color: var(--text-quaternary); margin: 0; }
         .mr-filter-tabs { display: flex; gap: 0.5rem; }
-        .mr-filter-tab { background: white; border: 1px solid #e2e8f0; padding: 0.4rem 0.875rem; border-radius: 8px; font-size: 0.8125rem; font-weight: 600; color: #64748b; cursor: pointer; }
-        .mr-filter-tab.active { background: #0d2331; color: white; border-color: #0d2331; }
+        .mr-filter-tab { background: var(--bg-surface); border: 1px solid var(--border-default); padding: 0.4rem 0.875rem; border-radius: 8px; font-size: 0.8125rem; font-weight: 600; color: var(--text-tertiary); cursor: pointer; }
+        .mr-filter-tab.active { background: var(--bg-brand); color: var(--text-inverse); border-color: var(--bg-brand); }
+        
+        .mr-table-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 20px; padding: 1.5rem; }
+        .mr-table-card h3 { font-size: 1.125rem; font-weight: 800; color: var(--text-primary); margin: 0 0 1.25rem 0; }
+        .mr-table-container { overflow-x: auto; }
+        .mr-table { width: 100%; border-collapse: collapse; text-align: left; }
+        .mr-table th { padding: 1rem; border-bottom: 1px solid var(--border-default); color: var(--text-tertiary); font-weight: 600; font-size: 0.875rem; white-space: nowrap; }
+        .mr-table td { padding: 1rem; border-bottom: 1px solid var(--border-default); color: var(--text-primary); font-size: 0.9375rem; }
+        .mr-table tr:last-child td { border-bottom: none; }
+        .mr-badge { padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; text-transform: capitalize; display: inline-block; }
+        .mr-badge.completed { background: var(--bg-success-subtle); color: var(--text-success); }
+        .mr-badge.scheduled { background: #e0f2fe; color: #0369a1; }
+        .mr-badge.cancelled { background: var(--bg-danger-subtle); color: var(--text-danger); }
+        
         @media (max-width: 1100px) {
           .mr-stats-grid { grid-template-columns: repeat(2, 1fr); }
           .mr-dashboard-row { grid-template-columns: 1fr; }

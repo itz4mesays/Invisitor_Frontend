@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
+import AuthLayout from './components/AuthLayout';
 import DashboardLayout from './components/DashboardLayout';
 import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
@@ -14,8 +15,23 @@ import PaymentFailed from './pages/PaymentFailed';
 import Blog from './pages/shared/Blog';
 import BlogPost from './pages/shared/BlogPost';
 
-// Dashboard Imports
+// Dashboard
+// Admin Pages
 import AdminDashboard from './pages/dashboards/AdminDashboard';
+import ManageHosts from './pages/admin/ManageHosts';
+import ManageEstateManagers from './pages/admin/ManageEstateManagers';
+import AdminManageTickets from './pages/admin/ManageTickets';
+import ManageLeads from './pages/admin/ManageLeads';
+import ManageForms from './pages/admin/ManageForms';
+import ManageTransactions from './pages/admin/ManageTransactions';
+import ManageInvoices from './pages/admin/ManageInvoices';
+import ManageUsers from './pages/admin/ManageUsers';
+import HostDetails from './pages/admin/HostDetails';
+import EstateManagerDetails from './pages/admin/EstateManagerDetails';
+import TicketDetails from './pages/admin/TicketDetails';
+import ManageAccessLevel from './pages/admin/ManageAccessLevel';
+
+// Manager Pages
 import ResidentDashboard from './pages/dashboards/ResidentDashboard';
 import ManagerDashboard from './pages/dashboards/ManagerDashboard';
 import VisitorDashboard from './pages/dashboards/VisitorDashboard';
@@ -27,7 +43,10 @@ import ResidentReports from './pages/resident/Reports';
 
 // Host Pages
 import HostVisitors from './pages/host/Visitors';
+import AddVisitor from './pages/host/AddVisitor';
+import VisitorDetails from './pages/host/VisitorDetails';
 import HostFrontDesk from './pages/host/FrontDesk';
+import VisitorReport from './pages/host/VisitorReport';
 
 // Shared Pages
 import ActivityLog from './pages/shared/ActivityLog';
@@ -35,13 +54,16 @@ import Profile from './pages/shared/Profile';
 import Notifications from './pages/shared/Notifications';
 import Transactions from './pages/financial/Transactions';
 import Appointments from './pages/shared/Appointments';
+import AddAppointment from './pages/shared/AddAppointment';
 import Settings from './pages/shared/Settings';
+import ManageQRCodes from './pages/shared/ManageQRCodes';
 import Calendar from './pages/shared/Calendar';
 import Invoices from './pages/shared/Invoices';
 import InvoiceDetails from './pages/shared/InvoiceDetails';
 
-// Manager Pages
 import ManagerReports from './pages/manager/Reports';
+import ResidentReport from './pages/manager/ResidentReport';
+import SecurityReport from './pages/manager/SecurityReport';
 import ManagerTransactions from './pages/manager/Transactions';
 import ManagerSecurity from './pages/manager/Security';
 import ManagerResidents from './pages/manager/Residents';
@@ -64,7 +86,7 @@ function App() {
         <Route path="/blog/:id" element={<BlogPost />} />
         
         {/* Auth Layout Routes */}
-        <Route element={<Layout />}>
+        <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignupWizard />} />
           <Route path="/register" element={<SignupWizard />} />
@@ -78,9 +100,21 @@ function App() {
         <Route path="/admin" element={<DashboardLayout />}>
           <Route index element={<Navigate to="/admin/dashboard" replace />} />
           <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="hosts" element={<ManageHosts />} />
+          <Route path="hosts/:id" element={<HostDetails />} />
+          <Route path="estate-managers" element={<ManageEstateManagers />} />
+          <Route path="estate-managers/:id" element={<EstateManagerDetails />} />
+          <Route path="tickets" element={<AdminManageTickets />} />
+          <Route path="tickets/:id" element={<TicketDetails />} />
+          <Route path="leads" element={<ManageLeads />} />
+          <Route path="forms" element={<ManageForms />} />
+          <Route path="transactions" element={<ManageTransactions />} />
+          <Route path="invoices" element={<ManageInvoices />} />
+          <Route path="users" element={<ManageUsers />} />
+          <Route path="access-level" element={<ManageAccessLevel />} />
+          <Route path="activity-log" element={<ActivityLog />} />
           <Route path="appointments" element={<Appointments />} />
           <Route path="calendar" element={<Calendar />} />
-          <Route path="activity-log" element={<ActivityLog />} />
           <Route path="notifications" element={<Notifications />} />
           <Route path="profile" element={<Profile />} />
           <Route path="settings" element={<Settings />} />
@@ -91,6 +125,7 @@ function App() {
           <Route index element={<Navigate to="/resident/dashboard" replace />} />
           <Route path="dashboard" element={<ResidentDashboard />} />
           <Route path="appointments" element={<Appointments />} />
+          <Route path="appointments/add" element={<AddAppointment />} />
           <Route path="calendar" element={<Calendar />} />
           <Route path="reports" element={<ResidentReports />} />
           <Route path="transactions" element={<Transactions />} />
@@ -110,10 +145,15 @@ function App() {
           <Route path="activity-log" element={<ActivityLog />} />
           <Route path="notifications" element={<Notifications />} />
           <Route path="appointments" element={<Appointments />} />
+          <Route path="appointments/add" element={<AddAppointment />} />
+          <Route path="qr-codes" element={<ManageQRCodes />} />
           <Route path="calendar" element={<Calendar />} />
           <Route path="invoices" element={<Invoices />} />
           <Route path="invoices/:id" element={<InvoiceDetails />} />
-          <Route path="reports" element={<ManagerReports />} />
+          <Route path="reports" element={<Navigate to="/manager/reports/appointments" replace />} />
+          <Route path="reports/appointments" element={<ManagerReports />} />
+          <Route path="reports/resident" element={<ResidentReport />} />
+          <Route path="reports/security" element={<SecurityReport />} />
           <Route path="support/dashboard" element={<SupportDashboard />} />
           <Route path="support/tickets" element={<ManageTickets />} />
           <Route path="support/tickets/:ticketId" element={<TicketView />} />
@@ -147,7 +187,15 @@ function App() {
           <Route path="activity-log" element={<ActivityLog />} />
           <Route path="notifications" element={<Notifications />} />
           <Route path="visitors" element={<HostVisitors />} />
+          <Route path="visitors/add" element={<AddVisitor />} />
+          <Route path="visitors/:visitorId" element={<VisitorDetails />} />
           <Route path="appointments" element={<Appointments />} />
+          <Route path="appointments/add" element={<AddAppointment />} />
+          <Route path="reports" element={<Navigate to="/host/reports/visitor" replace />} />
+          <Route path="reports/visitor" element={<VisitorReport />} />
+          <Route path="reports/appointments" element={<ManagerReports />} />
+          <Route path="reports/security" element={<SecurityReport />} />
+          <Route path="qr-codes" element={<ManageQRCodes />} />
           <Route path="calendar" element={<Calendar />} />
           <Route path="invoices" element={<Invoices />} />
           <Route path="invoices/:id" element={<InvoiceDetails />} />
@@ -164,6 +212,10 @@ function App() {
           <Route index element={<Navigate to="/frontdesk/dashboard" replace />} />
           <Route path="dashboard" element={<FrontDeskDashboard />} />
           <Route path="appointments" element={<Appointments />} />
+          <Route path="appointments/add" element={<AddAppointment />} />
+          <Route path="visitors" element={<HostVisitors />} />
+          <Route path="visitors/add" element={<AddVisitor />} />
+          <Route path="visitors/:visitorId" element={<VisitorDetails />} />
           <Route path="calendar" element={<Calendar />} />
           <Route path="transactions" element={<Transactions />} />
           <Route path="activity-log" element={<ActivityLog />} />

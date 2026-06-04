@@ -89,7 +89,7 @@ const Residents = () => {
       </div>
 
       {filtered.length === 0 && (
-        <div style={{ textAlign: 'center', padding: '3rem', color: '#94a3b8' }}>No residents found.</div>
+        <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-quaternary)' }}>No residents found.</div>
       )}
 
       {totalPages > 1 && (
@@ -117,42 +117,42 @@ const Residents = () => {
       <style jsx>{`
         .res-page { display: flex; flex-direction: column; gap: 1.5rem; padding-bottom: 3rem; }
         .res-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; }
-        .res-header h1 { font-size: 1.75rem; font-weight: 800; color: #1e293b; margin-bottom: 0.25rem; }
-        .res-header p { color: #64748b; font-size: 0.9375rem; }
-        .res-btn-add { background: #0d2331; color: white; border: none; padding: 0.875rem 1.5rem; border-radius: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; white-space: nowrap; }
+        .res-header h1 { font-size: 1.75rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.25rem; }
+        .res-header p { color: var(--text-tertiary); font-size: 0.9375rem; }
+        .res-btn-add { background: var(--bg-brand); color: var(--text-inverse); border: none; padding: 0.875rem 1.5rem; border-radius: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; white-space: nowrap; }
         .res-controls { display: flex; gap: 1rem; flex-wrap: wrap; }
-        .res-search { flex: 1; min-width: 200px; display: flex; align-items: center; gap: 0.75rem; background: white; padding: 0.75rem 1rem; border: 1px solid #e2e8f0; border-radius: 10px; color: #94a3b8; }
-        .res-search input { flex: 1; border: none; outline: none; background: none; font-size: 0.875rem; color: #1e293b; }
+        .res-search { flex: 1; min-width: 200px; display: flex; align-items: center; gap: 0.75rem; background: var(--bg-surface); padding: 0.75rem 1rem; border: 1px solid var(--border-default); border-radius: 10px; color: var(--text-quaternary); }
+        .res-search input { flex: 1; border: none; outline: none; background: none; font-size: 0.875rem; color: var(--text-primary); }
         .res-filters { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-        .res-filters select { background: white; border: 1px solid #e2e8f0; padding: 0.75rem 1rem; border-radius: 10px; font-size: 0.875rem; cursor: pointer; outline: none; }
+        .res-filters select { background: var(--bg-surface); border: 1px solid var(--border-default); padding: 0.75rem 1rem; border-radius: 10px; font-size: 0.875rem; cursor: pointer; outline: none; }
         .res-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
-        .res-card { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+        .res-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 20px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
         .res-card-header { display: flex; align-items: center; gap: 1rem; }
-        .res-avatar { width: 56px; height: 56px; border-radius: 50%; border: 3px solid #f1f5f9; flex-shrink: 0; }
+        .res-avatar { width: 56px; height: 56px; border-radius: 50%; border: 3px solid var(--bg-muted); flex-shrink: 0; }
         .res-card-info { flex: 1; }
-        .res-card-info h3 { font-size: 1rem; font-weight: 800; color: #1e293b; margin-bottom: 4px; }
+        .res-card-info h3 { font-size: 1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 4px; }
         .res-status-badge { padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; text-transform: capitalize; }
-        .res-status-badge.occupying { background: #dcfce7; color: #15803d; }
+        .res-status-badge.occupying { background: var(--bg-success-subtle); color: var(--text-success); }
         .res-status-badge.vacant { background: #fef3c7; color: #d97706; }
-        .res-type-badge { background: #f1f5f9; color: #475569; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; white-space: nowrap; }
+        .res-type-badge { background: var(--bg-muted); color: var(--text-secondary); padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; white-space: nowrap; }
         .res-card-details { display: flex; flex-direction: column; gap: 0.5rem; }
-        .res-detail { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: #64748b; }
+        .res-detail { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--text-tertiary); }
         .res-detail span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .res-card-actions { display: flex; gap: 0.75rem; align-items: center; }
-        .res-btn-view { flex: 1; background: #0d2331; color: white; border: none; padding: 0.625rem; border-radius: 10px; font-weight: 700; font-size: 0.8125rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.4rem; }
-        .res-btn-delete { background: #fef2f2; color: #ef4444; border: none; padding: 0.625rem; border-radius: 10px; cursor: pointer; display: flex; align-items: center; }
+        .res-btn-view { flex: 1; background: var(--bg-brand); color: var(--text-inverse); border: none; padding: 0.625rem; border-radius: 10px; font-weight: 700; font-size: 0.8125rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.4rem; }
+        .res-btn-delete { background: var(--bg-danger-subtle); color: var(--text-danger); border: none; padding: 0.625rem; border-radius: 10px; cursor: pointer; display: flex; align-items: center; }
         .res-pagination { display: flex; align-items: center; justify-content: center; gap: 1rem; padding-top: 1rem; }
-        .res-pagination button { background: white; border: 1px solid #e2e8f0; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.875rem; }
+        .res-pagination button { background: var(--bg-surface); border: 1px solid var(--border-default); padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.875rem; }
         .res-pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
-        .res-pagination span { font-size: 0.875rem; color: #64748b; }
+        .res-pagination span { font-size: 0.875rem; color: var(--text-tertiary); }
         .res-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 1rem; }
-        .res-modal { background: white; border-radius: 20px; padding: 2.5rem; max-width: 400px; width: 100%; text-align: center; }
-        .res-modal-icon { width: 64px; height: 64px; border-radius: 50%; background: #fef2f2; color: #ef4444; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; }
-        .res-modal h3 { font-size: 1.25rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; }
-        .res-modal p { font-size: 0.875rem; color: #64748b; margin-bottom: 1.5rem; }
+        .res-modal { background: var(--bg-surface); border-radius: 20px; padding: 2.5rem; max-width: 400px; width: 100%; text-align: center; }
+        .res-modal-icon { width: 64px; height: 64px; border-radius: 50%; background: var(--bg-danger-subtle); color: var(--text-danger); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; }
+        .res-modal h3 { font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.75rem; }
+        .res-modal p { font-size: 0.875rem; color: var(--text-tertiary); margin-bottom: 1.5rem; }
         .res-modal-actions { display: flex; gap: 0.75rem; }
-        .res-btn-confirm-delete { flex: 1; background: #ef4444; color: white; border: none; padding: 0.875rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
-        .res-btn-cancel-modal { flex: 1; background: white; border: 1px solid #e2e8f0; color: #1e293b; padding: 0.875rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
+        .res-btn-confirm-delete { flex: 1; background: var(--text-danger); color: var(--text-inverse); border: none; padding: 0.875rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
+        .res-btn-cancel-modal { flex: 1; background: var(--bg-surface); border: 1px solid var(--border-default); color: var(--text-primary); padding: 0.875rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
         @media (max-width: 1024px) { .res-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 768px) {
           .res-header { flex-direction: column; }

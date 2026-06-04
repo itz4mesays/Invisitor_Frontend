@@ -8,9 +8,9 @@ const CATEGORIES = ['Technical Issue', 'Billing', 'Account Access', 'General Inq
 const ALL_STATUSES = ['All', 'Open', 'Closed', 'Resolved', 'Pending', 'In Progress'];
 const STATUS_COLORS = {
   Open: { bg: '#fffbeb', color: '#d97706' },
-  Closed: { bg: '#fef2f2', color: '#dc2626' },
+  Closed: { bg: 'var(--bg-danger-subtle)', color: '#dc2626' },
   Resolved: { bg: '#f0fdf4', color: '#16a34a' },
-  Pending: { bg: '#eff6ff', color: '#2563eb' },
+  Pending: { bg: '#eff6ff', color: 'var(--accent-primary)' },
   'In Progress': { bg: '#faf5ff', color: '#7c3aed' },
 };
 
@@ -145,7 +145,7 @@ const ManagerSupport = () => {
                   </tr>
                 );
               })}
-              {paginated.length === 0 && <tr><td colSpan="7" style={{ textAlign: 'center', padding: '3rem', color: '#94a3b8' }}>No tickets found.</td></tr>}
+              {paginated.length === 0 && <tr><td colSpan="7" style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-quaternary)' }}>No tickets found.</td></tr>}
             </tbody>
           </table>
         </div>
@@ -166,7 +166,7 @@ const ManagerSupport = () => {
                 </div>
               ) : (
                 <div className="sp-add-content">
-                  <Ticket size={20} style={{ color: '#0d2331', marginBottom: '0.75rem' }} />
+                  <Ticket size={20} style={{ color: 'var(--bg-brand)', marginBottom: '0.75rem' }} />
                   <h2>New Support Ticket</h2>
                   <p>Describe your issue and we'll get back to you</p>
                   <form onSubmit={handleAddSubmit}>
@@ -209,61 +209,61 @@ const ManagerSupport = () => {
 
       <style jsx>{`
         .sp-page { display: flex; flex-direction: column; gap: 1.5rem; padding-bottom: 3rem; }
-        .sp-page-header h1 { font-size: 1.75rem; font-weight: 800; color: #1e293b; }
+        .sp-page-header h1 { font-size: 1.75rem; font-weight: 800; color: var(--text-primary); }
         .sp-top-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
         .sp-summary-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; }
         .sp-badge { display: flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
         .sp-badge-count { background: rgba(0,0,0,0.12); border-radius: 10px; padding: 1px 7px; font-size: 0.6875rem; font-weight: 800; }
-        .sp-btn-add { background: #0d2331; color: white; padding: 0.75rem 1.25rem; border-radius: 8px; border: none; font-weight: 700; font-size: 0.875rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; white-space: nowrap; }
-        .sp-table-card { background: white; border-radius: 16px; border: 1px solid #e2e8f0; padding: 1.5rem; }
+        .sp-btn-add { background: var(--bg-brand); color: var(--text-inverse); padding: 0.75rem 1.25rem; border-radius: 8px; border: none; font-weight: 700; font-size: 0.875rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; white-space: nowrap; }
+        .sp-table-card { background: var(--bg-surface); border-radius: 16px; border: 1px solid var(--border-default); padding: 1.5rem; }
         .sp-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem; }
-        .sp-toolbar h2 { font-size: 1.125rem; font-weight: 800; color: #1e293b; }
+        .sp-toolbar h2 { font-size: 1.125rem; font-weight: 800; color: var(--text-primary); }
         .sp-toolbar-actions { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
-        .sp-search { display: flex; align-items: center; gap: 0.5rem; background: #f8fafc; border: 1px solid #e2e8f0; padding: 0.5rem 1rem; border-radius: 8px; color: #94a3b8; width: 220px; }
-        .sp-search input { border: none; background: none; outline: none; font-size: 0.8125rem; color: #1e293b; width: 100%; }
+        .sp-search { display: flex; align-items: center; gap: 0.5rem; background: var(--bg-subtle); border: 1px solid var(--border-default); padding: 0.5rem 1rem; border-radius: 8px; color: var(--text-quaternary); width: 220px; }
+        .sp-search input { border: none; background: none; outline: none; font-size: 0.8125rem; color: var(--text-primary); width: 100%; }
         .sp-status-wrap { position: relative; }
-        .sp-status-btn { display: flex; align-items: center; gap: 6px; background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem 0.875rem; font-size: 0.8125rem; font-weight: 700; color: #475569; cursor: pointer; white-space: nowrap; }
-        .sp-status-dropdown { position: absolute; right: 0; top: calc(100% + 6px); background: white; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 100; min-width: 180px; overflow: hidden; }
-        .sp-status-dropdown button { display: flex; align-items: center; padding: 0.625rem 1rem; font-size: 0.875rem; font-weight: 600; color: #1e293b; background: none; border: none; width: 100%; cursor: pointer; text-align: left; }
-        .sp-status-dropdown button:hover { background: #f8fafc; }
-        .sp-status-dropdown button.active { background: #f1f5f9; font-weight: 800; }
+        .sp-status-btn { display: flex; align-items: center; gap: 6px; background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 8px; padding: 0.5rem 0.875rem; font-size: 0.8125rem; font-weight: 700; color: var(--text-secondary); cursor: pointer; white-space: nowrap; }
+        .sp-status-dropdown { position: absolute; right: 0; top: calc(100% + 6px); background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 100; min-width: 180px; overflow: hidden; }
+        .sp-status-dropdown button { display: flex; align-items: center; padding: 0.625rem 1rem; font-size: 0.875rem; font-weight: 600; color: var(--text-primary); background: none; border: none; width: 100%; cursor: pointer; text-align: left; }
+        .sp-status-dropdown button:hover { background: var(--bg-subtle); }
+        .sp-status-dropdown button.active { background: var(--bg-muted); font-weight: 800; }
         .sp-table { width: 100%; border-collapse: collapse; min-width: 620px; }
-        .sp-table th { padding: 0.875rem 0; font-size: 0.75rem; font-weight: 600; color: #64748b; border-bottom: 1px solid #f1f5f9; text-align: left; }
-        .sp-table td { padding: 1.125rem 0; font-size: 0.875rem; border-bottom: 1px solid #f1f5f9; }
-        .sp-id { font-weight: 700; color: #1e293b; }
-        .sp-subject { font-weight: 600; color: #1e293b; max-width: 200px; }
-        .sp-gray { color: #64748b; }
+        .sp-table th { padding: 0.875rem 0; font-size: 0.75rem; font-weight: 600; color: var(--text-tertiary); border-bottom: 1px solid var(--bg-muted); text-align: left; }
+        .sp-table td { padding: 1.125rem 0; font-size: 0.875rem; border-bottom: 1px solid var(--bg-muted); }
+        .sp-id { font-weight: 700; color: var(--text-primary); }
+        .sp-subject { font-weight: 600; color: var(--text-primary); max-width: 200px; }
+        .sp-gray { color: var(--text-tertiary); }
         .sp-pill { padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; white-space: nowrap; }
         .sp-action-wrap { position: relative; display: inline-block; }
-        .sp-btn-dots { background: none; border: none; color: #94a3b8; cursor: pointer; padding: 4px; border-radius: 6px; display: flex; align-items: center; }
-        .sp-btn-dots:hover { background: #f1f5f9; }
-        .sp-dropdown { position: absolute; right: 0; top: calc(100% + 4px); background: white; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); z-index: 100; min-width: 140px; overflow: hidden; }
-        .sp-dropdown button { display: flex; align-items: center; gap: 8px; padding: 0.75rem 1rem; font-size: 0.875rem; font-weight: 600; color: #1e293b; background: none; border: none; width: 100%; cursor: pointer; }
-        .sp-dropdown button:hover { background: #f8fafc; }
-        .sp-dropdown button.delete { color: #ef4444; }
-        .sp-dropdown button.delete:hover { background: #fef2f2; }
+        .sp-btn-dots { background: none; border: none; color: var(--text-quaternary); cursor: pointer; padding: 4px; border-radius: 6px; display: flex; align-items: center; }
+        .sp-btn-dots:hover { background: var(--bg-muted); }
+        .sp-dropdown { position: absolute; right: 0; top: calc(100% + 4px); background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); z-index: 100; min-width: 140px; overflow: hidden; }
+        .sp-dropdown button { display: flex; align-items: center; gap: 8px; padding: 0.75rem 1rem; font-size: 0.875rem; font-weight: 600; color: var(--text-primary); background: none; border: none; width: 100%; cursor: pointer; }
+        .sp-dropdown button:hover { background: var(--bg-subtle); }
+        .sp-dropdown button.delete { color: var(--text-danger); }
+        .sp-dropdown button.delete:hover { background: var(--bg-danger-subtle); }
         .sp-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 1rem; }
-        .sp-modal { background: white; width: 100%; max-width: 600px; border-radius: 28px; position: relative; max-height: 90vh; overflow-y: auto; }
-        .sp-modal-close { position: absolute; top: 1.25rem; right: 1.25rem; background: white; border: 1px solid #e2e8f0; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #1e293b; z-index: 10; }
+        .sp-modal { background: var(--bg-surface); width: 100%; max-width: 600px; border-radius: 28px; position: relative; max-height: 90vh; overflow-y: auto; }
+        .sp-modal-close { position: absolute; top: 1.25rem; right: 1.25rem; background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-primary); z-index: 10; }
         .sp-add-content { padding: 2.5rem; }
-        .sp-add-content h2 { font-size: 1.5rem; font-weight: 800; color: #0d2331; margin-bottom: 4px; }
-        .sp-add-content p { font-size: 0.875rem; color: #94a3b8; margin-bottom: 2rem; }
+        .sp-add-content h2 { font-size: 1.5rem; font-weight: 800; color: var(--bg-brand); margin-bottom: 4px; }
+        .sp-add-content p { font-size: 0.875rem; color: var(--text-quaternary); margin-bottom: 2rem; }
         .sp-form-field { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.25rem; }
-        .sp-form-field label { font-size: 0.75rem; font-weight: 800; color: #1e293b; }
-        .sp-form-field input, .sp-form-field select, .sp-form-field textarea { padding: 0.875rem; border-radius: 10px; border: 1.5px solid #e2e8f0; font-size: 0.875rem; color: #1e293b; outline: none; font-family: inherit; }
+        .sp-form-field label { font-size: 0.75rem; font-weight: 800; color: var(--text-primary); }
+        .sp-form-field input, .sp-form-field select, .sp-form-field textarea { padding: 0.875rem; border-radius: 10px; border: 1.5px solid var(--border-default); font-size: 0.875rem; color: var(--text-primary); outline: none; font-family: inherit; }
         .sp-form-field textarea { resize: vertical; }
         .sp-form-actions { display: flex; gap: 1rem; margin-top: 0.5rem; }
-        .sp-btn-submit { background: #0d2331; color: white; border: none; padding: 1rem 2rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
-        .sp-btn-cancel { background: white; border: 1px solid #e2e8f0; color: #1e293b; padding: 1rem 2rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
+        .sp-btn-submit { background: var(--bg-brand); color: var(--text-inverse); border: none; padding: 1rem 2rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
+        .sp-btn-cancel { background: var(--bg-surface); border: 1px solid var(--border-default); color: var(--text-primary); padding: 1rem 2rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
         .sp-success { padding: 3.5rem 2rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
-        .sp-success-icon { width: 80px; height: 80px; border-radius: 50%; background: #22c55e; color: white; display: flex; align-items: center; justify-content: center; }
-        .sp-success h2 { font-size: 1.5rem; font-weight: 800; color: #0d2331; }
-        .sp-btn-back { background: white; border: 1px solid #e2e8f0; color: #0d2331; padding: 0.875rem 2rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
+        .sp-success-icon { width: 80px; height: 80px; border-radius: 50%; background: var(--text-success); color: var(--text-inverse); display: flex; align-items: center; justify-content: center; }
+        .sp-success h2 { font-size: 1.5rem; font-weight: 800; color: var(--bg-brand); }
+        .sp-btn-back { background: var(--bg-surface); border: 1px solid var(--border-default); color: var(--bg-brand); padding: 0.875rem 2rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
         .sp-delete-modal { max-width: 400px; padding: 2.5rem; text-align: center; }
-        .sp-delete-icon { width: 72px; height: 72px; border-radius: 50%; background: #fef2f2; color: #ef4444; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; }
-        .sp-delete-modal h3 { font-size: 1.25rem; font-weight: 800; color: #1e293b; margin-bottom: 0.75rem; }
-        .sp-delete-modal p { font-size: 0.875rem; color: #64748b; margin-bottom: 1.5rem; line-height: 1.6; }
-        .sp-btn-delete-confirm { background: #ef4444; color: white; border: none; padding: 0.875rem 2rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
+        .sp-delete-icon { width: 72px; height: 72px; border-radius: 50%; background: var(--bg-danger-subtle); color: var(--text-danger); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; }
+        .sp-delete-modal h3 { font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.75rem; }
+        .sp-delete-modal p { font-size: 0.875rem; color: var(--text-tertiary); margin-bottom: 1.5rem; line-height: 1.6; }
+        .sp-btn-delete-confirm { background: var(--text-danger); color: var(--text-inverse); border: none; padding: 0.875rem 2rem; border-radius: 12px; font-weight: 700; cursor: pointer; }
         @media (max-width: 768px) {
           .sp-top-row { flex-direction: column; align-items: flex-start; }
           .sp-btn-add { width: 100%; justify-content: center; }

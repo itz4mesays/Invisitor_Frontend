@@ -8,12 +8,15 @@ import {
   Mail, Phone, MapPin, MessageCircle, Send, Globe, User
 } from 'lucide-react';
 
+import landingHeroBg from '../assets/landing-hero.png';
+import landingAboutImg from '../assets/landing-about.png';
+
 const Logo = ({ color = "white" }) => (
   <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
     <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="25" r="15" fill={color} />
-      <path d="M20 55C20 49.4772 24.4772 45 30 45H70C75.5228 45 80 49.4772 80 55V60H20V55Z" fill={color} />
-      <path d="M20 65H80V75C80 80.5228 75.5228 85 70 85H30C24.4772 85 20 80.5228 20 75V65Z" fill={color} />
+      <circle cx="50" cy="25" r="18" fill={color} />
+      <path d="M20 55C20 49.5 24.5 45 30 45H70C75.5 45 80 49.5 80 55V60H20V55Z" fill={color} />
+      <path d="M20 65H80V75C80 80.5 75.5 85 70 85H30C24.5 85 20 80.5 20 75V65Z" fill={color} />
     </svg>
     <span style={{ fontSize: '1.5rem', fontWeight: 800, color: color, letterSpacing: '-0.02em' }}>InVisitor</span>
   </div>
@@ -24,12 +27,12 @@ const FeatureItem = ({ icon, label, value }) => (
     display: 'flex', 
     alignItems: 'center', 
     padding: '0.75rem 0', 
-    borderBottom: '1px solid #f1f5f9',
+    borderBottom: '1px solid var(--bg-muted)',
     fontSize: '0.85rem'
   }}>
-    <span style={{ color: '#94a3b8', marginRight: '0.75rem' }}>{icon}</span>
-    <span style={{ flex: 1, color: '#444' }}>{label}</span>
-    <span style={{ fontWeight: 600, color: '#0d2331' }}>{value}</span>
+    <span style={{ color: 'var(--text-quaternary)', marginRight: '0.75rem' }}>{icon}</span>
+    <span style={{ flex: 1, color: 'var(--text-primary)' }}>{label}</span>
+    <span style={{ fontWeight: 600, color: 'var(--bg-brand)' }}>{value}</span>
   </li>
 );
 
@@ -109,7 +112,7 @@ const LandingPage = () => {
       support: 'Priority Email',
       security: 'Basic Whitelist',
       calendar: 'Basic',
-      color: '#00a3ff',
+      color: 'var(--accent-primary)',
       popular: true
     },
     {
@@ -140,7 +143,7 @@ const LandingPage = () => {
       support: 'Dedicated Manager',
       security: 'Advanced SOC2',
       calendar: 'Multi-Team',
-      color: '#0d2331'
+      color: 'var(--bg-brand)'
     }
   ];
 
@@ -174,7 +177,7 @@ const LandingPage = () => {
       reporting: 'Advanced Analytics',
       support: '24/7 Phone/Email',
       accessControl: 'QR + Badge',
-      color: '#00a3ff',
+      color: 'var(--accent-primary)',
       popular: true
     },
     {
@@ -190,7 +193,7 @@ const LandingPage = () => {
       reporting: 'Advanced Analytics',
       support: 'Dedicated Manager',
       accessControl: 'QR + Badge',
-      color: '#0d2331',
+      color: 'var(--bg-brand)',
       popular: false
     }
   ];
@@ -221,7 +224,7 @@ const LandingPage = () => {
         
         {/* Desktop Menu */}
         <div className="desktop-menu" style={{ display: 'none', gap: '2rem', alignItems: 'center' }}>
-          {['Home', 'About', 'Why Choose Us?', 'Pricing', 'Contact'].map((item) => (
+          {['Home', 'About', 'Pricing', 'Contact'].map((item) => (
             <button 
               key={item} 
               onClick={() => scrollTo(item.toLowerCase().replace(' ', '-'))}
@@ -236,7 +239,7 @@ const LandingPage = () => {
           >
             Blog
           </button>
-          <button onClick={() => navigate('/login')} className="btn btn-primary" style={{ width: 'auto', padding: '0.6rem 1.5rem', fontSize: '0.9rem', background: '#00a3ff' }}>
+          <button onClick={() => navigate('/login')} className="btn btn-primary" style={{ width: 'auto', padding: '0.6rem 1.5rem', fontSize: '0.9rem', background: 'var(--accent-primary)' }}>
             Login
           </button>
         </div>
@@ -285,7 +288,7 @@ const LandingPage = () => {
         style={{
           position: 'fixed', top: 0, right: 0, bottom: 0,
           width: '80%', maxWidth: '320px',
-          background: '#0d2331', zIndex: 250, padding: '2rem',
+          background: 'var(--bg-brand)', zIndex: 250, padding: '2rem',
           display: 'flex', flexDirection: 'column', gap: '1.5rem',
           boxShadow: '-10px 0 40px rgba(0,0,0,0.3)',
           transform: isMenuOpen ? 'translateX(0)' : 'translateX(100%)',
@@ -339,18 +342,20 @@ const LandingPage = () => {
 
       {/* Hero Section with Carousel */}
       <section id="home" style={{ 
-        background: 'radial-gradient(circle at center, #1a3c52 0%, #0d2331 100%)',
+        background: `url(${landingHeroBg}) center/cover no-repeat`,
         color: 'white',
-        padding: '12rem 2rem 8rem',
+        padding: '14rem 2rem 8rem',
         textAlign: 'center',
-        minHeight: '80vh',
+        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         position: 'relative',
         overflow: 'hidden'
       }}>
-        <div style={{ maxWidth: '1000px', margin: '0 auto', width: '100%' }}>
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(135deg, rgba(13, 35, 49, 0.85) 0%, rgba(0, 144, 230, 0.6) 100%)', zIndex: 1 }} />
+        
+        <div style={{ maxWidth: '1000px', margin: '0 auto', width: '100%', position: 'relative', zIndex: 2 }}>
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSlide}
@@ -369,7 +374,7 @@ const LandingPage = () => {
           </AnimatePresence>
           
           <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center' }}>
-            <button onClick={() => scrollTo('pricing')} className="btn btn-primary" style={{ width: 'auto', padding: '1.25rem 3rem', background: '#00a3ff', fontSize: '1.1rem' }}>Get Started Now</button>
+            <button onClick={() => scrollTo('pricing')} className="btn btn-primary" style={{ width: 'auto', padding: '1.25rem 3rem', background: 'var(--accent-primary)', fontSize: '1.1rem' }}>Get Started Now</button>
             <button onClick={() => scrollTo('about')} className="btn btn-outline" style={{ width: 'auto', padding: '1.25rem 3rem', color: 'white', borderColor: 'rgba(255,255,255,0.3)', fontSize: '1.1rem' }}>Learn More</button>
           </div>
 
@@ -383,7 +388,7 @@ const LandingPage = () => {
                   width: i === currentSlide ? '40px' : '10px',
                   height: '10px',
                   borderRadius: '10px',
-                  background: i === currentSlide ? '#00a3ff' : 'rgba(255,255,255,0.2)',
+                  background: i === currentSlide ? 'var(--accent-primary)' : 'rgba(255,255,255,0.2)',
                   cursor: 'pointer',
                   transition: 'all 0.3s ease'
                 }}
@@ -395,38 +400,39 @@ const LandingPage = () => {
 
       {/* Trusted By Section (Infinite Slide) */}
       <section style={{ 
-        padding: '3rem 0', 
-        background: 'white', 
-        borderBottom: '1px solid #f1f5f9',
+        padding: '4rem 0', 
+        background: 'var(--bg-surface)', 
+        borderBottom: '1px solid var(--border-default)',
         overflow: 'hidden',
         whiteSpace: 'nowrap'
       }}>
-        <p style={{ textAlign: 'center', color: '#64748b', fontSize: '0.9rem', marginBottom: '2rem', fontWeight: 600, letterSpacing: '0.05em' }}>
-          TRUSTED BY INNOVATIVE COMPANIES GLOBALLY
+        <p style={{ textAlign: 'center', color: 'var(--text-tertiary)', fontSize: '0.85rem', marginBottom: '2.5rem', fontWeight: 700, letterSpacing: '0.1em' }}>
+          TRUSTED BY INNOVATIVE ENTERPRISES GLOBALLY
         </p>
-        <div style={{ display: 'flex', overflow: 'hidden' }}>
+        <div style={{ display: 'flex', overflow: 'hidden', opacity: 0.6 }}>
           <motion.div 
             animate={{ x: [0, -1035] }}
             transition={{ 
-              duration: 25, 
+              duration: 30, 
               repeat: Infinity, 
               ease: "linear" 
             }}
-            style={{ display: 'flex', gap: '4rem', paddingLeft: '4rem' }}
+            style={{ display: 'flex', gap: '5rem', paddingLeft: '5rem' }}
           >
             {[
               "TechGlobal", "InnovateHQ", "SecureCorp", "CloudNative", "FutureScale", 
               "EliteSystems", "PrimeBuilders", "NexGen", "TechGlobal", "InnovateHQ", "SecureCorp"
             ].map((company, i) => (
               <div key={i} style={{ 
-                fontSize: '1.5rem', 
-                fontWeight: 700, 
-                color: '#cbd5e1',
+                fontSize: '1.75rem', 
+                fontWeight: 800, 
+                color: 'var(--text-tertiary)',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.5rem'
+                gap: '0.75rem',
+                filter: 'grayscale(100%)'
               }}>
-                <Globe size={24} style={{ opacity: 0.5 }} />
+                <Globe size={28} />
                 {company}
               </div>
             ))}
@@ -445,14 +451,15 @@ const LandingPage = () => {
               "EliteSystems", "PrimeBuilders", "NexGen", "TechGlobal", "InnovateHQ", "SecureCorp"
             ].map((company, i) => (
               <div key={i} style={{ 
-                fontSize: '1.5rem', 
-                fontWeight: 700, 
-                color: '#cbd5e1',
+                fontSize: '1.75rem', 
+                fontWeight: 800, 
+                color: 'var(--text-tertiary)',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.5rem'
+                gap: '0.75rem',
+                filter: 'grayscale(100%)'
               }}>
-                <Globe size={24} style={{ opacity: 0.5 }} />
+                <Globe size={28} />
                 {company}
               </div>
             ))}
@@ -461,68 +468,72 @@ const LandingPage = () => {
       </section>
 
       {/* About Section */}
-      <section id="about" style={{ padding: '8rem 2rem', background: '#f8fafc' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '4rem', alignItems: 'center' }}>
+      <section id="about" style={{ padding: '10rem 2rem', background: 'var(--bg-subtle)' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '6rem', alignItems: 'center' }}>
           <div>
-            <h2 style={{ fontSize: '2.5rem', color: '#0d2331', marginBottom: '1.5rem' }}>Revolutionizing Global Guest Management</h2>
-            <p style={{ color: '#64748b', fontSize: '1.1rem', lineHeight: 1.8, marginBottom: '2rem' }}>
+            <h2 style={{ fontSize: '3rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1.5rem', letterSpacing: '-0.02em', lineHeight: 1.2 }}>Revolutionizing Global Guest Management</h2>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '1.15rem', lineHeight: 1.8, marginBottom: '2.5rem' }}>
               InVisitor was born out of a simple need: to make building security and guest check-ins faster, safer, and friendlier. 
               We've developed a comprehensive suite of tools that bridge the gap between physical security and digital convenience.
             </p>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-              <div style={{ borderLeft: '4px solid #00a3ff', paddingLeft: '1rem' }}>
-                <h4 style={{ fontSize: '1.5rem', color: '#0d2331' }}>10k+</h4>
-                <p style={{ color: '#64748b', fontSize: '0.9rem' }}>Locations Globally</p>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+              <div style={{ borderLeft: '4px solid var(--accent-primary)', paddingLeft: '1.5rem' }}>
+                <h4 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-primary)' }}>10k+</h4>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', fontWeight: 600 }}>Locations Globally</p>
               </div>
-              <div style={{ borderLeft: '4px solid #8b5cf6', paddingLeft: '1rem' }}>
-                <h4 style={{ fontSize: '1.5rem', color: '#0d2331' }}>1M+</h4>
-                <p style={{ color: '#64748b', fontSize: '0.9rem' }}>Visitors Checked-In</p>
+              <div style={{ borderLeft: '4px solid #8b5cf6', paddingLeft: '1.5rem' }}>
+                <h4 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-primary)' }}>1M+</h4>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', fontWeight: 600 }}>Visitors Checked-In</p>
               </div>
             </div>
           </div>
           <div style={{ position: 'relative' }}>
              <div style={{ 
-               width: '100%', aspectRatio: '16/10', background: '#0d2331', borderRadius: '24px',
-               boxShadow: '0 30px 60px rgba(0,0,0,0.1)', overflow: 'hidden', display: 'flex', 
-               alignItems: 'center', justifyContent: 'center', color: 'white'
+               width: '100%', aspectRatio: '1/1', background: `url(${landingAboutImg}) center/cover no-repeat`, borderRadius: '32px',
+               boxShadow: '0 40px 80px rgba(0,0,0,0.15)', overflow: 'hidden'
              }}>
-               <Logo color="white" />
              </div>
+             {/* Decorative element */}
+             <div style={{ position: 'absolute', bottom: '-20px', left: '-20px', width: '150px', height: '150px', background: 'var(--accent-primary)', borderRadius: '50%', filter: 'blur(60px)', zIndex: -1, opacity: 0.6 }}></div>
           </div>
         </div>
       </section>
 
       {/* Why Choose Section */}
-      <section id="why-choose" style={{ padding: '8rem 2rem' }}>
-        <h2 style={{ textAlign: 'center', fontSize: '2.5rem', marginBottom: '1rem', color: '#0d2331' }}>Designed for Modern Workplaces</h2>
-        <p style={{ textAlign: 'center', color: '#64748b', marginBottom: '4rem' }}>Why top companies trust InVisitor for their security</p>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+      <section id="why-choose" style={{ padding: '10rem 2rem', background: 'var(--bg-surface)' }}>
+        <h2 style={{ textAlign: 'center', fontSize: '3rem', fontWeight: 800, marginBottom: '1rem', color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>Designed for Modern Workplaces</h2>
+        <p style={{ textAlign: 'center', fontSize: '1.15rem', color: 'var(--text-secondary)', marginBottom: '5rem' }}>Why top companies trust InVisitor for their security</p>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2.5rem' }}>
           {[
-            { icon: <Shield size={32} color="#00a3ff" />, title: 'Real-time Security', text: 'Instantly screen visitors against internal watchlists and government databases.' },
+            { icon: <Shield size={32} color="var(--accent-primary)" />, title: 'Real-time Security', text: 'Instantly screen visitors against internal watchlists and government databases.' },
             { icon: <Users size={32} color="#8b5cf6" />, title: 'Host Notifications', text: 'Hosts are instantly notified via Email, SMS, or Push when their guest arrives.' },
             { icon: <Printer size={32} color="#0ea5e9" />, title: 'Custom Badges', text: 'Print professional, high-quality badges with photos and access permissions.' },
             { icon: <BarChart size={32} color="#f59e0b" />, title: 'Data & Analytics', text: 'Insightful reporting to help you understand traffic patterns and peak hours.' },
             { icon: <Calendar size={32} color="#10b981" />, title: 'Pre-registration', text: 'Invite guests ahead of time and provide them with easy check-in QR codes.' },
-            { icon: <Headphones size={32} color="#ef4444" />, title: 'Global Support', text: 'Our dedicated support team is available 24/7 to ensure your operations run smooth.' }
+            { icon: <Headphones size={32} color="var(--text-danger)" />, title: 'Global Support', text: 'Our dedicated support team is available 24/7 to ensure your operations run smooth.' }
           ].map((item, i) => (
             <motion.div 
               key={i}
-              whileHover={{ y: -5 }}
-              style={{ background: '#f8fafc', padding: '2.5rem', borderRadius: '20px', transition: 'all 0.3s ease' }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              whileHover={{ y: -8, boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}
+              style={{ background: 'var(--bg-subtle)', padding: '3rem 2.5rem', borderRadius: '24px', transition: 'all 0.3s ease', border: '1px solid var(--border-default)' }}
             >
-              <div style={{ marginBottom: '1.5rem' }}>{item.icon}</div>
-              <h3 style={{ marginBottom: '0.75rem', fontSize: '1.25rem', color: '#0d2331' }}>{item.title}</h3>
-              <p style={{ color: '#64748b', lineHeight: 1.6, fontSize: '0.95rem' }}>{item.text}</p>
+              <div style={{ marginBottom: '2rem', background: 'var(--bg-surface)', width: '64px', height: '64px', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 16px rgba(0,0,0,0.05)' }}>{item.icon}</div>
+              <h3 style={{ marginBottom: '1rem', fontSize: '1.4rem', fontWeight: 700, color: 'var(--text-primary)' }}>{item.title}</h3>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: 1.7, fontSize: '1rem' }}>{item.text}</p>
             </motion.div>
           ))}
         </div>
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" style={{ padding: '8rem 1rem', background: '#f8fafc' }}>
+      <section id="pricing" style={{ padding: '8rem 1rem', background: 'var(--bg-subtle)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <h2 style={{ textAlign: 'center', fontSize: '2.5rem', marginBottom: '1rem', color: '#0d2331' }}>Simple, Transparent Pricing</h2>
-          <p style={{ textAlign: 'center', color: '#64748b', marginBottom: '2.5rem' }}>Choose the plan that fits your needs</p>
+          <h2 style={{ textAlign: 'center', fontSize: '2.5rem', marginBottom: '1rem', color: 'var(--bg-brand)' }}>Simple, Transparent Pricing</h2>
+          <p style={{ textAlign: 'center', color: 'var(--text-tertiary)', marginBottom: '2.5rem' }}>Choose the plan that fits your needs</p>
 
           {/* Category Tabs */}
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2.5rem' }}>
@@ -539,8 +550,8 @@ const LandingPage = () => {
                     fontSize: '0.9rem',
                     cursor: 'pointer',
                     transition: 'all 0.25s ease',
-                    background: pricingTab === tab.key ? '#0d2331' : 'transparent',
-                    color: pricingTab === tab.key ? 'white' : '#64748b',
+                    background: pricingTab === tab.key ? 'var(--bg-brand)' : 'transparent',
+                    color: pricingTab === tab.key ? 'white' : 'var(--text-tertiary)',
                     boxShadow: pricingTab === tab.key ? '0 4px 12px rgba(13,35,49,0.2)' : 'none'
                   }}
                 >
@@ -552,11 +563,11 @@ const LandingPage = () => {
 
           {/* Billing Toggle */}
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginBottom: '3.5rem' }}>
-            <span style={{ fontWeight: 600, color: !isYearly ? '#0d2331' : '#94a3b8' }}>Monthly</span>
+            <span style={{ fontWeight: 600, color: !isYearly ? 'var(--bg-brand)' : 'var(--text-quaternary)' }}>Monthly</span>
             <div 
               onClick={() => setIsYearly(!isYearly)}
               style={{ 
-                width: '60px', height: '32px', background: '#0d2331', borderRadius: '30px', 
+                width: '60px', height: '32px', background: 'var(--bg-brand)', borderRadius: '30px', 
                 padding: '4px', cursor: 'pointer', position: 'relative'
               }}
             >
@@ -566,8 +577,8 @@ const LandingPage = () => {
               />
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <span style={{ fontWeight: 600, color: isYearly ? '#0d2331' : '#94a3b8' }}>Yearly</span>
-              <span style={{ background: '#dcfce7', color: '#16a34a', fontSize: '0.7rem', padding: '0.25rem 0.5rem', borderRadius: '20px', fontWeight: 700 }}>Save 20%</span>
+              <span style={{ fontWeight: 600, color: isYearly ? 'var(--bg-brand)' : 'var(--text-quaternary)' }}>Yearly</span>
+              <span style={{ background: 'var(--bg-success-subtle)', color: '#16a34a', fontSize: '0.7rem', padding: '0.25rem 0.5rem', borderRadius: '20px', fontWeight: 700 }}>Save 20%</span>
             </div>
           </div>
 
@@ -590,11 +601,11 @@ const LandingPage = () => {
                       key={i}
                       whileHover={{ y: -10 }}
                       style={{
-                        background: 'white',
-                        borderRadius: '24px',
-                        padding: '2.5rem 1.5rem',
-                        boxShadow: plan.popular ? '0 20px 40px rgba(0, 163, 255, 0.12)' : '0 10px 30px rgba(0,0,0,0.04)',
-                        border: plan.popular ? '2px solid #00a3ff' : '1px solid #eef2f6',
+                        background: 'var(--bg-surface)',
+                        borderRadius: '32px',
+                        padding: '3rem 2rem',
+                        boxShadow: plan.popular ? '0 24px 60px rgba(0, 144, 230, 0.15)' : '0 12px 30px rgba(0,0,0,0.05)',
+                        border: plan.popular ? '2px solid var(--accent-primary)' : '1px solid var(--border-default)',
                         position: 'relative',
                         display: 'flex',
                         flexDirection: 'column'
@@ -603,17 +614,17 @@ const LandingPage = () => {
                       {plan.popular && (
                         <div style={{
                           position: 'absolute', top: '-15px', left: '50%', transform: 'translateX(-50%)',
-                          background: '#00a3ff', color: 'white', padding: '0.4rem 1rem', borderRadius: '20px',
-                          fontSize: '0.75rem', fontWeight: 700, whiteSpace: 'nowrap'
+                          background: 'var(--accent-primary)', color: 'white', padding: '0.5rem 1.25rem', borderRadius: '20px',
+                          fontSize: '0.75rem', fontWeight: 800, whiteSpace: 'nowrap', letterSpacing: '0.05em'
                         }}>MOST POPULAR</div>
                       )}
-                      <div style={{ marginBottom: '2rem' }}>
-                        <h3 style={{ fontSize: '1.4rem', fontWeight: 700, color: plan.popular ? '#00a3ff' : '#0d2331' }}>{plan.name}</h3>
-                        <p style={{ color: '#64748b', fontSize: '0.875rem', marginTop: '0.4rem' }}>{plan.tagline}</p>
-                        <div style={{ marginTop: '1.25rem', display: 'flex', alignItems: 'baseline', gap: '0.25rem' }}>
-                          <span style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0d2331' }}>₦</span>
-                          <span style={{ fontSize: '2.25rem', fontWeight: 800, color: '#0d2331' }}>{displayPrice}</span>
-                          <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>/{isYearly ? 'yr' : 'mo'}</span>
+                      <div style={{ marginBottom: '2.5rem' }}>
+                        <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: plan.popular ? 'var(--accent-primary)' : 'var(--text-primary)' }}>{plan.name}</h3>
+                        <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginTop: '0.5rem' }}>{plan.tagline}</p>
+                        <div style={{ marginTop: '1.5rem', display: 'flex', alignItems: 'baseline', gap: '0.25rem' }}>
+                          <span style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-primary)' }}>₦</span>
+                          <span style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.03em' }}>{displayPrice}</span>
+                          <span style={{ color: 'var(--text-quaternary)', fontSize: '0.85rem' }}>/{isYearly ? 'yr' : 'mo'}</span>
                         </div>
                         {isYearly && <p style={{ fontSize: '0.75rem', color: '#16a34a', fontWeight: 600, marginTop: '0.25rem' }}>₦{plan.monthlyPrice.toLocaleString()}/mo billed annually</p>}
                       </div>
@@ -630,10 +641,9 @@ const LandingPage = () => {
                           <FeatureItem icon={<Headphones size={15}/>} label="Support" value={plan.support} />
                         </ul>
                       </div>
-                      <button
+                        <button
                         onClick={() => navigate('/register', { state: { planType: 'private', planTier: plan.name } })}
-                        className="btn"
-                        style={{ marginTop: '2rem', background: plan.popular ? '#00a3ff' : '#0d2331', color: 'white' }}
+                        style={{ width: '100%', marginTop: '2.5rem', padding: '1.2rem', borderRadius: '16px', background: plan.popular ? 'var(--accent-primary)' : 'var(--bg-subtle)', color: plan.popular ? 'white' : 'var(--text-primary)', border: plan.popular ? 'none' : '1px solid var(--border-default)', fontSize: '1rem', fontWeight: 700, cursor: 'pointer', transition: 'all 0.2s', boxShadow: plan.popular ? '0 8px 24px rgba(0, 144, 230, 0.2)' : 'none' }}
                       >
                         Get Started
                       </button>
@@ -680,12 +690,12 @@ const LandingPage = () => {
                         )}
                         <div style={{ marginBottom: '2rem' }}>
                           <div style={{ display: 'inline-block', background: `${plan.color}18`, color: plan.color, fontSize: '0.75rem', fontWeight: 700, padding: '0.3rem 0.75rem', borderRadius: '20px', marginBottom: '0.75rem' }}>REAL ESTATE</div>
-                          <h3 style={{ fontSize: '1.4rem', fontWeight: 700, color: plan.popular ? plan.color : '#0d2331' }}>{plan.name}</h3>
-                          <p style={{ color: '#64748b', fontSize: '0.875rem', marginTop: '0.4rem' }}>{plan.tagline}</p>
+                          <h3 style={{ fontSize: '1.4rem', fontWeight: 700, color: plan.popular ? plan.color : 'var(--bg-brand)' }}>{plan.name}</h3>
+                          <p style={{ color: 'var(--text-tertiary)', fontSize: '0.875rem', marginTop: '0.4rem' }}>{plan.tagline}</p>
                           <div style={{ marginTop: '1.25rem', display: 'flex', alignItems: 'baseline', gap: '0.25rem' }}>
-                            <span style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0d2331' }}>₦</span>
-                            <span style={{ fontSize: '2.25rem', fontWeight: 800, color: '#0d2331' }}>{displayPrice}</span>
-                            <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>/{isYearly ? 'yr' : 'mo'}</span>
+                            <span style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--bg-brand)' }}>₦</span>
+                            <span style={{ fontSize: '2.25rem', fontWeight: 800, color: 'var(--bg-brand)' }}>{displayPrice}</span>
+                            <span style={{ color: 'var(--text-quaternary)', fontSize: '0.85rem' }}>/{isYearly ? 'yr' : 'mo'}</span>
                           </div>
                           {isYearly && <p style={{ fontSize: '0.75rem', color: '#16a34a', fontWeight: 600, marginTop: '0.25rem' }}>₦{plan.monthlyPrice.toLocaleString()}/mo billed annually</p>}
                         </div>
@@ -705,7 +715,7 @@ const LandingPage = () => {
                         <button
                           onClick={() => navigate('/register', { state: { planType: 'real-estate', planTier: plan.name, residents: plan.residents } })}
                           className="btn"
-                          style={{ marginTop: '2rem', background: plan.popular ? plan.color : '#0d2331', color: 'white' }}
+                          style={{ marginTop: '2rem', background: plan.popular ? plan.color : 'var(--bg-brand)', color: 'white' }}
                         >
                           Get Started
                         </button>
@@ -713,8 +723,8 @@ const LandingPage = () => {
                     );
                   })}
                 </div>
-                <p style={{ textAlign: 'center', marginTop: '2rem', color: '#94a3b8', fontSize: '0.875rem' }}>
-                  Need a custom estate plan? <button onClick={() => scrollTo('contact')} style={{ background: 'none', border: 'none', color: '#00a3ff', fontWeight: 700, cursor: 'pointer', fontSize: '0.875rem' }}>Contact our team →</button>
+                <p style={{ textAlign: 'center', marginTop: '2rem', color: 'var(--text-quaternary)', fontSize: '0.875rem' }}>
+                  Need a custom estate plan? <button onClick={() => scrollTo('contact')} style={{ background: 'none', border: 'none', color: 'var(--accent-primary)', fontWeight: 700, cursor: 'pointer', fontSize: '0.875rem' }}>Contact our team →</button>
                 </p>
               </motion.div>
             )}
@@ -726,26 +736,26 @@ const LandingPage = () => {
       <section id="contact" style={{ padding: '8rem 2rem' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '4rem' }}>
           <div>
-            <h2 style={{ fontSize: '2.5rem', color: '#0d2331', marginBottom: '1.5rem' }}>Get in Touch</h2>
-            <p style={{ color: '#64748b', fontSize: '1.1rem', marginBottom: '2.5rem' }}>
+            <h2 style={{ fontSize: '2.5rem', color: 'var(--bg-brand)', marginBottom: '1.5rem' }}>Get in Touch</h2>
+            <p style={{ color: 'var(--text-tertiary)', fontSize: '1.1rem', marginBottom: '2.5rem' }}>
               Have questions about how InVisitor can secure your building? Our experts are ready to help.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(0,163,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#00a3ff' }}><Mail size={20}/></div>
-                <div><h5 style={{ margin: 0 }}>Email Us</h5><p style={{ margin: 0, color: '#64748b' }}>support@invisitor.com</p></div>
+                <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(0,163,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-primary)' }}><Mail size={20}/></div>
+                <div><h5 style={{ margin: 0 }}>Email Us</h5><p style={{ margin: 0, color: 'var(--text-tertiary)' }}>support@invisitor.com</p></div>
               </div>
               <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
                 <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(139,92,246,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#8b5cf6' }}><Phone size={20}/></div>
-                <div><h5 style={{ margin: 0 }}>Call Us</h5><p style={{ margin: 0, color: '#64748b' }}>+1 (888) INVISIT</p></div>
+                <div><h5 style={{ margin: 0 }}>Call Us</h5><p style={{ margin: 0, color: 'var(--text-tertiary)' }}>+1 (888) INVISIT</p></div>
               </div>
               <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
                 <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(16,185,129,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#10b981' }}><MapPin size={20}/></div>
-                <div><h5 style={{ margin: 0 }}>Visit Us</h5><p style={{ margin: 0, color: '#64748b' }}>123 Enterprise Way, Tech City</p></div>
+                <div><h5 style={{ margin: 0 }}>Visit Us</h5><p style={{ margin: 0, color: 'var(--text-tertiary)' }}>123 Enterprise Way, Tech City</p></div>
               </div>
             </div>
           </div>
-          <div style={{ background: '#f8fafc', padding: '3rem', borderRadius: '24px' }}>
+          <div style={{ background: 'var(--bg-subtle)', padding: '3rem', borderRadius: '24px' }}>
             <div className="form-group"><label>Full Name</label><input type="text" placeholder="John Doe" /></div>
             <div className="form-group"><label>Work Email</label><input type="email" placeholder="john@company.com" /></div>
             <div className="form-group"><label>Message</label><textarea style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--input-border)', minHeight: '120px' }} placeholder="How can we help?"></textarea></div>
@@ -755,7 +765,7 @@ const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer style={{ background: '#0d2331', color: 'white', padding: '5rem 2rem 2rem' }}>
+      <footer style={{ background: 'var(--bg-brand)', color: 'white', padding: '5rem 2rem 2rem' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '4rem', marginBottom: '4rem' }}>
             <div>

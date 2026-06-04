@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 
 const DashboardLayout = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 768);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
@@ -49,9 +49,20 @@ const DashboardLayout = () => {
       document.body.classList.remove('dark-mode');
     }
     
-    // Cleanup on unmount to prevent leaks
     return () => document.body.classList.remove('dark-mode');
   }, [isDarkMode]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setIsSidebarOpen(false);
+      } else {
+        setIsSidebarOpen(true);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   
   const role = location.pathname.split('/')[1];
   const getMenuItems = (currentRole) => {
@@ -73,6 +84,24 @@ const DashboardLayout = () => {
       case 'admin':
         return [
           ...baseMenus,
+          { icon: <Users size={20} />, label: 'Manage Hosts', path: `/${currentRole}/hosts` },
+          { icon: <Users size={20} />, label: 'Manage Users', path: `/${currentRole}/users` },
+          { icon: <ShieldCheck size={20} />, label: 'Estate Managers', path: `/${currentRole}/estate-managers` },
+          { icon: <FileText size={20} />, label: 'Tickets', path: `/${currentRole}/tickets` },
+          { icon: <Users size={20} />, label: 'Leads', path: `/${currentRole}/leads` },
+          { icon: <FileText size={20} />, label: 'Forms', path: `/${currentRole}/forms` },
+          { icon: <BarChart2 size={20} />, label: 'Transactions', path: `/${currentRole}/transactions` },
+          { icon: <FileText size={20} />, label: 'Manage Invoices', path: `/${currentRole}/invoices` },
+          { 
+            icon: <ShieldCheck size={20} />, 
+            label: 'Access Level', 
+            isDropdown: true,
+            children: [
+              { label: 'Overview', path: `/${currentRole}/access-level` },
+              { label: 'Manage Roles', path: `/${currentRole}/access-level?tab=roles` },
+              { label: 'Manage Permissions', path: `/${currentRole}/access-level?tab=permissions` }
+            ]
+          },
           { icon: <BarChart2 size={20} />, label: 'Activity Log', path: `/${currentRole}/activity-log` },
         ];
       case 'manager':
@@ -81,9 +110,19 @@ const DashboardLayout = () => {
           { icon: <Users size={20} />, label: 'Residents', path: `/${currentRole}/residents` },
           { icon: <ShieldCheck size={20} />, label: 'Security', path: `/${currentRole}/security` },
           { icon: <Calendar size={20} />, label: 'Appointments', path: `/${currentRole}/appointments` },
-          { icon: <FileText size={20} />, label: 'Invoices', path: `/${currentRole}/invoices` },
-          { icon: <BarChart2 size={20} />, label: 'Reports', path: `/${currentRole}/reports` },
+          { icon: <FileText size={20} />, label: 'Manage Invoices', path: `/${currentRole}/invoices` },
+          { 
+            icon: <BarChart2 size={20} />, 
+            label: 'Reports', 
+            isDropdown: true,
+            children: [
+              { label: 'Resident Report', path: `/${currentRole}/reports/resident` },
+              { label: 'Appointment Reports', path: `/${currentRole}/reports/appointments` },
+              { label: 'Security Report', path: `/${currentRole}/reports/security` }
+            ]
+          },
           { icon: <BarChart2 size={20} />, label: 'Transactions', path: `/${currentRole}/transactions` },
+          { icon: <ShieldCheck size={20} />, label: 'Manage QR Codes', path: `/${currentRole}/qr-codes` },
           supportArea,
           { icon: <BarChart2 size={20} />, label: 'Activity Log', path: `/${currentRole}/activity-log` },
         ];
@@ -100,8 +139,19 @@ const DashboardLayout = () => {
           ...baseMenus,
           { icon: <Users size={20} />, label: 'Visitors', path: `/${currentRole}/visitors` },
           { icon: <Calendar size={20} />, label: 'Appointments', path: `/${currentRole}/appointments` },
+          { 
+            icon: <BarChart2 size={20} />, 
+            label: 'Reports', 
+            isDropdown: true,
+            children: [
+              { label: 'Visitor Report', path: `/${currentRole}/reports/visitor` },
+              { label: 'Appointment Reports', path: `/${currentRole}/reports/appointments` },
+              { label: 'Security Report', path: `/${currentRole}/reports/security` }
+            ]
+          },
+          { icon: <ShieldCheck size={20} />, label: 'Manage QR Codes', path: `/${currentRole}/qr-codes` },
           { icon: <ShieldCheck size={20} />, label: 'Front-Desk Officers', path: `/${currentRole}/front-desk` },
-          { icon: <FileText size={20} />, label: 'Invoices', path: `/${currentRole}/invoices` },
+          { icon: <FileText size={20} />, label: 'Manage Invoices', path: `/${currentRole}/invoices` },
           { icon: <BarChart2 size={20} />, label: 'Transactions', path: `/${currentRole}/transactions` },
           supportArea,
           { icon: <BarChart2 size={20} />, label: 'Activity Log', path: `/${currentRole}/activity-log` },
@@ -115,7 +165,8 @@ const DashboardLayout = () => {
       case 'frontdesk':
         return [
           ...baseMenus,
-          { icon: <BarChart2 size={20} />, label: 'Transactions', path: `/${currentRole}/transactions` },
+          { icon: <Users size={20} />, label: 'Visitors', path: `/${currentRole}/visitors` },
+          { icon: <Calendar size={20} />, label: 'Appointments', path: `/${currentRole}/appointments` },
           supportArea,
           { icon: <BarChart2 size={20} />, label: 'Activity Log', path: `/${currentRole}/activity-log` },
         ];
@@ -244,7 +295,7 @@ const DashboardLayout = () => {
         <header className="top-header">
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: 1 }}>
             <button className="mobile-dashboard-menu-btn" onClick={() => setIsSidebarOpen(true)}>
-              <Menu size={24} color="#64748b" />
+              <Menu size={24} color="var(--text-tertiary)" />
             </button>
             <div style={{ flex: 1 }}></div>
           </div>
@@ -254,8 +305,8 @@ const DashboardLayout = () => {
                 <AlertTriangle size={16} /> SOS
               </button>
             )}
-            <span className="header-user-name" style={{ fontSize: '0.875rem', fontWeight: '700', color: '#1e293b' }}>David Fayemi</span>
-            <button className="theme-toggle-btn" onClick={() => setIsDarkMode(!isDarkMode)} style={{ background: 'none', border: 'none', color: '#64748b', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+            <span className="header-user-name" style={{ fontSize: '0.875rem', fontWeight: '700', color: 'var(--text-primary)' }}>David Fayemi</span>
+            <button className="theme-toggle-btn" onClick={() => setIsDarkMode(!isDarkMode)} style={{ background: 'none', border: 'none', color: 'var(--text-tertiary)', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
               {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
             </button>
             <div 
@@ -339,15 +390,15 @@ const DashboardLayout = () => {
         .dashboard-container {
           display: flex;
           min-height: 100vh;
-          background-color: #f8fafc;
-          color: #1a202c;
+          background-color: var(--bg-subtle);
+          color: var(--text-primary);
         }
 
         /* Sidebar */
         .sidebar {
           width: 280px;
-          background: white;
-          border-right: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          border-right: 1px solid var(--border-default);
           display: flex;
           flex-direction: column;
           height: 100vh;
@@ -375,13 +426,13 @@ const DashboardLayout = () => {
           top: 32px;
           width: 28px;
           height: 28px;
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-default);
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
-          color: #64748b;
+          color: var(--text-tertiary);
           cursor: pointer;
           box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
           z-index: 100;
@@ -389,8 +440,8 @@ const DashboardLayout = () => {
         }
 
         .sidebar-toggle-btn:hover {
-          color: #0d2331;
-          background: #f8fafc;
+          color: var(--bg-brand);
+          background: var(--bg-subtle);
           transform: scale(1.1);
         }
 
@@ -404,7 +455,7 @@ const DashboardLayout = () => {
         .logo-text {
           font-size: 1.25rem;
           font-weight: 800;
-          color: #0d2331;
+          color: var(--bg-brand);
           white-space: nowrap;
         }
 
@@ -431,7 +482,7 @@ const DashboardLayout = () => {
           display: flex;
           align-items: center;
           padding: 0.75rem 1rem;
-          color: #64748b;
+          color: var(--text-tertiary);
           text-decoration: none;
           border-radius: 12px;
           transition: all 0.2s;
@@ -439,13 +490,13 @@ const DashboardLayout = () => {
         }
 
         .nav-link:hover {
-          background-color: #f1f5f9;
-          color: #0d2331;
+          background-color: var(--bg-muted);
+          color: var(--bg-brand);
         }
 
         .nav-link.active {
-          background-color: #f1f5f9;
-          color: #0d2331;
+          background-color: var(--bg-muted);
+          color: var(--bg-brand);
           font-weight: 600;
         }
 
@@ -462,13 +513,13 @@ const DashboardLayout = () => {
         }
 
         .nav-link.w-full { width: 100%; border: none; background: transparent; cursor: pointer; font-family: inherit; font-size: 1rem; }
-        .nav-link-sub { display: block; padding: 0.5rem 1rem; color: #64748b; text-decoration: none; border-radius: 8px; font-size: 0.875rem; transition: all 0.2s; }
-        .nav-link-sub:hover { color: #0d2331; background: #f8fafc; }
-        .nav-link-sub.active { color: #0d2331; font-weight: 700; background: #f1f5f9; }
+        .nav-link-sub { display: block; padding: 0.5rem 1rem; color: var(--text-tertiary); text-decoration: none; border-radius: 8px; font-size: 0.875rem; transition: all 0.2s; }
+        .nav-link-sub:hover { color: var(--bg-brand); background: var(--bg-subtle); }
+        .nav-link-sub.active { color: var(--bg-brand); font-weight: 700; background: var(--bg-muted); }
 
         .sidebar-footer {
           padding: 1.5rem;
-          border-top: 1px solid #e2e8f0;
+          border-top: 1px solid var(--border-default);
         }
 
         .user-profile-mini {
@@ -477,7 +528,7 @@ const DashboardLayout = () => {
           align-items: center;
           gap: 0.75rem;
           padding: 0.75rem;
-          background: #f8fafc;
+          background: var(--bg-subtle);
           border-radius: 12px;
           overflow: hidden;
         }
@@ -491,7 +542,7 @@ const DashboardLayout = () => {
           width: 40px;
           height: 40px;
           border-radius: 50%;
-          background: #e2e8f0;
+          background: var(--border-default);
           object-fit: cover;
         }
 
@@ -509,7 +560,7 @@ const DashboardLayout = () => {
         .user-name {
           font-size: 0.875rem;
           font-weight: 700;
-          color: #1e293b;
+          color: var(--text-primary);
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -517,7 +568,7 @@ const DashboardLayout = () => {
 
         .user-email {
           font-size: 0.75rem;
-          color: #64748b;
+          color: var(--text-tertiary);
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -526,7 +577,7 @@ const DashboardLayout = () => {
         .logout-btn {
           background: none;
           border: none;
-          color: #64748b;
+          color: var(--text-tertiary);
           cursor: pointer;
           font-size: 1.125rem;
           display: flex;
@@ -539,7 +590,7 @@ const DashboardLayout = () => {
 
         .logout-btn:hover {
           background-color: #fee2e2;
-          color: #ef4444;
+          color: var(--text-danger);
         }
 
         .sidebar.closed .logout-btn {
@@ -557,8 +608,8 @@ const DashboardLayout = () => {
 
         .top-header {
           height: 72px;
-          background: white;
-          border-bottom: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          border-bottom: 1px solid var(--border-default);
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -575,8 +626,8 @@ const DashboardLayout = () => {
         }
 
         .btn-emergency {
-          background: #ef4444;
-          color: white;
+          background: var(--text-danger);
+          color: var(--text-inverse);
           border: none;
           padding: 0.5rem 1rem;
           border-radius: 8px;
@@ -606,7 +657,7 @@ const DashboardLayout = () => {
           background: none;
           border: none;
           font-size: 1.25rem;
-          color: #64748b;
+          color: var(--text-tertiary);
           cursor: pointer;
           position: relative;
           display: flex;
@@ -619,8 +670,8 @@ const DashboardLayout = () => {
           right: -2px;
           width: 8px;
           height: 8px;
-          background-color: #ef4444;
-          border: 2px solid white;
+          background-color: var(--text-danger);
+          border: 2px solid var(--bg-surface);
           border-radius: 50%;
         }
 
@@ -628,7 +679,7 @@ const DashboardLayout = () => {
           width: 40px;
           height: 40px;
           border-radius: 50%;
-          border: 2px solid #e2e8f0;
+          border: 2px solid var(--border-default);
           overflow: hidden;
           cursor: pointer;
         }
@@ -643,8 +694,8 @@ const DashboardLayout = () => {
           position: absolute;
           right: 0;
           top: calc(100% + 10px);
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-default);
           border-radius: 12px;
           box-shadow: 0 10px 25px rgba(0,0,0,0.1);
           min-width: 180px;
@@ -665,30 +716,30 @@ const DashboardLayout = () => {
           text-align: left;
           font-size: 0.875rem;
           font-weight: 600;
-          color: #1e293b;
+          color: var(--text-primary);
           cursor: pointer;
           transition: background 0.2s;
         }
 
         .profile-dropdown button:hover {
-          background: #f8fafc;
+          background: var(--bg-subtle);
         }
 
         .profile-dropdown button.logout-btn-drop {
-          color: #ef4444;
-          border-top: 1px solid #f1f5f9;
+          color: var(--text-danger);
+          border-top: 1px solid var(--bg-muted);
         }
 
         .profile-dropdown button.logout-btn-drop:hover {
-          background: #fef2f2;
+          background: var(--bg-danger-subtle);
         }
 
         .notification-dropdown {
           position: absolute;
           right: 0;
           top: calc(100% + 5px);
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-default);
           border-radius: 12px;
           box-shadow: 0 10px 25px rgba(0,0,0,0.1);
           width: 320px;
@@ -698,22 +749,22 @@ const DashboardLayout = () => {
           flex-direction: column;
         }
 
-        .notif-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-bottom: 1px solid #f1f5f9; }
-        .notif-header h4 { margin: 0; font-size: 0.9375rem; font-weight: 800; color: #1e293b; }
+        .notif-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-bottom: 1px solid var(--bg-muted); }
+        .notif-header h4 { margin: 0; font-size: 0.9375rem; font-weight: 800; color: var(--text-primary); }
         .notif-mark-read { background: none; border: none; font-size: 0.75rem; font-weight: 600; color: #3b82f6; cursor: pointer; }
         
         .notif-list { max-height: 350px; overflow-y: auto; display: flex; flex-direction: column; }
-        .notif-item { padding: 0.875rem 1rem; border-bottom: 1px solid #f1f5f9; display: flex; flex-direction: column; gap: 0.25rem; transition: background 0.2s; cursor: pointer; }
-        .notif-item:hover { background: #f8fafc; }
+        .notif-item { padding: 0.875rem 1rem; border-bottom: 1px solid var(--bg-muted); display: flex; flex-direction: column; gap: 0.25rem; transition: background 0.2s; cursor: pointer; }
+        .notif-item:hover { background: var(--bg-subtle); }
         .notif-item.unread { background: #eff6ff; }
         .notif-item.unread:hover { background: #e0f2fe; }
         
-        .notif-text { font-size: 0.875rem; color: #1e293b; font-weight: 500; line-height: 1.4; }
-        .notif-time { font-size: 0.75rem; color: #94a3b8; }
+        .notif-text { font-size: 0.875rem; color: var(--text-primary); font-weight: 500; line-height: 1.4; }
+        .notif-time { font-size: 0.75rem; color: var(--text-quaternary); }
 
-        .notif-footer { padding: 0.75rem; border-top: 1px solid #f1f5f9; text-align: center; }
-        .notif-view-all { background: none; border: none; font-size: 0.8125rem; font-weight: 700; color: #64748b; cursor: pointer; transition: color 0.2s; }
-        .notif-view-all:hover { color: #1e293b; }
+        .notif-footer { padding: 0.75rem; border-top: 1px solid var(--bg-muted); text-align: center; }
+        .notif-view-all { background: none; border: none; font-size: 0.8125rem; font-weight: 700; color: var(--text-tertiary); cursor: pointer; transition: color 0.2s; }
+        .notif-view-all:hover { color: var(--text-primary); }
 
         .content-area {
           padding: 2rem;

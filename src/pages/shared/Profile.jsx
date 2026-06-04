@@ -187,10 +187,10 @@ const Profile = () => {
         .profile-header h1 {
           font-size: 1.75rem;
           font-weight: 800;
-          color: #0d2331;
+          color: var(--bg-brand);
           margin-bottom: 0.25rem;
         }
-        .profile-header p { color: #64748b; font-size: 0.9375rem; }
+        .profile-header p { color: var(--text-tertiary); font-size: 0.9375rem; }
 
         .save-toast {
           display: flex;
@@ -198,7 +198,7 @@ const Profile = () => {
           gap: 0.5rem;
           background: #f0fdf4;
           border: 1px solid #bbf7d0;
-          color: #15803d;
+          color: var(--text-success);
           padding: 0.875rem 1.25rem;
           border-radius: 12px;
           font-weight: 700;
@@ -223,56 +223,56 @@ const Profile = () => {
         }
 
         .profile-card {
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-default);
           border-radius: 20px;
           padding: 1.5rem;
         }
 
         .avatar-wrapper { position: relative; }
-        .profile-avatar { width: 120px; height: 120px; border-radius: 50%; border: 4px solid white; box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
-        .role-pill { position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); background: #0d2331; color: white; padding: 3px 14px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; white-space: nowrap; }
-        .avatar-card h2 { font-size: 1.25rem; font-weight: 800; color: #0d2331; margin-top: 0.5rem; }
-        .profile-email { font-size: 0.875rem; color: #64748b; }
+        .profile-avatar { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--bg-surface); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+        .role-pill { position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); background: var(--bg-brand); color: var(--text-inverse); padding: 3px 14px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; white-space: nowrap; }
+        .avatar-card h2 { font-size: 1.25rem; font-weight: 800; color: var(--bg-brand); margin-top: 0.5rem; }
+        .profile-email { font-size: 0.875rem; color: var(--text-tertiary); }
 
         .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.75rem; }
-        .card-title-group { display: flex; align-items: center; gap: 0.75rem; color: #0d2331; }
+        .card-title-group { display: flex; align-items: center; gap: 0.75rem; color: var(--bg-brand); }
         .card-title-group h3 { font-size: 1rem; font-weight: 800; margin: 0; }
 
-        .btn-edit { background: #f1f5f9; border: none; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 700; font-size: 0.8125rem; color: #0d2331; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; }
+        .btn-edit { background: var(--bg-muted); border: none; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 700; font-size: 0.8125rem; color: var(--bg-brand); cursor: pointer; display: flex; align-items: center; gap: 0.4rem; }
         .edit-actions { display: flex; gap: 0.75rem; }
-        .btn-cancel { background: white; border: 1.5px solid #e2e8f0; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 700; color: #64748b; cursor: pointer; }
-        .btn-save { background: #0d2331; color: white; border: none; padding: 0.5rem 1.25rem; border-radius: 8px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; }
+        .btn-cancel { background: var(--bg-surface); border: 1.5px solid var(--border-default); padding: 0.5rem 1rem; border-radius: 8px; font-weight: 700; color: var(--text-tertiary); cursor: pointer; }
+        .btn-save { background: var(--bg-brand); color: var(--text-inverse); border: none; padding: 0.5rem 1.25rem; border-radius: 8px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; }
 
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
         .form-group { display: flex; flex-direction: column; gap: 0.375rem; }
         .full-width { grid-column: span 2; }
 
-        label { font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.03em; }
-        .field-value { font-size: 0.9375rem; font-weight: 600; color: #1e293b; margin: 0; }
+        label { font-size: 0.75rem; font-weight: 700; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.03em; }
+        .field-value { font-size: 0.9375rem; font-weight: 600; color: var(--text-primary); margin: 0; }
 
         input, select {
-          width: 100%; padding: 0.75rem 1rem; border: 1.5px solid #e2e8f0;
-          border-radius: 10px; font-size: 0.875rem; color: #1e293b;
+          width: 100%; padding: 0.75rem 1rem; border: 1.5px solid var(--border-default);
+          border-radius: 10px; font-size: 0.875rem; color: var(--text-primary);
           outline: none; transition: border-color 0.2s; box-sizing: border-box;
         }
-        input:focus, select:focus { border-color: #0d2331; }
+        input:focus, select:focus { border-color: var(--bg-brand); }
 
         .input-icon { position: relative; display: flex; align-items: center; }
-        .input-icon svg:first-child { position: absolute; left: 0.875rem; color: #94a3b8; pointer-events: none; }
+        .input-icon svg:first-child { position: absolute; left: 0.875rem; color: var(--text-quaternary); pointer-events: none; }
         .input-icon input { padding-left: 2.5rem; padding-right: 2.5rem; }
-        .btn-eye { position: absolute; right: 0.875rem; background: none; border: none; cursor: pointer; color: #94a3b8; display: flex; align-items: center; padding: 0; }
+        .btn-eye { position: absolute; right: 0.875rem; background: none; border: none; cursor: pointer; color: var(--text-quaternary); display: flex; align-items: center; padding: 0; }
 
         .phone-input-group { display: flex; gap: 0.5rem; }
         .phone-input-group select { width: 160px; flex-shrink: 0; }
 
-        .btn-update-pw { background: #0d2331; color: white; border: none; padding: 0.875rem 2rem; border-radius: 12px; font-weight: 700; cursor: pointer; margin-top: 1rem; }
+        .btn-update-pw { background: var(--bg-brand); color: var(--text-inverse); border: none; padding: 0.875rem 2rem; border-radius: 12px; font-weight: 700; cursor: pointer; margin-top: 1rem; }
 
-        .twofa-desc { font-size: 0.875rem; color: #64748b; line-height: 1.6; margin: 0; }
+        .twofa-desc { font-size: 0.875rem; color: var(--text-tertiary); line-height: 1.6; margin: 0; }
 
-        .toggle-switch { width: 48px; height: 26px; background: #e2e8f0; border-radius: 999px; cursor: pointer; position: relative; transition: background 0.25s; flex-shrink: 0; }
-        .toggle-switch.on { background: #22c55e; }
-        .toggle-thumb { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: transform 0.25s; box-shadow: 0 1px 4px rgba(0,0,0,0.15); }
+        .toggle-switch { width: 48px; height: 26px; background: var(--border-default); border-radius: 999px; cursor: pointer; position: relative; transition: background 0.25s; flex-shrink: 0; }
+        .toggle-switch.on { background: var(--text-success); }
+        .toggle-thumb { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; background: var(--bg-surface); border-radius: 50%; transition: transform 0.25s; box-shadow: 0 1px 4px rgba(0,0,0,0.15); }
         .toggle-switch.on .toggle-thumb { transform: translateX(22px); }
 
         @media (max-width: 1024px) {

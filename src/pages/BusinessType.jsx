@@ -17,7 +17,7 @@ const BusinessType = () => {
   return (
     <div className="card" style={{ maxWidth: '800px', padding: '3rem' }}>
       <h1 className="card-title" style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Sign Up</h1>
-      <p className="card-subtitle" style={{ color: '#64748b', marginBottom: '2.5rem' }}>
+      <p className="card-subtitle" style={{ color: 'var(--text-tertiary)', marginBottom: '2.5rem' }}>
         InVisitor is catered to businesses of all kinds.
       </p>
 
@@ -36,7 +36,7 @@ const BusinessType = () => {
           left: '10%', 
           right: '10%', 
           height: '2px', 
-          background: '#e2e8f0', 
+          background: 'var(--border-default)', 
           zIndex: 0 
         }} />
         {steps.map((step, index) => (
@@ -52,12 +52,12 @@ const BusinessType = () => {
               width: '40px', 
               height: '40px', 
               borderRadius: '50%', 
-              background: step.active ? '#0d2331' : '#f1f5f9',
-              border: step.active ? '2px solid #0d2331' : '2px solid #e2e8f0',
+              background: step.active ? 'var(--bg-brand)' : 'var(--bg-muted)',
+              border: step.active ? '2px solid var(--bg-brand)' : '2px solid var(--border-default)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              color: step.active ? 'white' : '#94a3b8',
+              color: step.active ? 'white' : 'var(--text-quaternary)',
               fontSize: '0.9rem',
               fontWeight: 700,
               transition: 'all 0.3s ease'
@@ -66,7 +66,7 @@ const BusinessType = () => {
             </div>
             <span style={{ 
               fontSize: '0.7rem', 
-              color: step.active ? '#0d2331' : '#94a3b8',
+              color: step.active ? 'var(--bg-brand)' : 'var(--text-quaternary)',
               fontWeight: 600,
               textAlign: 'center',
               lineHeight: 1.2
@@ -77,7 +77,7 @@ const BusinessType = () => {
         ))}
       </div>
 
-      <p style={{ textAlign: 'center', fontWeight: 700, marginBottom: '2.5rem', color: '#0d2331' }}>Select Business Type</p>
+      <p style={{ textAlign: 'center', fontWeight: 700, marginBottom: '2.5rem', color: 'var(--bg-brand)' }}>Select Business Type</p>
 
       <div style={{ display: 'flex', gap: '3rem', justifyContent: 'center', marginBottom: '3.5rem' }}>
         {/* Individual Option */}
@@ -100,23 +100,23 @@ const BusinessType = () => {
             alignItems: 'center',
             justifyContent: 'center',
             marginBottom: '1.5rem',
-            border: selectedType === 'individual' ? '4px solid #0d2331' : 'none',
+            border: selectedType === 'individual' ? '4px solid var(--bg-brand)' : 'none',
             overflow: 'hidden',
             boxShadow: '0 4px 6px rgba(0,0,0,0.05)'
           }}>
              <User size={80} color="white" />
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <span style={{ fontSize: '0.9rem', fontWeight: 600, color: '#0d2331' }}>Private/Public</span>
+            <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--bg-brand)' }}>Private/Public</span>
             <div style={{ 
               width: '18px', 
               height: '18px', 
               borderRadius: '50%', 
-              border: '2px solid #cbd5e1',
+              border: '2px solid var(--border-heavy)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              background: selectedType === 'individual' ? '#0d2331' : 'transparent'
+              background: selectedType === 'individual' ? 'var(--bg-brand)' : 'transparent'
             }}>
               {selectedType === 'individual' && <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'white' }} />}
             </div>
@@ -143,23 +143,23 @@ const BusinessType = () => {
             alignItems: 'center',
             justifyContent: 'center',
             marginBottom: '1.5rem',
-            border: selectedType === 'business' ? '4px solid #0d2331' : 'none',
+            border: selectedType === 'business' ? '4px solid var(--bg-brand)' : 'none',
             overflow: 'hidden',
             boxShadow: '0 4px 6px rgba(0,0,0,0.05)'
           }}>
              <Building2 size={80} color="white" />
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <span style={{ fontSize: '0.9rem', fontWeight: 600, color: '#0d2331' }}>Real Estate</span>
+            <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--bg-brand)' }}>Real Estate</span>
             <div style={{ 
               width: '18px', 
               height: '18px', 
               borderRadius: '50%', 
-              border: '2px solid #cbd5e1',
+              border: '2px solid var(--border-heavy)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              background: selectedType === 'business' ? '#0d2331' : 'transparent'
+              background: selectedType === 'business' ? 'var(--bg-brand)' : 'transparent'
             }}>
               {selectedType === 'business' && <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'white' }} />}
             </div>
@@ -173,7 +173,7 @@ const BusinessType = () => {
         style={{ 
           width: '100%', 
           padding: '1.25rem', 
-          background: selectedType ? '#0d2331' : '#cbd5e1',
+          background: selectedType ? 'var(--bg-brand)' : 'var(--border-heavy)',
           color: 'white',
           fontWeight: 700,
           borderRadius: '12px',

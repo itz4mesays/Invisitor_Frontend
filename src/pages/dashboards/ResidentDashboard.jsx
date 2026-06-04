@@ -44,7 +44,7 @@ const ResidentDashboard = () => {
               transition={{ delay: i * 0.05, duration: 0.5 }}
               style={{ width: '100%', background: 'linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%)', borderRadius: '4px 4px 0 0', minHeight: d.count > 0 ? '4px' : '0' }}
             />
-            <span style={{ fontSize: '0.6rem', color: '#94a3b8', fontWeight: 600 }}>{d.label}</span>
+            <span style={{ fontSize: '0.6rem', color: 'var(--text-quaternary)', fontWeight: 600 }}>{d.label}</span>
           </div>
         ))}
       </div>
@@ -82,10 +82,10 @@ const ResidentDashboard = () => {
 
   const getStatusColor = (status) => {
     switch(status) {
-      case 'completed': return { bg: '#dcfce7', color: '#166534' };
+      case 'completed': return { bg: 'var(--bg-success-subtle)', color: '#166534' };
       case 'scheduled': return { bg: '#e0f2fe', color: '#0369a1' };
-      case 'cancelled': return { bg: '#fef2f2', color: '#dc2626' };
-      default: return { bg: '#f1f5f9', color: '#475569' };
+      case 'cancelled': return { bg: 'var(--bg-danger-subtle)', color: '#dc2626' };
+      default: return { bg: 'var(--bg-muted)', color: 'var(--text-secondary)' };
     }
   };
 
@@ -208,7 +208,7 @@ const ResidentDashboard = () => {
 
               <div className="resd-qr-section">
                 <div className="resd-qr-box">
-                  <QrCode size={100} color="#0d2331" />
+                  <QrCode size={100} color="var(--bg-brand)" />
                 </div>
                 <div className="resd-code-display">
                   <p>ENTRY CODE</p>
@@ -242,75 +242,75 @@ const ResidentDashboard = () => {
       <style jsx>{`
         .resd-page { display: flex; flex-direction: column; gap: 1.5rem; padding-bottom: 3rem; }
         .resd-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; }
-        .resd-header h1 { font-size: 1.75rem; font-weight: 800; color: #1e293b; margin-bottom: 0.25rem; }
-        .resd-header p { color: #64748b; font-size: 0.9375rem; }
-        .resd-btn-primary { background: #0d2331; color: white; padding: 0.75rem 1.25rem; border-radius: 12px; border: none; font-weight: 700; font-size: 0.875rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; white-space: nowrap; }
-        .resd-text-gray { color: #94a3b8; }
-        .resd-text-light { color: #cbd5e1; }
+        .resd-header h1 { font-size: 1.75rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.25rem; }
+        .resd-header p { color: var(--text-tertiary); font-size: 0.9375rem; }
+        .resd-btn-primary { background: var(--bg-brand); color: var(--text-inverse); padding: 0.75rem 1.25rem; border-radius: 12px; border: none; font-weight: 700; font-size: 0.875rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; white-space: nowrap; }
+        .resd-text-gray { color: var(--text-quaternary); }
+        .resd-text-light { color: var(--border-heavy); }
         
         .resd-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
-        .resd-stat-card { background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 1.5rem; display: flex; align-items: center; gap: 1.25rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); transition: all 0.2s ease; }
+        .resd-stat-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 24px; padding: 1.5rem; display: flex; align-items: center; gap: 1.25rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); transition: all 0.2s ease; }
         .resd-stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.04); }
         .resd-stat-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; }
         .resd-stat-info { display: flex; flex-direction: column; gap: 0.25rem; }
-        .resd-stat-label { font-size: 0.8125rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
-        .resd-stat-value { font-size: 1.875rem; font-weight: 800; color: #1e293b; line-height: 1; }
+        .resd-stat-label { font-size: 0.8125rem; font-weight: 600; color: var(--text-quaternary); text-transform: uppercase; letter-spacing: 0.05em; }
+        .resd-stat-value { font-size: 1.875rem; font-weight: 800; color: var(--text-primary); line-height: 1; }
 
         .resd-main-grid { display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; }
-        .resd-chart-card { background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
-        .resd-recent-appointments { background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+        .resd-chart-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 24px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+        .resd-recent-appointments { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 24px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
         .resd-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
-        .resd-card-header h3 { font-size: 1.125rem; font-weight: 800; color: #1e293b; margin: 0; }
+        .resd-card-header h3 { font-size: 1.125rem; font-weight: 800; color: var(--text-primary); margin: 0; }
         .resd-btn-link { background: none; border: none; color: #3b82f6; font-weight: 700; font-size: 0.875rem; display: flex; align-items: center; gap: 4px; cursor: pointer; }
         
         .resd-appt-list { display: flex; flex-direction: column; gap: 0.75rem; }
-        .resd-appt-item { display: flex; align-items: center; gap: 1rem; padding: 1.25rem; border: 1px solid #f1f5f9; border-radius: 16px; cursor: pointer; transition: all 0.2s; background: #fcfcfd; }
-        .resd-appt-item:hover { border-color: #e2e8f0; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.02); transform: translateY(-2px); }
-        .resd-appt-icon { width: 40px; height: 40px; background: #f1f5f9; color: #64748b; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .resd-appt-item { display: flex; align-items: center; gap: 1rem; padding: 1.25rem; border: 1px solid var(--bg-muted); border-radius: 16px; cursor: pointer; transition: all 0.2s; background: #fcfcfd; }
+        .resd-appt-item:hover { border-color: var(--border-default); background: var(--bg-surface); box-shadow: 0 4px 12px rgba(0,0,0,0.02); transform: translateY(-2px); }
+        .resd-appt-icon { width: 40px; height: 40px; background: var(--bg-muted); color: var(--text-tertiary); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .resd-appt-details { flex: 1; }
-        .resd-appt-details h4 { font-size: 0.9375rem; font-weight: 800; color: #1e293b; margin: 0 0 2px 0; }
-        .resd-appt-details p { font-size: 0.8125rem; color: #64748b; margin: 0; }
+        .resd-appt-details h4 { font-size: 0.9375rem; font-weight: 800; color: var(--text-primary); margin: 0 0 2px 0; }
+        .resd-appt-details p { font-size: 0.8125rem; color: var(--text-tertiary); margin: 0; }
         .resd-appt-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
-        .resd-appt-time { font-size: 0.75rem; font-weight: 600; color: #94a3b8; }
+        .resd-appt-time { font-size: 0.75rem; font-weight: 600; color: var(--text-quaternary); }
         .resd-status-pill { font-size: 0.7rem; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em; }
-        .resd-empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem 0; gap: 1rem; color: #94a3b8; font-weight: 600; }
+        .resd-empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem 0; gap: 1rem; color: var(--text-quaternary); font-weight: 600; }
         
         .resd-side-panel { display: flex; flex-direction: column; gap: 1.5rem; }
-        .resd-invite-box, .resd-support-box, .resd-doughnut-card { background: white; border: 1px solid #e2e8f0; border-radius: 24px; padding: 2rem; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
-        .resd-invite-box h3, .resd-support-box h3, .resd-doughnut-card h3 { font-size: 1.125rem; font-weight: 800; color: #1e293b; margin: 0 0 0.5rem 0; }
-        .resd-invite-box p, .resd-support-box p, .resd-doughnut-card p { font-size: 0.875rem; color: #64748b; margin: 0 0 1.5rem 0; line-height: 1.5; }
-        .resd-quick-code { font-size: 1.5rem; font-weight: 900; color: #0d2331; letter-spacing: 4px; background: #f8fafc; padding: 1rem; border-radius: 12px; border: 1px dashed #cbd5e1; margin-bottom: 1rem; }
-        .resd-btn-outline { background: white; border: 1.5px solid #e2e8f0; color: #0d2331; padding: 0.75rem 1rem; border-radius: 12px; font-weight: 700; width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; cursor: pointer; transition: all 0.2s; }
-        .resd-btn-outline:hover { background: #f8fafc; border-color: #cbd5e1; }
+        .resd-invite-box, .resd-support-box, .resd-doughnut-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 24px; padding: 2rem; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+        .resd-invite-box h3, .resd-support-box h3, .resd-doughnut-card h3 { font-size: 1.125rem; font-weight: 800; color: var(--text-primary); margin: 0 0 0.5rem 0; }
+        .resd-invite-box p, .resd-support-box p, .resd-doughnut-card p { font-size: 0.875rem; color: var(--text-tertiary); margin: 0 0 1.5rem 0; line-height: 1.5; }
+        .resd-quick-code { font-size: 1.5rem; font-weight: 900; color: var(--bg-brand); letter-spacing: 4px; background: var(--bg-subtle); padding: 1rem; border-radius: 12px; border: 1px dashed var(--border-heavy); margin-bottom: 1rem; }
+        .resd-btn-outline { background: var(--bg-surface); border: 1.5px solid var(--border-default); color: var(--bg-brand); padding: 0.75rem 1rem; border-radius: 12px; font-weight: 700; width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; cursor: pointer; transition: all 0.2s; }
+        .resd-btn-outline:hover { background: var(--bg-subtle); border-color: var(--border-heavy); }
 
         .resd-doughnut-wrap { position: relative; display: flex; justify-content: center; margin-bottom: 1.5rem; }
         .resd-doughnut-center-text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
-        .resd-d-total { font-size: 1.75rem; font-weight: 900; color: #1e293b; line-height: 1; margin-bottom: 0.25rem; }
-        .resd-d-label { font-size: 0.75rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
+        .resd-d-total { font-size: 1.75rem; font-weight: 900; color: var(--text-primary); line-height: 1; margin-bottom: 0.25rem; }
+        .resd-d-label { font-size: 0.75rem; font-weight: 700; color: var(--text-quaternary); text-transform: uppercase; letter-spacing: 0.05em; }
         .resd-pie-legend { display: flex; flex-direction: column; gap: 0.75rem; text-align: left; }
-        .resd-legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: #475569; }
+        .resd-legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: var(--text-secondary); }
 
         /* Modal Styles */
         .resd-modal-overlay { position: fixed; inset: 0; background: rgba(13, 35, 49, 0.4); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 1rem; }
-        .resd-modal { background: white; border-radius: 24px; padding: 2rem; max-width: 440px; width: 100%; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .resd-modal-close { position: absolute; top: 1.25rem; right: 1.25rem; background: #f1f5f9; border: none; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #475569; font-size: 1.1rem; font-weight: 700; transition: background 0.2s; }
-        .resd-modal-close:hover { background: #e2e8f0; }
+        .resd-modal { background: var(--bg-surface); border-radius: 24px; padding: 2rem; max-width: 440px; width: 100%; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .resd-modal-close { position: absolute; top: 1.25rem; right: 1.25rem; background: var(--bg-muted); border: none; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-secondary); font-size: 1.1rem; font-weight: 700; transition: background 0.2s; }
+        .resd-modal-close:hover { background: var(--border-default); }
         .resd-modal-header { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; margin-bottom: 2rem; padding-top: 0.5rem; }
-        .resd-modal-header h2 { font-size: 1.5rem; font-weight: 800; color: #0d2331; margin: 0; }
+        .resd-modal-header h2 { font-size: 1.5rem; font-weight: 800; color: var(--bg-brand); margin: 0; }
         
-        .resd-qr-section { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; display: flex; flex-direction: column; align-items: center; margin-bottom: 1.5rem; text-align: center; }
-        .resd-qr-box { background: white; padding: 1rem; border-radius: 16px; border: 1px solid #e2e8f0; display: inline-block; margin-bottom: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
-        .resd-code-display p { font-size: 0.75rem; font-weight: 700; color: #64748b; margin: 0 0 0.25rem 0; text-transform: uppercase; letter-spacing: 0.05em; }
-        .resd-code-display h3 { font-size: 2rem; font-weight: 900; color: #0d2331; letter-spacing: 4px; margin: 0; }
+        .resd-qr-section { background: var(--bg-subtle); border: 1px solid var(--border-default); border-radius: 20px; padding: 1.5rem; display: flex; flex-direction: column; align-items: center; margin-bottom: 1.5rem; text-align: center; }
+        .resd-qr-box { background: var(--bg-surface); padding: 1rem; border-radius: 16px; border: 1px solid var(--border-default); display: inline-block; margin-bottom: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+        .resd-code-display p { font-size: 0.75rem; font-weight: 700; color: var(--text-tertiary); margin: 0 0 0.25rem 0; text-transform: uppercase; letter-spacing: 0.05em; }
+        .resd-code-display h3 { font-size: 2rem; font-weight: 900; color: var(--bg-brand); letter-spacing: 4px; margin: 0; }
 
-        .resd-details-grid { display: grid; grid-template-columns: 1fr; gap: 0.875rem; background: #fcfcfd; border: 1px solid #f1f5f9; padding: 1.25rem; border-radius: 16px; margin-bottom: 1.5rem; }
-        .resd-detail-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.875rem; }
+        .resd-details-grid { display: grid; grid-template-columns: 1fr; gap: 0.875rem; background: #fcfcfd; border: 1px solid var(--bg-muted); padding: 1.25rem; border-radius: 16px; margin-bottom: 1.5rem; }
+        .resd-detail-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--bg-muted); padding-bottom: 0.875rem; }
         .resd-detail-item:last-child { border-bottom: none; padding-bottom: 0; }
-        .resd-detail-item span { font-size: 0.8125rem; font-weight: 600; color: #94a3b8; }
-        .resd-detail-item strong { font-size: 0.9375rem; font-weight: 700; color: #1e293b; }
+        .resd-detail-item span { font-size: 0.8125rem; font-weight: 600; color: var(--text-quaternary); }
+        .resd-detail-item strong { font-size: 0.9375rem; font-weight: 700; color: var(--text-primary); }
         
         .resd-modal-actions { display: flex; gap: 1rem; }
-        .resd-btn-share { flex: 1; background: #0d2331; color: white; padding: 1rem; border-radius: 12px; border: none; font-weight: 700; font-size: 0.9375rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; cursor: pointer; }
+        .resd-btn-share { flex: 1; background: var(--bg-brand); color: var(--text-inverse); padding: 1rem; border-radius: 12px; border: none; font-weight: 700; font-size: 0.9375rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; cursor: pointer; }
 
         @media (max-width: 1024px) {
           .resd-stats-grid { grid-template-columns: repeat(3, 1fr); }

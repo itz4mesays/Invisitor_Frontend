@@ -160,7 +160,7 @@ const ActivityLog = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="6" style={{ textAlign: 'center', padding: '2rem 1rem', color: '#64748b' }}>
+                  <td colSpan="6" style={{ textAlign: 'center', padding: '2rem 1rem', color: 'var(--text-tertiary)' }}>
                     No activity found for the selected criteria.
                   </td>
                 </tr>
@@ -188,12 +188,12 @@ const ActivityLog = () => {
         .page-header-simple h1 {
           font-size: 1.9rem;
           font-weight: 800;
-          color: #0f172a;
+          color: var(--text-primary);
           margin-bottom: 0.35rem;
         }
 
         .page-header-simple p {
-          color: #475569;
+          color: var(--text-secondary);
           max-width: 680px;
           line-height: 1.6;
         }
@@ -205,10 +205,10 @@ const ActivityLog = () => {
         }
 
         .summary-card {
-          background: white;
+          background: var(--bg-surface);
           padding: 1.25rem 1.5rem;
           border-radius: 18px;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--border-default);
           display: flex;
           flex-direction: column;
           gap: 0.5rem;
@@ -219,12 +219,12 @@ const ActivityLog = () => {
           font-size: 0.8rem;
           font-weight: 700;
           text-transform: uppercase;
-          color: #64748b;
+          color: var(--text-tertiary);
         }
 
         .summary-card strong {
           font-size: 1.75rem;
-          color: #0f172a;
+          color: var(--text-primary);
         }
 
         .filter-panel {
@@ -232,10 +232,10 @@ const ActivityLog = () => {
           grid-template-columns: repeat(4, minmax(0, 1fr));
           gap: 1rem;
           align-items: end;
-          background: white;
+          background: var(--bg-surface);
           padding: 1.5rem;
           border-radius: 18px;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--border-default);
         }
 
         .filter-group {
@@ -247,15 +247,15 @@ const ActivityLog = () => {
         .filter-group label {
           font-size: 0.75rem;
           font-weight: 700;
-          color: #475569;
+          color: var(--text-secondary);
         }
 
         .filter-group input {
           padding: 0.9rem 1rem;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--border-default);
           border-radius: 12px;
-          background: #f8fafc;
-          color: #0f172a;
+          background: var(--bg-subtle);
+          color: var(--text-primary);
           outline: none;
         }
 
@@ -269,8 +269,8 @@ const ActivityLog = () => {
           align-items: center;
           gap: 0.75rem;
           padding: 0.9rem 1rem;
-          background: #f8fafc;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-subtle);
+          border: 1px solid var(--border-default);
           border-radius: 12px;
         }
 
@@ -279,13 +279,13 @@ const ActivityLog = () => {
           background: transparent;
           width: 100%;
           outline: none;
-          color: #0f172a;
+          color: var(--text-primary);
         }
 
         .btn-filter-clear {
-          background: white;
-          border: 1px solid #e2e8f0;
-          color: #475569;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-default);
+          color: var(--text-secondary);
           padding: 0.9rem 1rem;
           border-radius: 12px;
           cursor: pointer;
@@ -297,10 +297,10 @@ const ActivityLog = () => {
         }
 
         .activity-table-card {
-          background: white;
+          background: var(--bg-surface);
           padding: 1.5rem;
           border-radius: 18px;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--border-default);
           display: flex;
           flex-direction: column;
           gap: 1.5rem;
@@ -316,12 +316,12 @@ const ActivityLog = () => {
         .table-header-row h2 {
           margin: 0;
           font-size: 1.25rem;
-          color: #0f172a;
+          color: var(--text-primary);
         }
 
         .table-header-row p {
           margin: 0.35rem 0 0;
-          color: #64748b;
+          color: var(--text-tertiary);
         }
 
         .table-header-tag {
@@ -352,20 +352,20 @@ const ActivityLog = () => {
           padding: 0.75rem 1rem;
           font-size: 0.75rem;
           font-weight: 700;
-          color: #94a3b8;
+          color: var(--text-quaternary);
           text-transform: uppercase;
-          border-bottom: 1px solid #f1f5f9;
+          border-bottom: 1px solid var(--bg-muted);
         }
 
         .activity-table td {
           padding: 1rem;
           font-size: 0.875rem;
-          color: #1e293b;
-          border-bottom: 1px solid #f8fafc;
+          color: var(--text-primary);
+          border-bottom: 1px solid var(--bg-subtle);
         }
 
         .activity-table tbody tr:hover td {
-          background: #f8fafc;
+          background: var(--bg-subtle);
         }
 
         @media (max-width: 1024px) {

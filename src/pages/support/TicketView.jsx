@@ -96,7 +96,7 @@ const TICKET_DB = {
 
 const STATUS_COLORS = {
   Open:     { bg: '#fffbeb', color: '#d97706' },
-  Closed:   { bg: '#fef2f2', color: '#dc2626' },
+  Closed:   { bg: 'var(--bg-danger-subtle)', color: '#dc2626' },
   Resolved: { bg: '#f0fdf4', color: '#16a34a' },
 };
 
@@ -111,7 +111,7 @@ const AttachmentItem = ({ file }) => {
     <>
       <div className="tv-attach-item" onClick={() => isImage && setLightbox(true)}>
         <div className="tv-attach-icon">
-          {isImage ? <Image size={18} color="#6366f1" /> : <FileText size={18} color="#0d2331" />}
+          {isImage ? <Image size={18} color="#6366f1" /> : <FileText size={18} color="var(--bg-brand)" />}
         </div>
         <span className="tv-attach-name">{file.name}</span>
         <a
@@ -175,7 +175,7 @@ const Comment = ({ comment, onReact }) => {
           <div className="tv-comment-attachments">
             {comment.attachments.map((a, i) => (
               <div key={i} className="tv-attach-item small">
-                <FileText size={14} color="#0d2331" />
+                <FileText size={14} color="var(--bg-brand)" />
                 <span className="tv-attach-name">{a.name}</span>
               </div>
             ))}
@@ -226,7 +226,7 @@ const TicketView = () => {
   if (!baseTicket) {
     return (
       <div className="tv-not-found">
-        <Ticket size={48} color="#94a3b8" />
+        <Ticket size={48} color="var(--text-quaternary)" />
         <h2>Ticket not found</h2>
         <button className="tv-btn-back" onClick={() => navigate(-1)}>Go Back</button>
       </div>
@@ -442,21 +442,21 @@ const TicketView = () => {
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-default);
           border-radius: 10px;
           padding: 0.5rem 1rem;
           font-size: 0.875rem;
           font-weight: 700;
-          color: #475569;
+          color: var(--text-secondary);
           cursor: pointer;
           transition: all 0.2s;
           width: fit-content;
         }
 
         .tv-back-btn:hover {
-          background: #f1f5f9;
-          color: #0d2331;
+          background: var(--bg-muted);
+          color: var(--bg-brand);
         }
 
         /* Layout */
@@ -475,8 +475,8 @@ const TicketView = () => {
 
         /* Ticket header */
         .tv-ticket-header {
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-default);
           border-radius: 16px;
           padding: 1.5rem;
         }
@@ -491,7 +491,7 @@ const TicketView = () => {
         .tv-ticket-id {
           font-size: 0.8125rem;
           font-weight: 800;
-          color: #94a3b8;
+          color: var(--text-quaternary);
           letter-spacing: 0.5px;
         }
 
@@ -505,15 +505,15 @@ const TicketView = () => {
         .tv-subject {
           font-size: 1.375rem;
           font-weight: 800;
-          color: #1e293b;
+          color: var(--text-primary);
           line-height: 1.3;
           margin: 0;
         }
 
         /* Section cards */
         .tv-section-card {
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-default);
           border-radius: 16px;
           padding: 1.5rem;
         }
@@ -521,7 +521,7 @@ const TicketView = () => {
         .tv-section-title {
           font-size: 0.9375rem;
           font-weight: 800;
-          color: #1e293b;
+          color: var(--text-primary);
           margin-bottom: 1rem;
           display: flex;
           align-items: center;
@@ -530,7 +530,7 @@ const TicketView = () => {
 
         .tv-description {
           font-size: 0.875rem;
-          color: #475569;
+          color: var(--text-secondary);
           line-height: 1.7;
           margin: 0;
         }
@@ -546,8 +546,8 @@ const TicketView = () => {
           display: flex;
           align-items: center;
           gap: 0.625rem;
-          background: #f8fafc;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-subtle);
+          border: 1px solid var(--border-default);
           border-radius: 10px;
           padding: 0.625rem 0.875rem;
           cursor: pointer;
@@ -555,7 +555,7 @@ const TicketView = () => {
         }
 
         .tv-attach-item:hover {
-          background: #f1f5f9;
+          background: var(--bg-muted);
         }
 
         .tv-attach-item.small {
@@ -572,14 +572,14 @@ const TicketView = () => {
           flex: 1;
           font-size: 0.8125rem;
           font-weight: 600;
-          color: #1e293b;
+          color: var(--text-primary);
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
 
         .tv-attach-download {
-          color: #94a3b8;
+          color: var(--text-quaternary);
           display: flex;
           align-items: center;
           text-decoration: none;
@@ -587,7 +587,7 @@ const TicketView = () => {
         }
 
         .tv-attach-download:hover {
-          color: #0d2331;
+          color: var(--bg-brand);
         }
 
         /* Lightbox */
@@ -607,7 +607,7 @@ const TicketView = () => {
           position: absolute;
           top: 1.5rem;
           right: 1.5rem;
-          background: white;
+          background: var(--bg-surface);
           border: none;
           border-radius: 50%;
           width: 44px;
@@ -616,7 +616,7 @@ const TicketView = () => {
           align-items: center;
           justify-content: center;
           cursor: pointer;
-          color: #1e293b;
+          color: var(--text-primary);
         }
 
         .tv-lightbox-img {
@@ -628,7 +628,7 @@ const TicketView = () => {
 
         .tv-lightbox-caption {
           margin-top: 1rem;
-          color: #94a3b8;
+          color: var(--text-quaternary);
           font-size: 0.8125rem;
         }
 
@@ -642,7 +642,7 @@ const TicketView = () => {
 
         .tv-no-comments {
           font-size: 0.875rem;
-          color: #94a3b8;
+          color: var(--text-quaternary);
           text-align: center;
           padding: 2rem 0;
           margin: 0;
@@ -658,15 +658,15 @@ const TicketView = () => {
           width: 40px;
           height: 40px;
           border-radius: 50%;
-          border: 2px solid #e2e8f0;
+          border: 2px solid var(--border-default);
           flex-shrink: 0;
           object-fit: cover;
         }
 
         .tv-comment-body {
           flex: 1;
-          background: #f8fafc;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-subtle);
+          border: 1px solid var(--border-default);
           border-radius: 14px;
           padding: 1rem 1.125rem;
         }
@@ -681,18 +681,18 @@ const TicketView = () => {
         .tv-comment-author {
           font-size: 0.875rem;
           font-weight: 800;
-          color: #1e293b;
+          color: var(--text-primary);
         }
 
         .tv-comment-date {
           font-size: 0.75rem;
-          color: #94a3b8;
+          color: var(--text-quaternary);
           font-weight: 500;
         }
 
         .tv-comment-text {
           font-size: 0.875rem;
-          color: #475569;
+          color: var(--text-secondary);
           line-height: 1.6;
           margin: 0 0 0.75rem;
         }
@@ -715,29 +715,29 @@ const TicketView = () => {
           align-items: center;
           gap: 5px;
           padding: 4px 10px;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--border-default);
           border-radius: 20px;
-          background: white;
+          background: var(--bg-surface);
           font-size: 0.75rem;
           font-weight: 700;
-          color: #64748b;
+          color: var(--text-tertiary);
           cursor: pointer;
           transition: all 0.2s;
         }
 
         .tv-react-btn:hover {
-          background: #f1f5f9;
-          color: #0d2331;
+          background: var(--bg-muted);
+          color: var(--bg-brand);
         }
 
         .tv-react-btn.liked {
           background: #eff6ff;
           border-color: #bfdbfe;
-          color: #2563eb;
+          color: var(--accent-primary);
         }
 
         .tv-react-btn.disliked {
-          background: #fef2f2;
+          background: var(--bg-danger-subtle);
           border-color: #fecaca;
           color: #dc2626;
         }
@@ -747,7 +747,7 @@ const TicketView = () => {
           display: flex;
           gap: 0.875rem;
           align-items: flex-start;
-          border-top: 1px solid #f1f5f9;
+          border-top: 1px solid var(--bg-muted);
           padding-top: 1.25rem;
         }
 
@@ -761,30 +761,30 @@ const TicketView = () => {
         .tv-comment-textarea {
           width: 100%;
           padding: 0.875rem;
-          border: 1.5px solid #e2e8f0;
+          border: 1.5px solid var(--border-default);
           border-radius: 12px;
           font-size: 0.875rem;
-          color: #1e293b;
+          color: var(--text-primary);
           font-family: inherit;
           resize: none;
           outline: none;
           transition: border-color 0.2s;
-          background: white;
+          background: var(--bg-surface);
         }
 
         .tv-comment-textarea:focus {
-          border-color: #0d2331;
+          border-color: var(--bg-brand);
         }
 
         .tv-comment-file-preview {
           display: flex;
           align-items: center;
           gap: 6px;
-          background: #f1f5f9;
+          background: var(--bg-muted);
           border-radius: 8px;
           padding: 6px 10px;
           font-size: 0.8125rem;
-          color: #475569;
+          color: var(--text-secondary);
           font-weight: 600;
         }
 
@@ -792,7 +792,7 @@ const TicketView = () => {
           background: none;
           border: none;
           cursor: pointer;
-          color: #94a3b8;
+          color: var(--text-quaternary);
           display: flex;
           align-items: center;
           margin-left: auto;
@@ -808,33 +808,33 @@ const TicketView = () => {
           display: flex;
           align-items: center;
           gap: 6px;
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-default);
           border-radius: 8px;
           padding: 0.5rem 0.875rem;
           font-size: 0.8125rem;
           font-weight: 700;
-          color: #475569;
+          color: var(--text-secondary);
           cursor: pointer;
           transition: all 0.2s;
         }
 
         .tv-btn-attach:hover {
-          background: #f1f5f9;
-          color: #0d2331;
+          background: var(--bg-muted);
+          color: var(--bg-brand);
         }
 
         .tv-btn-send {
           display: flex;
           align-items: center;
           gap: 6px;
-          background: #0d2331;
+          background: var(--bg-brand);
           border: none;
           border-radius: 8px;
           padding: 0.5rem 1.125rem;
           font-size: 0.8125rem;
           font-weight: 700;
-          color: white;
+          color: var(--text-inverse);
           cursor: pointer;
           transition: opacity 0.2s;
           margin-left: auto;
@@ -856,8 +856,8 @@ const TicketView = () => {
         }
 
         .tv-meta-card {
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-default);
           border-radius: 16px;
           padding: 1.5rem;
         }
@@ -865,10 +865,10 @@ const TicketView = () => {
         .tv-meta-title {
           font-size: 0.9375rem;
           font-weight: 800;
-          color: #1e293b;
+          color: var(--text-primary);
           margin-bottom: 1.25rem;
           padding-bottom: 0.875rem;
-          border-bottom: 1px solid #f1f5f9;
+          border-bottom: 1px solid var(--bg-muted);
         }
 
         .tv-meta-item {
@@ -881,7 +881,7 @@ const TicketView = () => {
         .tv-meta-label {
           font-size: 0.6875rem;
           font-weight: 800;
-          color: #94a3b8;
+          color: var(--text-quaternary);
           letter-spacing: 0.5px;
           text-transform: uppercase;
           display: flex;
@@ -892,7 +892,7 @@ const TicketView = () => {
         .tv-meta-value {
           font-size: 0.875rem;
           font-weight: 700;
-          color: #1e293b;
+          color: var(--text-primary);
         }
 
         /* Not found */
@@ -903,18 +903,18 @@ const TicketView = () => {
           justify-content: center;
           gap: 1rem;
           min-height: 50vh;
-          color: #64748b;
+          color: var(--text-tertiary);
         }
 
         .tv-not-found h2 {
           font-size: 1.25rem;
           font-weight: 800;
-          color: #1e293b;
+          color: var(--text-primary);
         }
 
         .tv-btn-back {
-          background: #0d2331;
-          color: white;
+          background: var(--bg-brand);
+          color: var(--text-inverse);
           border: none;
           padding: 0.75rem 1.5rem;
           border-radius: 10px;

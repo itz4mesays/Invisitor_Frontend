@@ -46,7 +46,7 @@ const AddVisitor = () => {
         <section className="form-section">
           <h2><User size={18} /> Visitor Profile</h2>
           <div className="profile-photo-area">
-            <div className="photo-circle"><User size={40} color="#94a3b8" /></div>
+            <div className="photo-circle"><User size={40} color="var(--text-quaternary)" /></div>
             <button type="button" className="btn-upload-text">Upload Profile Picture</button>
           </div>
 
@@ -100,7 +100,7 @@ const AddVisitor = () => {
             </div>
           </div>
           <div className="upload-box">
-            <Upload size={20} color="#64748b" />
+            <Upload size={20} color="var(--text-tertiary)" />
             <span>Click to upload ID document copy (PDF, JPG)</span>
           </div>
         </section>
@@ -136,40 +136,40 @@ const AddVisitor = () => {
       <style jsx>{`
         .add-v-page { max-width: 800px; margin: 0 auto; padding-bottom: 4rem; }
         .add-v-header { margin-bottom: 2.5rem; }
-        .btn-back { display: flex; align-items: center; gap: 0.5rem; background: none; border: none; color: #64748b; font-weight: 600; cursor: pointer; padding: 0; margin-bottom: 1rem; transition: color 0.2s; }
-        .btn-back:hover { color: #0d2331; }
-        .add-v-header h1 { font-size: 2rem; font-weight: 800; color: #1e293b; margin: 0 0 0.5rem 0; }
-        .add-v-header p { color: #64748b; margin: 0; }
+        .btn-back { display: flex; align-items: center; gap: 0.5rem; background: none; border: none; color: var(--text-tertiary); font-weight: 600; cursor: pointer; padding: 0; margin-bottom: 1rem; transition: color 0.2s; }
+        .btn-back:hover { color: var(--bg-brand); }
+        .add-v-header h1 { font-size: 2rem; font-weight: 800; color: var(--text-primary); margin: 0 0 0.5rem 0; }
+        .add-v-header p { color: var(--text-tertiary); margin: 0; }
         
         .add-v-form { display: flex; flex-direction: column; gap: 2rem; }
-        .form-section { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
-        .form-section h2 { display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; font-weight: 800; color: #1e293b; border-bottom: 1px solid #f1f5f9; padding-bottom: 1rem; margin: 0 0 1.5rem 0; }
+        .form-section { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 16px; padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
+        .form-section h2 { display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; font-weight: 800; color: var(--text-primary); border-bottom: 1px solid var(--bg-muted); padding-bottom: 1rem; margin: 0 0 1.5rem 0; }
         
         .profile-photo-area { display: flex; flex-direction: column; align-items: center; gap: 1rem; margin-bottom: 2rem; }
-        .photo-circle { width: 80px; height: 80px; border-radius: 50%; background: #f1f5f9; border: 2px dashed #cbd5e1; display: flex; align-items: center; justify-content: center; }
-        .btn-upload-text { background: none; border: none; color: #00a3ff; font-weight: 700; font-size: 0.875rem; cursor: pointer; }
+        .photo-circle { width: 80px; height: 80px; border-radius: 50%; background: var(--bg-muted); border: 2px dashed var(--border-heavy); display: flex; align-items: center; justify-content: center; }
+        .btn-upload-text { background: none; border: none; color: var(--accent-primary); font-weight: 700; font-size: 0.875rem; cursor: pointer; }
         
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
         .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
-        .form-group label { font-size: 0.75rem; font-weight: 700; color: #1e293b; text-transform: uppercase; letter-spacing: 0.05em; }
-        .form-group input, .form-group select { padding: 0.875rem 1rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; color: #1e293b; transition: all 0.2s; background: #fff; }
-        .form-group input:focus, .form-group select:focus { outline: none; border-color: #00a3ff; box-shadow: 0 0 0 3px rgba(0, 163, 255, 0.1); }
+        .form-group label { font-size: 0.75rem; font-weight: 700; color: var(--text-primary); text-transform: uppercase; letter-spacing: 0.05em; }
+        .form-group input, .form-group select { padding: 0.875rem 1rem; border: 1px solid var(--border-heavy); border-radius: 8px; font-size: 0.95rem; color: var(--text-primary); transition: all 0.2s; background: #fff; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--accent-primary); box-shadow: 0 0 0 3px rgba(0, 163, 255, 0.1); }
         .phone-prefix { width: 90px; }
         
-        .upload-box { margin-top: 1.5rem; border: 2px dashed #cbd5e1; border-radius: 12px; padding: 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem; color: #64748b; font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: all 0.2s; background: #f8fafc; }
-        .upload-box:hover { border-color: #94a3b8; background: #f1f5f9; }
+        .upload-box { margin-top: 1.5rem; border: 2px dashed var(--border-heavy); border-radius: 12px; padding: 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem; color: var(--text-tertiary); font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: all 0.2s; background: var(--bg-subtle); }
+        .upload-box:hover { border-color: var(--text-quaternary); background: var(--bg-muted); }
         
         .form-actions { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem; }
-        .btn-cancel { padding: 1rem 2rem; background: white; border: 1px solid #cbd5e1; border-radius: 12px; font-weight: 700; color: #475569; cursor: pointer; font-size: 0.95rem; }
-        .btn-submit { padding: 1rem 2.5rem; background: #0d2331; border: none; border-radius: 12px; font-weight: 700; color: white; cursor: pointer; font-size: 0.95rem; transition: background 0.2s; }
-        .btn-submit:hover { background: #1a3c52; }
+        .btn-cancel { padding: 1rem 2rem; background: var(--bg-surface); border: 1px solid var(--border-heavy); border-radius: 12px; font-weight: 700; color: var(--text-secondary); cursor: pointer; font-size: 0.95rem; }
+        .btn-submit { padding: 1rem 2.5rem; background: var(--bg-brand); border: none; border-radius: 12px; font-weight: 700; color: var(--text-inverse); cursor: pointer; font-size: 0.95rem; transition: background 0.2s; }
+        .btn-submit:hover { background: var(--bg-brand-hover); }
 
         .add-v-success { position: fixed; inset: 0; background: rgba(255,255,255,0.95); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-        .success-card { background: white; padding: 4rem 3rem; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); text-align: center; max-width: 450px; }
-        .success-icon { color: #22c55e; margin-bottom: 1.5rem; display: flex; justify-content: center; }
-        .success-card h2 { font-size: 1.75rem; font-weight: 800; color: #1e293b; margin: 0 0 1rem 0; }
-        .success-card p { color: #64748b; margin: 0 0 1rem 0; line-height: 1.5; }
-        .redirect-text { font-size: 0.875rem; color: #94a3b8; font-style: italic; }
+        .success-card { background: var(--bg-surface); padding: 4rem 3rem; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); text-align: center; max-width: 450px; }
+        .success-icon { color: var(--text-success); margin-bottom: 1.5rem; display: flex; justify-content: center; }
+        .success-card h2 { font-size: 1.75rem; font-weight: 800; color: var(--text-primary); margin: 0 0 1rem 0; }
+        .success-card p { color: var(--text-tertiary); margin: 0 0 1rem 0; line-height: 1.5; }
+        .redirect-text { font-size: 0.875rem; color: var(--text-quaternary); font-style: italic; }
 
         @media (max-width: 768px) {
           .form-grid { grid-template-columns: 1fr; }

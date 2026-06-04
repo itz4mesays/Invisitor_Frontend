@@ -33,8 +33,8 @@ const GroupedBarChart = ({ data, height = 300 }) => {
     <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', height: H }}>
       {yTicks.map((t, i) => (
         <g key={i}>
-          <line x1={padL} y1={t.y} x2={W - padR} y2={t.y} stroke="#f1f5f9" strokeWidth={1} />
-          <text x={padL - 4} y={t.y + 4} textAnchor="end" fontSize={9} fill="#94a3b8" fontFamily="inherit">{t.label}</text>
+          <line x1={padL} y1={t.y} x2={W - padR} y2={t.y} stroke="var(--bg-muted)" strokeWidth={1} />
+          <text x={padL - 4} y={t.y + 4} textAnchor="end" fontSize={9} fill="var(--text-quaternary)" fontFamily="inherit">{t.label}</text>
         </g>
       ))}
       {data.map((d, i) => {
@@ -44,9 +44,9 @@ const GroupedBarChart = ({ data, height = 300 }) => {
         return (
           <g key={i}>
             <rect x={groupX} y={padT + chartH - openH} width={barW} height={openH} fill="#f59e0b" rx={2} />
-            <rect x={groupX + barW + 2} y={padT + chartH - closedH} width={barW} height={closedH} fill="#0d2331" rx={2} opacity={0.75} />
+            <rect x={groupX + barW + 2} y={padT + chartH - closedH} width={barW} height={closedH} fill="var(--bg-brand)" rx={2} opacity={0.75} />
             {(i % Math.ceil(data.length / 7) === 0 || i === data.length - 1) && (
-              <text x={groupX + groupW / 2 - barPad} y={H - 6} textAnchor="middle" fontSize={9} fill="#94a3b8" fontFamily="inherit">{d.label}</text>
+              <text x={groupX + groupW / 2 - barPad} y={H - 6} textAnchor="middle" fontSize={9} fill="var(--text-quaternary)" fontFamily="inherit">{d.label}</text>
             )}
           </g>
         );
@@ -60,18 +60,19 @@ const PieChart = ({ segments, size = 160 }) => {
   const cx = size / 2;
   const cy = size / 2;
   const total = segments.reduce((s, seg) => s + seg.value, 0);
-  let cumulAngle = -Math.PI / 2;
-  const arcs = segments.map((seg) => {
+  const arcs = segments.reduce((acc, seg) => {
     const angle = (seg.value / total) * Math.PI * 2;
-    const x1 = cx + r * Math.cos(cumulAngle);
-    const y1 = cy + r * Math.sin(cumulAngle);
-    cumulAngle += angle;
-    const x2 = cx + r * Math.cos(cumulAngle);
-    const y2 = cy + r * Math.sin(cumulAngle);
+    const x1 = cx + r * Math.cos(acc.currentAngle);
+    const y1 = cy + r * Math.sin(acc.currentAngle);
+    const nextAngle = acc.currentAngle + angle;
+    const x2 = cx + r * Math.cos(nextAngle);
+    const y2 = cy + r * Math.sin(nextAngle);
     const largeArc = angle > Math.PI ? 1 : 0;
     const d = `M${cx},${cy} L${x1},${y1} A${r},${r} 0 ${largeArc},1 ${x2},${y2} Z`;
-    return { d, color: seg.color };
-  });
+    acc.arcs.push({ d, color: seg.color });
+    acc.currentAngle = nextAngle;
+    return acc;
+  }, { currentAngle: -Math.PI / 2, arcs: [] }).arcs;
   return (
     <svg viewBox={`0 0 ${size} ${size}`} style={{ width: size, height: size }}>
       {arcs.map((arc, i) => <path key={i} d={arc.d} fill={arc.color} stroke="white" strokeWidth={2} />)}
@@ -90,7 +91,7 @@ const TICKET_LIST = [
 
 const STATUS_COLORS = {
   Open: { bg: '#fffbeb', color: '#d97706' },
-  Closed: { bg: '#fef2f2', color: '#dc2626' },
+  Closed: { bg: 'var(--bg-danger-subtle)', color: '#dc2626' },
   Resolved: { bg: '#f0fdf4', color: '#16a34a' },
 };
 
@@ -114,14 +115,14 @@ const SupportDashboard = () => {
   const stats = [
     { label: 'Total Tickets', value: 148, icon: <Ticket size={20} />, color: '#6366f1', bg: '#eef2ff' },
     { label: 'Open Tickets', value: 42, icon: <Circle size={20} />, color: '#f59e0b', bg: '#fffbeb' },
-    { label: 'Closed Tickets', value: 78, icon: <CheckCircle2 size={20} />, color: '#ef4444', bg: '#fef2f2' },
-    { label: 'Resolved Tickets', value: 28, icon: <ShieldCheck size={20} />, color: '#22c55e', bg: '#f0fdf4' },
+    { label: 'Closed Tickets', value: 78, icon: <CheckCircle2 size={20} />, color: 'var(--text-danger)', bg: 'var(--bg-danger-subtle)' },
+    { label: 'Resolved Tickets', value: 28, icon: <ShieldCheck size={20} />, color: 'var(--text-success)', bg: '#f0fdf4' },
   ];
 
   const pieSegments = [
     { label: 'Open', value: 42, color: '#f59e0b' },
-    { label: 'Closed', value: 78, color: '#ef4444' },
-    { label: 'Resolved', value: 28, color: '#22c55e' },
+    { label: 'Closed', value: 78, color: 'var(--text-danger)' },
+    { label: 'Resolved', value: 28, color: 'var(--text-success)' },
   ];
 
   return (
@@ -152,7 +153,7 @@ const SupportDashboard = () => {
               <div className="sp-bar-legend">
                 <span className="sp-legend-dot" style={{ background: '#f59e0b' }} />
                 <span className="sp-legend-tag">Open</span>
-                <span className="sp-legend-dot" style={{ background: '#0d2331', opacity: 0.75 }} />
+                <span className="sp-legend-dot" style={{ background: 'var(--bg-brand)', opacity: 0.75 }} />
                 <span className="sp-legend-tag">Closed</span>
               </div>
               <div className="sp-month-picker" onClick={() => setMonthOpen(!monthOpen)}>
@@ -230,52 +231,52 @@ const SupportDashboard = () => {
 
       <style jsx="true">{`
         .sp-dashboard { display: flex; flex-direction: column; gap: 1.75rem; padding-bottom: 3rem; }
-        .sp-page-header h1 { font-size: 1.75rem; font-weight: 800; color: #1e293b; margin-bottom: 0; }
+        .sp-page-header h1 { font-size: 1.75rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0; }
         .sp-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
-        .sp-stat-card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 1rem; position: relative; }
+        .sp-stat-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 16px; padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 1rem; position: relative; }
         .sp-stat-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .sp-stat-body { display: flex; flex-direction: column; gap: 2px; }
-        .sp-stat-label { font-size: 0.75rem; color: #94a3b8; font-weight: 600; }
-        .sp-stat-value { font-size: 1.75rem; font-weight: 800; color: #1e293b; line-height: 1; }
+        .sp-stat-label { font-size: 0.75rem; color: var(--text-quaternary); font-weight: 600; }
+        .sp-stat-value { font-size: 1.75rem; font-weight: 800; color: var(--text-primary); line-height: 1; }
         .sp-trend { position: absolute; top: 1.25rem; right: 1.25rem; opacity: 0.6; }
         .sp-charts-row { display: grid; grid-template-columns: 1fr 320px; gap: 1.25rem; }
-        .sp-chart-card { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; }
+        .sp-chart-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 20px; padding: 1.5rem; }
         .sp-chart-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem; }
-        .sp-chart-header h3 { font-size: 1rem; font-weight: 800; color: #1e293b; margin-bottom: 2px; }
-        .sp-chart-header p { font-size: 0.75rem; color: #94a3b8; font-weight: 500; }
+        .sp-chart-header h3 { font-size: 1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 2px; }
+        .sp-chart-header p { font-size: 0.75rem; color: var(--text-quaternary); font-weight: 500; }
         .sp-chart-controls { display: flex; align-items: center; gap: 0.875rem; flex-wrap: wrap; }
-        .sp-bar-legend { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 600; color: #475569; }
+        .sp-bar-legend { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); }
         .sp-legend-tag { margin-right: 6px; }
-        .sp-month-picker { position: relative; display: flex; align-items: center; gap: 6px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 6px 10px; font-size: 0.75rem; font-weight: 700; color: #1e293b; cursor: pointer; user-select: none; }
+        .sp-month-picker { position: relative; display: flex; align-items: center; gap: 6px; background: var(--bg-subtle); border: 1px solid var(--border-default); border-radius: 8px; padding: 6px 10px; font-size: 0.75rem; font-weight: 700; color: var(--text-primary); cursor: pointer; user-select: none; }
         .sp-month-picker .rotated { transform: rotate(180deg); }
-        .sp-month-dropdown { position: absolute; top: calc(100% + 6px); right: 0; background: white; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); z-index: 200; display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 8px; width: 160px; }
-        .sp-month-dropdown button { background: none; border: none; padding: 6px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; color: #64748b; cursor: pointer; text-align: center; }
-        .sp-month-dropdown button:hover { background: #f1f5f9; color: #0d2331; }
-        .sp-month-dropdown button.active { background: #0d2331; color: white; }
+        .sp-month-dropdown { position: absolute; top: calc(100% + 6px); right: 0; background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); z-index: 200; display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 8px; width: 160px; }
+        .sp-month-dropdown button { background: none; border: none; padding: 6px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; color: var(--text-tertiary); cursor: pointer; text-align: center; }
+        .sp-month-dropdown button:hover { background: var(--bg-muted); color: var(--bg-brand); }
+        .sp-month-dropdown button.active { background: var(--bg-brand); color: var(--text-inverse); }
         .sp-bar-chart-wrap { width: 100%; overflow: hidden; }
         .sp-pie-wrap { position: relative; display: flex; justify-content: center; align-items: center; margin: 0.5rem 0 1.5rem; }
         .sp-pie-center-text { position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
-        .sp-pie-total { font-size: 1.75rem; font-weight: 800; color: #1e293b; line-height: 1; }
-        .sp-pie-label-sm { font-size: 0.6875rem; color: #94a3b8; font-weight: 600; }
+        .sp-pie-total { font-size: 1.75rem; font-weight: 800; color: var(--text-primary); line-height: 1; }
+        .sp-pie-label-sm { font-size: 0.6875rem; color: var(--text-quaternary); font-weight: 600; }
         .sp-legend { display: flex; flex-direction: column; gap: 0.75rem; }
         .sp-legend-item { display: flex; align-items: center; gap: 0.75rem; }
         .sp-legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; display: inline-block; }
-        .sp-legend-name { font-size: 0.8125rem; color: #475569; font-weight: 600; flex: 1; }
-        .sp-legend-val { font-size: 0.875rem; font-weight: 800; color: #1e293b; }
-        .sp-recent-card { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; }
+        .sp-legend-name { font-size: 0.8125rem; color: var(--text-secondary); font-weight: 600; flex: 1; }
+        .sp-legend-val { font-size: 0.875rem; font-weight: 800; color: var(--text-primary); }
+        .sp-recent-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 20px; padding: 1.5rem; }
         .sp-recent-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem; }
-        .sp-recent-header h3 { font-size: 1rem; font-weight: 800; color: #1e293b; margin-bottom: 2px; }
-        .sp-recent-header p { font-size: 0.75rem; color: #94a3b8; font-weight: 500; }
-        .sp-btn-see-all { background: none; border: none; font-size: 0.8125rem; font-weight: 700; color: #64748b; display: flex; align-items: center; gap: 4px; cursor: pointer; }
+        .sp-recent-header h3 { font-size: 1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 2px; }
+        .sp-recent-header p { font-size: 0.75rem; color: var(--text-quaternary); font-weight: 500; }
+        .sp-btn-see-all { background: none; border: none; font-size: 0.8125rem; font-weight: 700; color: var(--text-tertiary); display: flex; align-items: center; gap: 4px; cursor: pointer; }
         .sp-recent-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
-        .sp-recent-table th { padding: 0.75rem 0; font-size: 0.75rem; font-weight: 600; color: #94a3b8; border-bottom: 1px solid #f1f5f9; }
-        .sp-recent-table td { padding: 1rem 0; font-size: 0.875rem; border-bottom: 1px solid #f1f5f9; }
+        .sp-recent-table th { padding: 0.75rem 0; font-size: 0.75rem; font-weight: 600; color: var(--text-quaternary); border-bottom: 1px solid var(--bg-muted); }
+        .sp-recent-table td { padding: 1rem 0; font-size: 0.875rem; border-bottom: 1px solid var(--bg-muted); }
         .sp-recent-table tbody tr:last-child td { border-bottom: none; }
         .sp-recent-row { cursor: pointer; transition: background 0.15s; }
-        .sp-recent-row:hover td { background: #f8fafc; }
-        .sp-id-cell { font-weight: 700; color: #1e293b; padding-right: 0.5rem; }
-        .sp-subject-cell { font-weight: 600; color: #1e293b; max-width: 200px; }
-        .sp-gray { color: #64748b; }
+        .sp-recent-row:hover td { background: var(--bg-subtle); }
+        .sp-id-cell { font-weight: 700; color: var(--text-primary); padding-right: 0.5rem; }
+        .sp-subject-cell { font-weight: 600; color: var(--text-primary); max-width: 200px; }
+        .sp-gray { color: var(--text-tertiary); }
         .sp-status-pill { padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; white-space: nowrap; }
 
         @media (max-width: 1100px) {

@@ -27,7 +27,7 @@ const BarChart = ({ data, height = 200 }) => {
             transition={{ delay: i * 0.05, duration: 0.5 }}
             style={{ width: '100%', background: 'linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%)', borderRadius: '4px 4px 0 0', minHeight: d.count > 0 ? '4px' : '0' }}
           />
-          <span style={{ fontSize: '0.6rem', color: '#94a3b8', fontWeight: 600 }}>{d.label}</span>
+          <span style={{ fontSize: '0.6rem', color: 'var(--text-quaternary)', fontWeight: 600 }}>{d.label}</span>
         </div>
       ))}
     </div>
@@ -60,8 +60,8 @@ const PieChart = ({ segments, size = 140 }) => {
 
 const STATUS_COLORS = {
   completed: { bg: '#f0fdf4', color: '#16a34a' },
-  scheduled: { bg: '#eff6ff', color: '#2563eb' },
-  cancelled: { bg: '#fef2f2', color: '#dc2626' },
+  scheduled: { bg: '#eff6ff', color: 'var(--accent-primary)' },
+  cancelled: { bg: 'var(--bg-danger-subtle)', color: '#dc2626' },
 };
 
 const ResidentReports = () => {
@@ -100,9 +100,9 @@ const ResidentReports = () => {
   }));
 
   const pieSegments = [
-    { label: 'Completed', value: stats.completed, color: '#22c55e' },
+    { label: 'Completed', value: stats.completed, color: 'var(--text-success)' },
     { label: 'Scheduled', value: stats.scheduled, color: '#3b82f6' },
-    { label: 'Cancelled', value: stats.cancelled, color: '#ef4444' },
+    { label: 'Cancelled', value: stats.cancelled, color: 'var(--text-danger)' },
   ];
 
   return (
@@ -116,9 +116,9 @@ const ResidentReports = () => {
       <div className="rr-stats-grid">
         {[
           { label: 'Total Appointments', value: stats.total, icon: <Calendar size={20} />, color: '#6366f1', bg: '#eef2ff' },
-          { label: 'Completed', value: stats.completed, icon: <CheckCircle size={20} />, color: '#22c55e', bg: '#f0fdf4' },
+          { label: 'Completed', value: stats.completed, icon: <CheckCircle size={20} />, color: 'var(--text-success)', bg: '#f0fdf4' },
           { label: 'Scheduled', value: stats.scheduled, icon: <Clock size={20} />, color: '#3b82f6', bg: '#eff6ff' },
-          { label: 'Cancelled', value: stats.cancelled, icon: <XCircle size={20} />, color: '#ef4444', bg: '#fef2f2' },
+          { label: 'Cancelled', value: stats.cancelled, icon: <XCircle size={20} />, color: 'var(--text-danger)', bg: 'var(--bg-danger-subtle)' },
         ].map((s, i) => (
           <motion.div key={i} className="rr-stat-card" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}>
             <div className="rr-stat-icon" style={{ background: s.bg, color: s.color }}>{s.icon}</div>
@@ -189,16 +189,16 @@ const ResidentReports = () => {
                 const sc = STATUS_COLORS[appt.status] || {};
                 return (
                   <tr key={appt.id}>
-                    <td style={{ fontWeight: 700, color: '#1e293b' }}>{appt.id}</td>
+                    <td style={{ fontWeight: 700, color: 'var(--text-primary)' }}>{appt.id}</td>
                     <td style={{ fontWeight: 600 }}>{appt.visitor}</td>
-                    <td style={{ color: '#64748b' }}>{appt.purpose}</td>
-                    <td style={{ color: '#64748b' }}>{appt.date}</td>
-                    <td style={{ color: '#64748b' }}>{appt.time}</td>
+                    <td style={{ color: 'var(--text-tertiary)' }}>{appt.purpose}</td>
+                    <td style={{ color: 'var(--text-tertiary)' }}>{appt.date}</td>
+                    <td style={{ color: 'var(--text-tertiary)' }}>{appt.time}</td>
                     <td><span className="rr-status-pill" style={{ background: sc.bg, color: sc.color }}>{appt.status.charAt(0).toUpperCase() + appt.status.slice(1)}</span></td>
                   </tr>
                 );
               }) : (
-                <tr><td colSpan="6" style={{ textAlign: 'center', padding: '2rem', color: '#94a3b8' }}>No appointments found.</td></tr>
+                <tr><td colSpan="6" style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-quaternary)' }}>No appointments found.</td></tr>
               )}
             </tbody>
           </table>
@@ -215,45 +215,45 @@ const ResidentReports = () => {
 
       <style jsx="true">{`
         .rr-page { display: flex; flex-direction: column; gap: 1.5rem; padding-bottom: 3rem; }
-        .rr-header h1 { font-size: 1.75rem; font-weight: 800; color: #1e293b; margin-bottom: 0.25rem; }
-        .rr-header p { color: #64748b; font-size: 0.9375rem; }
+        .rr-header h1 { font-size: 1.75rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.25rem; }
+        .rr-header p { color: var(--text-tertiary); font-size: 0.9375rem; }
 
         .rr-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
-        .rr-stat-card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; }
+        .rr-stat-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 16px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; }
         .rr-stat-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .rr-stat-label { display: block; font-size: 0.75rem; color: #94a3b8; font-weight: 600; }
-        .rr-stat-value { display: block; font-size: 1.75rem; font-weight: 800; color: #1e293b; line-height: 1; }
+        .rr-stat-label { display: block; font-size: 0.75rem; color: var(--text-quaternary); font-weight: 600; }
+        .rr-stat-value { display: block; font-size: 1.75rem; font-weight: 800; color: var(--text-primary); line-height: 1; }
 
         .rr-charts-row { display: grid; grid-template-columns: 1fr 280px; gap: 1.25rem; }
-        .rr-chart-card { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; }
-        .rr-chart-card h3 { font-size: 1rem; font-weight: 800; color: #1e293b; margin-bottom: 4px; }
-        .rr-chart-card p { font-size: 0.75rem; color: #94a3b8; margin-bottom: 1rem; }
+        .rr-chart-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 20px; padding: 1.5rem; }
+        .rr-chart-card h3 { font-size: 1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 4px; }
+        .rr-chart-card p { font-size: 0.75rem; color: var(--text-quaternary); margin-bottom: 1rem; }
         .rr-pie-wrap { display: flex; justify-content: center; margin: 1rem 0; }
         .rr-pie-legend { display: flex; flex-direction: column; gap: 0.625rem; }
-        .rr-legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; color: #475569; }
+        .rr-legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; color: var(--text-secondary); }
 
-        .rr-table-card { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 1.5rem; }
+        .rr-table-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 20px; padding: 1.5rem; }
         .rr-toolbar { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 1rem; }
-        .rr-toolbar h3 { font-size: 1rem; font-weight: 800; color: #1e293b; margin-bottom: 2px; }
-        .rr-toolbar p { font-size: 0.75rem; color: #94a3b8; }
+        .rr-toolbar h3 { font-size: 1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 2px; }
+        .rr-toolbar p { font-size: 0.75rem; color: var(--text-quaternary); }
         .rr-filters { display: flex; flex-direction: column; gap: 0.75rem; align-items: flex-end; }
-        .rr-search-box { display: flex; align-items: center; gap: 0.5rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem 0.875rem; }
+        .rr-search-box { display: flex; align-items: center; gap: 0.5rem; background: var(--bg-subtle); border: 1px solid var(--border-default); border-radius: 8px; padding: 0.5rem 0.875rem; }
         .rr-search-box input { border: none; background: none; outline: none; font-size: 0.8125rem; width: 200px; }
         .rr-date-filters { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
-        .rr-date-filters input { padding: 0.5rem 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 0.8125rem; outline: none; }
-        .rr-date-filters span { font-size: 0.8125rem; color: #64748b; }
-        .rr-clear-btn { background: none; border: none; color: #ef4444; font-weight: 700; font-size: 0.8125rem; cursor: pointer; }
+        .rr-date-filters input { padding: 0.5rem 0.75rem; border: 1px solid var(--border-default); border-radius: 8px; font-size: 0.8125rem; outline: none; }
+        .rr-date-filters span { font-size: 0.8125rem; color: var(--text-tertiary); }
+        .rr-clear-btn { background: none; border: none; color: var(--text-danger); font-weight: 700; font-size: 0.8125rem; cursor: pointer; }
 
         .rr-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 550px; }
-        .rr-table th { padding: 0.75rem 0; font-size: 0.75rem; font-weight: 600; color: #94a3b8; border-bottom: 1px solid #f1f5f9; }
-        .rr-table td { padding: 1rem 0; font-size: 0.875rem; border-bottom: 1px solid #f1f5f9; }
+        .rr-table th { padding: 0.75rem 0; font-size: 0.75rem; font-weight: 600; color: var(--text-quaternary); border-bottom: 1px solid var(--bg-muted); }
+        .rr-table td { padding: 1rem 0; font-size: 0.875rem; border-bottom: 1px solid var(--bg-muted); }
         .rr-table tbody tr:last-child td { border-bottom: none; }
         .rr-status-pill { padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
 
-        .rr-pagination { display: flex; align-items: center; justify-content: center; gap: 1rem; padding-top: 1.25rem; border-top: 1px solid #f1f5f9; margin-top: 1rem; }
-        .rr-pagination button { background: white; border: 1px solid #e2e8f0; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.875rem; }
+        .rr-pagination { display: flex; align-items: center; justify-content: center; gap: 1rem; padding-top: 1.25rem; border-top: 1px solid var(--bg-muted); margin-top: 1rem; }
+        .rr-pagination button { background: var(--bg-surface); border: 1px solid var(--border-default); padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.875rem; }
         .rr-pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
-        .rr-pagination span { font-size: 0.875rem; color: #64748b; }
+        .rr-pagination span { font-size: 0.875rem; color: var(--text-tertiary); }
 
         @media (max-width: 1100px) {
           .rr-stats-grid { grid-template-columns: repeat(2, 1fr); }

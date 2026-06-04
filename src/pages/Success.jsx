@@ -8,7 +8,7 @@ const Success = () => {
   return (
     <div className="card" style={{ textAlign: 'center' }}>
       <div style={{ marginBottom: '2rem' }}>
-        <CheckCircle size={80} color="#22c55e" style={{ margin: '0 auto' }} />
+        <CheckCircle size={80} color="var(--text-success)" style={{ margin: '0 auto' }} />
       </div>
       <h1 className="card-title">Payment Successful</h1>
       <p className="card-subtitle">

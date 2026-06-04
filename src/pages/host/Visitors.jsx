@@ -62,7 +62,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
           padding: 1rem;
         }
         .modal-container {
-          background: white;
+          background: var(--bg-surface);
           width: 100%;
           max-width: 850px;
           border-radius: 40px;
@@ -76,8 +76,8 @@ const Modal = ({ isOpen, onClose, title, children }) => {
           z-index: 100;
         }
         .btn-close-circle {
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-default);
           border-radius: 50%;
           width: 44px;
           height: 44px;
@@ -85,7 +85,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
           align-items: center;
           justify-content: center;
           cursor: pointer;
-          color: #1e293b;
+          color: var(--text-primary);
         }
         .modal-body-p-0 {
           padding: 0;
@@ -97,7 +97,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
           width: 6px;
         }
         .modal-body-p-0::-webkit-scrollbar-thumb {
-          background: #e2e8f0;
+          background: var(--border-default);
           border-radius: 10px;
         }
       `}</style>
@@ -136,6 +136,9 @@ const HostVisitors = () => {
   const [blacklisted, setBlacklisted] = useState(new Set());
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [selectedVisitor, setSelectedVisitor] = useState(null);
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('Profile');
 
   const handleViewDetails = (visitor) => {
     navigate(`/host/visitors/${visitor.id}`);
@@ -317,7 +320,7 @@ const HostVisitors = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="6" style={{ textAlign: 'center', padding: '3rem 1rem', color: '#64748b' }}>
+                <td colSpan="6" style={{ textAlign: 'center', padding: '3rem 1rem', color: 'var(--text-tertiary)' }}>
                   No visitors found matching your criteria.
                 </td>
               </tr>
@@ -399,12 +402,12 @@ const HostVisitors = () => {
                     <div className="form-field">
                       <label>PHONE NUMBER</label>
                       <div style={{ display: 'flex', gap: '0.5rem' }}>
-                        <select style={{ width: '80px', padding: '0.625rem', border: '1px solid #e2e8f0', borderRadius: '12px' }}>
+                        <select style={{ width: '80px', padding: '0.625rem', border: '1px solid var(--border-default)', borderRadius: '12px' }}>
                           <option>+234</option>
                           <option>+1</option>
                           <option>+44</option>
                         </select>
-                        <input type="text" placeholder="814 609 2019" style={{ flex: 1, padding: '0.625rem', border: '1px solid #e2e8f0', borderRadius: '12px' }} />
+                        <input type="text" placeholder="814 609 2019" style={{ flex: 1, padding: '0.625rem', border: '1px solid var(--border-default)', borderRadius: '12px' }} />
                       </div>
                     </div>
                     <div className="form-field">
@@ -563,12 +566,12 @@ const HostVisitors = () => {
                     <div className="form-field">
                       <label>PHONE NUMBER</label>
                       <div style={{ display: 'flex', gap: '0.5rem' }}>
-                        <select style={{ width: '80px', padding: '0.625rem', border: '1px solid #e2e8f0', borderRadius: '12px' }} disabled={!isEditing}>
+                        <select style={{ width: '80px', padding: '0.625rem', border: '1px solid var(--border-default)', borderRadius: '12px' }} disabled={!isEditing}>
                           <option>+234</option>
                           <option>+1</option>
                           <option>+44</option>
                         </select>
-                        <input type="text" defaultValue={selectedVisitor?.phone} readOnly={!isEditing} style={{ flex: 1, padding: '0.625rem', border: '1px solid #e2e8f0', borderRadius: '12px' }} />
+                        <input type="text" defaultValue={selectedVisitor?.phone} readOnly={!isEditing} style={{ flex: 1, padding: '0.625rem', border: '1px solid var(--border-default)', borderRadius: '12px' }} />
                       </div>
                     </div>
                     <div className="form-field">
@@ -685,7 +688,7 @@ const HostVisitors = () => {
         .page-header-simple h1 {
           font-size: 1.75rem;
           font-weight: 800;
-          color: #1e293b;
+          color: var(--text-primary);
           margin-bottom: 2rem;
         }
 
@@ -707,23 +710,23 @@ const HostVisitors = () => {
           gap: 0.5rem;
           padding: 0.5rem 1rem;
           border-radius: 8px;
-          border: 1px solid #e2e8f0;
-          background: #f8fafc;
+          border: 1px solid var(--border-default);
+          background: var(--bg-subtle);
           font-size: 0.875rem;
           font-weight: 600;
-          color: #64748b;
+          color: var(--text-tertiary);
           cursor: pointer;
         }
 
         .status-tab.active {
           background: #e0f2fe;
-          color: #0d2331;
+          color: var(--bg-brand);
           border-color: #bae6fd;
         }
 
         .badge-count {
-          background: #0d2331;
-          color: white;
+          background: var(--bg-brand);
+          color: var(--text-inverse);
           padding: 2px 8px;
           border-radius: 12px;
           font-size: 0.6875rem;
@@ -731,14 +734,14 @@ const HostVisitors = () => {
         }
 
         .badge-count.empty {
-          background: white;
-          color: #94a3b8;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          color: var(--text-quaternary);
+          border: 1px solid var(--border-default);
         }
 
         .btn-add-visitor {
-          background: #0d2331;
-          color: white;
+          background: var(--bg-brand);
+          color: var(--text-inverse);
           padding: 0.75rem 1.25rem;
           border-radius: 8px;
           border: none;
@@ -750,9 +753,9 @@ const HostVisitors = () => {
         }
 
         .table-container {
-          background: white;
+          background: var(--bg-surface);
           border-radius: 12px;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--border-default);
           padding: 1.5rem;
         }
 
@@ -766,7 +769,7 @@ const HostVisitors = () => {
         .table-title {
           font-size: 1.25rem;
           font-weight: 700;
-          color: #1e293b;
+          color: var(--text-primary);
         }
 
         .filter-actions {
@@ -785,24 +788,24 @@ const HostVisitors = () => {
           left: 1rem;
           top: 50%;
           transform: translateY(-50%);
-          color: #94a3b8;
+          color: var(--text-quaternary);
         }
 
         .search-box input {
           width: 100%;
           padding: 0.5rem 1rem 0.5rem 2.5rem;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--border-default);
           border-radius: 8px;
           font-size: 0.8125rem;
-          background: #f8fafc;
+          background: var(--bg-subtle);
         }
 
         .btn-filter-icon {
-          background: white;
+          background: var(--bg-surface);
           border: none;
           font-size: 0.875rem;
           font-weight: 600;
-          color: #475569;
+          color: var(--text-secondary);
           display: flex;
           align-items: center;
           gap: 0.5rem;
@@ -819,8 +822,8 @@ const HostVisitors = () => {
           padding: 1rem 0;
           font-size: 0.75rem;
           font-weight: 600;
-          color: #64748b;
-          border-bottom: 1px solid #f1f5f9;
+          color: var(--text-tertiary);
+          border-bottom: 1px solid var(--bg-muted);
         }
 
         .th-content {
@@ -830,18 +833,18 @@ const HostVisitors = () => {
         }
 
         .sort-icon {
-          color: #cbd5e1;
+          color: var(--border-heavy);
           cursor: pointer;
         }
 
         .visitors-table td {
           padding: 1.25rem 0;
           font-size: 0.875rem;
-          border-bottom: 1px solid #f1f5f9;
+          border-bottom: 1px solid var(--bg-muted);
         }
 
         .text-gray {
-          color: #64748b;
+          color: var(--text-tertiary);
         }
 
         .user-cell {
@@ -858,7 +861,7 @@ const HostVisitors = () => {
 
         .user-name-bold {
           font-weight: 700;
-          color: #1e293b;
+          color: var(--text-primary);
         }
 
         .actions-cell {
@@ -871,31 +874,31 @@ const HostVisitors = () => {
         }
 
         .btn-action-dots {
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-default);
           border-radius: 6px;
           width: 32px;
           height: 32px;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          color: #64748b;
+          color: var(--text-tertiary);
           cursor: pointer;
           transition: all 0.2s;
         }
 
         .btn-action-dots:hover {
-          background: #f8fafc;
-          border-color: #cbd5e1;
-          color: #1e293b;
+          background: var(--bg-subtle);
+          border-color: var(--border-heavy);
+          color: var(--text-primary);
         }
 
         .action-dropdown-menu {
           position: absolute;
           right: 0;
           top: 110%;
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-default);
           border-radius: 12px;
           box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
           width: 200px;
@@ -914,7 +917,7 @@ const HostVisitors = () => {
           background: none;
           font-size: 0.875rem;
           font-weight: 500;
-          color: #475569;
+          color: var(--text-secondary);
           cursor: pointer;
           border-radius: 8px;
           transition: all 0.2s;
@@ -922,16 +925,16 @@ const HostVisitors = () => {
         }
 
         .dropdown-item:hover {
-          background: #f1f5f9;
-          color: #0d2331;
+          background: var(--bg-muted);
+          color: var(--bg-brand);
         }
 
         .dropdown-item svg {
-          color: #94a3b8;
+          color: var(--text-quaternary);
         }
 
         .dropdown-item.delete {
-          color: #ef4444;
+          color: var(--text-danger);
         }
 
         .dropdown-item.delete:hover {
@@ -939,14 +942,14 @@ const HostVisitors = () => {
         }
 
         .dropdown-item.delete svg {
-          color: #ef4444;
+          color: var(--text-danger);
         }
 
         .dropdown-item.blacklist {
           color: #dc2626;
         }
         .dropdown-item.blacklist:hover {
-          background: #fef2f2;
+          background: var(--bg-danger-subtle);
         }
         .dropdown-item.whitelist {
           color: #16a34a;
@@ -973,13 +976,13 @@ const HostVisitors = () => {
         }
 
         .btn-pagination-outline {
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-default);
           padding: 0.5rem 1rem;
           border-radius: 8px;
           font-size: 0.875rem;
           font-weight: 600;
-          color: #0d2331;
+          color: var(--bg-brand);
           display: flex;
           align-items: center;
           gap: 0.5rem;
@@ -995,7 +998,7 @@ const HostVisitors = () => {
         .btn-page {
           background: none;
           border: none;
-          color: #94a3b8;
+          color: var(--text-quaternary);
           font-size: 0.875rem;
           font-weight: 600;
           padding: 0.25rem 0.5rem;
@@ -1003,13 +1006,13 @@ const HostVisitors = () => {
         }
 
         .btn-page.active-page {
-          border: 1px solid #1e293b;
-          color: #1e293b;
+          border: 1px solid var(--text-primary);
+          color: var(--text-primary);
           border-radius: 6px;
         }
 
         .page-dots {
-          color: #94a3b8;
+          color: var(--text-quaternary);
         }
 
         /* Visitor Profile Modal Styles */
@@ -1030,7 +1033,7 @@ const HostVisitors = () => {
           display: flex;
           align-items: center;
           gap: 0.25rem;
-          color: #64748b;
+          color: var(--text-tertiary);
           font-size: 0.8125rem;
           font-weight: 600;
           cursor: pointer;
@@ -1039,19 +1042,19 @@ const HostVisitors = () => {
         }
 
         .btn-back-link:hover {
-          color: #0d2331;
+          color: var(--bg-brand);
         }
 
         .modal-title-main {
           font-size: 1.75rem;
           font-weight: 800;
-          color: #1e293b;
+          color: var(--text-primary);
         }
 
         .modal-tabs-line {
           display: flex;
           gap: 2.5rem;
-          border-bottom: 1px solid #f1f5f9;
+          border-bottom: 1px solid var(--bg-muted);
           margin-bottom: 2.5rem;
         }
 
@@ -1061,7 +1064,7 @@ const HostVisitors = () => {
           padding: 0.75rem 0;
           font-size: 0.9375rem;
           font-weight: 600;
-          color: #94a3b8;
+          color: var(--text-quaternary);
           display: flex;
           align-items: center;
           gap: 0.75rem;
@@ -1070,7 +1073,7 @@ const HostVisitors = () => {
         }
 
         .line-tab.active {
-          color: #0d2331;
+          color: var(--bg-brand);
         }
 
         .line-tab.active::after {
@@ -1080,7 +1083,7 @@ const HostVisitors = () => {
           left: 0;
           right: 0;
           height: 2px;
-          background: #0d2331;
+          background: var(--bg-brand);
         }
 
         .profile-form-area {
@@ -1101,8 +1104,8 @@ const HostVisitors = () => {
           height: 100px;
           border-radius: 50%;
           overflow: hidden;
-          background: #f8fafc;
-          border: 4px solid white;
+          background: var(--bg-subtle);
+          border: 4px solid var(--bg-surface);
           box-shadow: 0 4px 10px rgba(0,0,0,0.1);
           margin-bottom: 0.75rem;
         }
@@ -1116,7 +1119,7 @@ const HostVisitors = () => {
         .btn-link-action {
           background: none;
           border: none;
-          color: #0d2331;
+          color: var(--bg-brand);
           font-size: 0.875rem;
           font-weight: 700;
           text-decoration: underline;
@@ -1136,12 +1139,12 @@ const HostVisitors = () => {
           gap: 0.75rem;
           font-size: 0.8125rem;
           font-weight: 700;
-          color: #1e293b;
+          color: var(--text-primary);
         }
 
         .passed-pill {
-          background: #22c55e;
-          color: white;
+          background: var(--text-success);
+          color: var(--text-inverse);
           padding: 4px 12px;
           border-radius: 20px;
           font-size: 0.75rem;
@@ -1154,7 +1157,7 @@ const HostVisitors = () => {
           gap: 0.5rem;
           background: none;
           border: none;
-          color: #0d2331;
+          color: var(--bg-brand);
           font-size: 0.875rem;
           font-weight: 700;
           cursor: pointer;
@@ -1179,7 +1182,7 @@ const HostVisitors = () => {
         .form-field label {
           font-size: 0.75rem;
           font-weight: 700;
-          color: #475569;
+          color: var(--text-secondary);
           text-transform: uppercase;
         }
 
@@ -1187,11 +1190,11 @@ const HostVisitors = () => {
         .form-field select {
           width: 100%;
           padding: 0.875rem 1.25rem;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--border-default);
           border-radius: 12px;
           font-size: 0.9375rem;
-          color: #1e293b;
-          background: #f8fafc;
+          color: var(--text-primary);
+          background: var(--bg-subtle);
           outline: none;
         }
 
@@ -1204,7 +1207,7 @@ const HostVisitors = () => {
         .field-icon {
           position: absolute;
           right: 1.25rem;
-          color: #94a3b8;
+          color: var(--text-quaternary);
         }
 
         .attachment-section {
@@ -1212,7 +1215,7 @@ const HostVisitors = () => {
         }
 
         .file-preview-card {
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--border-default);
           border-radius: 16px;
           padding: 1rem 1.5rem;
           display: flex;
@@ -1227,29 +1230,29 @@ const HostVisitors = () => {
         }
 
         .file-icon-blue {
-          color: #0d2331;
+          color: var(--bg-brand);
         }
 
         .file-name {
           font-size: 0.875rem;
           font-weight: 700;
-          color: #1e293b;
+          color: var(--text-primary);
         }
 
         .btn-view-preview {
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-default);
           padding: 0.5rem 1rem;
           border-radius: 10px;
           font-size: 0.8125rem;
           font-weight: 700;
-          color: #475569;
+          color: var(--text-secondary);
           cursor: pointer;
         }
 
         .unverified-pill {
-          background: #94a3b8;
-          color: white;
+          background: var(--text-quaternary);
+          color: var(--text-inverse);
           padding: 4px 12px;
           border-radius: 20px;
           font-size: 0.75rem;
@@ -1260,12 +1263,12 @@ const HostVisitors = () => {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: #f1f5f9;
-          border: 2px dashed #cbd5e1;
+          background: var(--bg-muted);
+          border: 2px dashed var(--border-heavy);
         }
 
         .text-gray-light {
-          color: #94a3b8;
+          color: var(--text-quaternary);
         }
 
         .flex-row-gap {
@@ -1275,13 +1278,13 @@ const HostVisitors = () => {
         }
 
         .btn-upload-outline {
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-default);
           padding: 0.75rem 1.25rem;
           border-radius: 12px;
           font-size: 0.8125rem;
           font-weight: 700;
-          color: #1e293b;
+          color: var(--text-primary);
           display: flex;
           align-items: center;
           gap: 0.75rem;
@@ -1294,7 +1297,7 @@ const HostVisitors = () => {
           gap: 0.5rem;
           font-size: 0.875rem;
           font-weight: 700;
-          color: #1e293b;
+          color: var(--text-primary);
         }
 
         .form-actions-bottom {
@@ -1304,8 +1307,8 @@ const HostVisitors = () => {
         }
 
         .btn-add-primary-large {
-          background: #0d2331;
-          color: white;
+          background: var(--bg-brand);
+          color: var(--text-inverse);
           padding: 1rem 2.5rem;
           border: none;
           border-radius: 12px;
@@ -1315,10 +1318,10 @@ const HostVisitors = () => {
         }
 
         .btn-cancel-outline-large {
-          background: white;
-          color: #64748b;
+          background: var(--bg-surface);
+          color: var(--text-tertiary);
           padding: 1rem 2.5rem;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--border-default);
           border-radius: 12px;
           font-weight: 800;
           font-size: 0.9375rem;
@@ -1339,7 +1342,7 @@ const HostVisitors = () => {
           width: 80px;
           height: 80px;
           background: #fee2e2;
-          color: #ef4444;
+          color: var(--text-danger);
           border-radius: 50%;
           display: flex;
           align-items: center;
@@ -1350,7 +1353,7 @@ const HostVisitors = () => {
         .delete-confirmation h4 {
           font-size: 1.5rem;
           font-weight: 700;
-          color: #0d2331;
+          color: var(--bg-brand);
           margin-bottom: 0.75rem;
         }
 
@@ -1362,8 +1365,8 @@ const HostVisitors = () => {
         }
 
         .btn-danger {
-          background: #ef4444;
-          color: white;
+          background: var(--text-danger);
+          color: var(--text-inverse);
           padding: 1rem;
           border-radius: 12px;
           border: none;
@@ -1372,11 +1375,11 @@ const HostVisitors = () => {
         }
 
         .btn-outline {
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-default);
           padding: 1rem;
           border-radius: 12px;
-          color: #64748b;
+          color: var(--text-tertiary);
           font-weight: 700;
           cursor: pointer;
         }
@@ -1391,17 +1394,17 @@ const HostVisitors = () => {
           padding: 1rem;
           font-size: 0.75rem;
           font-weight: 700;
-          color: #94a3b8;
-          border-bottom: 2px solid #f1f5f9;
+          color: var(--text-quaternary);
+          border-bottom: 2px solid var(--bg-muted);
         }
         .tracking-table td {
           padding: 1.25rem 1rem;
           font-size: 0.8125rem;
-          border-bottom: 1px solid #f1f5f9;
+          border-bottom: 1px solid var(--bg-muted);
         }
         .status-badge-mini {
-          background: #dcfce7;
-          color: #15803d;
+          background: var(--bg-success-subtle);
+          color: var(--text-success);
           padding: 4px 10px;
           border-radius: 8px;
           font-weight: 700;
@@ -1420,7 +1423,7 @@ const HostVisitors = () => {
         .success-title {
           font-size: 2.25rem;
           font-weight: 800;
-          color: #1e293b;
+          color: var(--text-primary);
           line-height: 1.2;
           margin-bottom: 3rem;
         }
@@ -1428,12 +1431,12 @@ const HostVisitors = () => {
         .success-circle-large {
           width: 100px;
           height: 100px;
-          background: #22c55e;
+          background: var(--text-success);
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
-          color: white;
+          color: var(--text-inverse);
           box-shadow: 0 10px 20px rgba(34, 197, 94, 0.2);
         }
       `}</style>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, Building2, CreditCard, Check, Shield, Lock, Mail, MapPin, Users, Globe } from 'lucide-react';
+import { Briefcase, Home, CreditCard, Check, Shield, Lock, Mail, MapPin, Users, Globe } from 'lucide-react';
 
 const SignupWizard = () => {
   const navigate = useNavigate();
@@ -40,44 +40,65 @@ const SignupWizard = () => {
       case 1: // Business Type
         return (
           <div className="step-content">
-            <p style={{ textAlign: 'center', fontWeight: 600, marginBottom: '2.5rem', color: '#0d2331' }}>Select Business Type</p>
-            <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', marginBottom: '1rem' }}>
-              <div 
+            <p style={{ textAlign: 'center', fontWeight: 600, marginBottom: '2.5rem', color: 'var(--bg-brand)' }}>Select Business Type</p>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginTop: '2.5rem' }}>
+              <motion.div 
+                whileHover={{ y: -5, boxShadow: '0 12px 30px rgba(0, 144, 230, 0.15)' }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => setSelectedType('private')}
                 style={{ 
-                  display: 'flex', flexDirection: 'column', alignItems: 'center', 
-                  cursor: 'pointer', flex: 1, padding: '1.5rem', borderRadius: '24px',
-                  background: selectedType === 'private' ? 'rgba(d, 35, 49, 0.03)' : 'transparent',
-                  border: selectedType === 'private' ? '2px solid #0d2331' : '2px solid transparent',
-                  transition: 'all 0.2s ease'
+                  padding: '2.5rem 2rem', 
+                  border: selectedType === 'private' ? '2px solid var(--bg-brand)' : '2px solid var(--border-default)', 
+                  borderRadius: '20px', 
+                  cursor: 'pointer', 
+                  background: selectedType === 'private' ? 'rgba(0, 144, 230, 0.05)' : 'white', 
+                  textAlign: 'center', 
+                  transition: 'all 0.3s ease',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  opacity: selectedType !== 'private' ? 0.5 : 1
                 }}
               >
-                <div style={{ width: '120px', height: '120px', borderRadius: '50%', background: '#ffb347', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
-                   <User size={60} color="white" />
+                {selectedType === 'private' && <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: 'var(--bg-brand)' }} />}
+                <div style={{ 
+                  width: '80px', height: '80px', borderRadius: '50%', margin: '0 auto 1.5rem', 
+                  background: selectedType === 'private' ? 'var(--bg-brand)' : '#f3f4f6', 
+                  display: 'flex', alignItems: 'center', justifyContent: 'center' 
+                }}>
+                  <Briefcase size={36} color={selectedType === 'private' ? 'white' : 'var(--bg-brand)'} />
                 </div>
-                <span style={{ fontSize: '0.9rem', fontWeight: 700, color: '#0d2331' }}>Private/Public</span>
-                <div style={{ width: '18px', height: '18px', borderRadius: '50%', border: '2px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '0.5rem', background: selectedType === 'private' ? '#0d2331' : 'transparent' }}>
-                  {selectedType === 'private' && <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'white' }} />}
-                </div>
-              </div>
-              <div 
+                <h3 style={{ fontSize: '1.4rem', marginBottom: '0.5rem', fontWeight: 700, color: 'var(--text-primary)' }}>Private / Public Business</h3>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.5 }}>Corporate offices, agencies, retail, and commercial spaces.</p>
+              </motion.div>
+
+              <motion.div 
+                whileHover={{ y: -5, boxShadow: '0 12px 30px rgba(16, 185, 129, 0.15)' }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => setSelectedType('real-estate')}
                 style={{ 
-                  display: 'flex', flexDirection: 'column', alignItems: 'center', 
-                  cursor: 'pointer', flex: 1, padding: '1.5rem', borderRadius: '24px',
-                  background: selectedType === 'real-estate' ? 'rgba(d, 35, 49, 0.03)' : 'transparent',
-                  border: selectedType === 'real-estate' ? '2px solid #0d2331' : '2px solid transparent',
-                  transition: 'all 0.2s ease'
+                  padding: '2.5rem 2rem', 
+                  border: selectedType === 'real-estate' ? '2px solid #10b981' : '2px solid var(--border-default)', 
+                  borderRadius: '20px', 
+                  cursor: 'pointer', 
+                  background: selectedType === 'real-estate' ? 'rgba(16, 185, 129, 0.05)' : 'white', 
+                  textAlign: 'center', 
+                  transition: 'all 0.3s ease',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  opacity: selectedType !== 'real-estate' ? 0.5 : 1
                 }}
               >
-                <div style={{ width: '120px', height: '120px', borderRadius: '50%', background: '#0FB3FF', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
-                   <Building2 size={60} color="white" />
+                {selectedType === 'real-estate' && <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: '#10b981' }} />}
+                <div style={{ 
+                  width: '80px', height: '80px', borderRadius: '50%', margin: '0 auto 1.5rem', 
+                  background: selectedType === 'real-estate' ? '#10b981' : '#f3f4f6', 
+                  display: 'flex', alignItems: 'center', justifyContent: 'center' 
+                }}>
+                  <Home size={36} color={selectedType === 'real-estate' ? 'white' : '#10b981'} />
                 </div>
-                <span style={{ fontSize: '0.9rem', fontWeight: 700, color: '#0d2331' }}>Real Estate</span>
-                <div style={{ width: '18px', height: '18px', borderRadius: '50%', border: '2px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '0.5rem', background: selectedType === 'real-estate' ? '#0d2331' : 'transparent' }}>
-                  {selectedType === 'real-estate' && <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'white' }} />}
-                </div>
-              </div>
+                <h3 style={{ fontSize: '1.4rem', marginBottom: '0.5rem', fontWeight: 700, color: 'var(--text-primary)' }}>Real Estate / Estates</h3>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.5 }}>Residential communities, estates, and managed apartments.</p>
+              </motion.div>
             </div>
           </div>
         );
@@ -90,7 +111,7 @@ const SignupWizard = () => {
                    <label>Organization/Business Name</label>
                    <div style={{ position: 'relative' }}>
                     <input type="text" placeholder="Official business name" style={{ paddingLeft: '2.75rem' }} />
-                    <Building2 size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+                    <Briefcase size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-quaternary)' }} />
                    </div>
                  </div>
                  <div className="form-group">
@@ -104,7 +125,7 @@ const SignupWizard = () => {
                       <option value="government">Government</option>
                       <option value="others">Others</option>
                     </select>
-                    <Shield size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+                    <Shield size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-quaternary)' }} />
                    </div>
                  </div>
                  <div className="form-group">
@@ -115,7 +136,7 @@ const SignupWizard = () => {
                    <label>Address of Organization</label>
                    <div style={{ position: 'relative' }}>
                     <input type="text" placeholder="Full physical address" style={{ paddingLeft: '2.75rem' }} />
-                    <MapPin size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+                    <MapPin size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-quaternary)' }} />
                    </div>
                  </div>
                  <div className="form-group">
@@ -138,14 +159,14 @@ const SignupWizard = () => {
                       <option value="51-200">51-200</option>
                       <option value="200+">200+</option>
                     </select>
-                    <Users size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+                    <Users size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-quaternary)' }} />
                    </div>
                  </div>
                  <div className="form-group" style={{ gridColumn: 'span 2' }}>
                    <label>Organization Email Address</label>
                    <div style={{ position: 'relative' }}>
                     <input type="email" placeholder="contact@business.com" style={{ paddingLeft: '2.75rem' }} />
-                    <Mail size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+                    <Mail size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-quaternary)' }} />
                    </div>
                  </div>
                </div>
@@ -155,7 +176,7 @@ const SignupWizard = () => {
                    <label>Legal Entity Name</label>
                    <div style={{ position: 'relative' }}>
                     <input type="text" placeholder="Full legal name" style={{ paddingLeft: '2.75rem' }} />
-                    <Building2 size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+                    <Home size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-quaternary)' }} />
                    </div>
                  </div>
                  <div className="form-group">
@@ -182,7 +203,7 @@ const SignupWizard = () => {
                    <label>Full Address</label>
                    <div style={{ position: 'relative' }}>
                     <input type="text" placeholder="Property address" style={{ paddingLeft: '2.75rem' }} />
-                    <MapPin size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+                    <MapPin size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-quaternary)' }} />
                    </div>
                  </div>
                  <div className="form-group">
@@ -214,7 +235,7 @@ const SignupWizard = () => {
                    <label>Primary Contact Person</label>
                    <div style={{ position: 'relative' }}>
                     <input type="text" placeholder="Full name of primary contact" style={{ paddingLeft: '2.75rem' }} />
-                    <User size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+                    <Briefcase size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-quaternary)' }} />
                    </div>
                  </div>
                  <div className="form-group">
@@ -224,26 +245,26 @@ const SignupWizard = () => {
                   <div className="form-group">
                     <label>Contact Phone Number (WhatsApp preferred)</label>
                     <div style={{ display: 'flex', gap: '0.5rem' }}>
-                       <select style={{ width: '100px', flexShrink: 0, padding: '0.625rem', border: '1px solid #e2e8f0', borderRadius: '8px' }}>
+                       <select style={{ width: '100px', flexShrink: 0, padding: '0.625rem', border: '1px solid var(--border-default)', borderRadius: '8px' }}>
                          <option>+234</option>
                          <option>+1</option>
                          <option>+44</option>
                        </select>
-                       <input type="text" placeholder="814 609 2019" style={{ flex: 1, padding: '0.625rem', border: '1px solid #e2e8f0', borderRadius: '8px' }} />
+                       <input type="text" placeholder="814 609 2019" style={{ flex: 1, padding: '0.625rem', border: '1px solid var(--border-default)', borderRadius: '8px' }} />
                     </div>
                   </div>
                  <div className="form-group" style={{ gridColumn: 'span 2' }}>
                    <label>Contact Address</label>
                    <div style={{ position: 'relative' }}>
                     <input type="text" placeholder="Full contact address" style={{ paddingLeft: '2.75rem' }} />
-                    <MapPin size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+                    <MapPin size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-quaternary)' }} />
                    </div>
                  </div>
                  <div className="form-group" style={{ gridColumn: 'span 2' }}>
                    <label>Contact Email Address</label>
                    <div style={{ position: 'relative' }}>
                     <input type="email" placeholder="contact@business.com" style={{ paddingLeft: '2.75rem' }} />
-                    <Mail size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+                    <Mail size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-quaternary)' }} />
                    </div>
                  </div>
                </div>
@@ -253,43 +274,43 @@ const SignupWizard = () => {
                    <label>Estate Manager Name</label>
                    <div style={{ position: 'relative' }}>
                     <input type="text" placeholder="Full name of estate manager" style={{ paddingLeft: '2.75rem' }} />
-                    <User size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+                    <Home size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-quaternary)' }} />
                    </div>
                  </div>
                   <div className="form-group">
                     <label>Manager Phone Number (WhatsApp preferred)</label>
                     <div style={{ display: 'flex', gap: '0.5rem' }}>
-                       <select style={{ width: '100px', flexShrink: 0, padding: '0.625rem', border: '1px solid #e2e8f0', borderRadius: '8px' }}>
+                       <select style={{ width: '100px', flexShrink: 0, padding: '0.625rem', border: '1px solid var(--border-default)', borderRadius: '8px' }}>
                          <option>+234</option>
                          <option>+1</option>
                          <option>+44</option>
                        </select>
-                       <input type="text" placeholder="814 609 2019" style={{ flex: 1, padding: '0.625rem', border: '1px solid #e2e8f0', borderRadius: '8px' }} />
+                       <input type="text" placeholder="814 609 2019" style={{ flex: 1, padding: '0.625rem', border: '1px solid var(--border-default)', borderRadius: '8px' }} />
                     </div>
                   </div>
                  <div className="form-group">
                    <label>Manager Email Address</label>
                    <div style={{ position: 'relative' }}>
                     <input type="email" placeholder="manager@estate.com" style={{ paddingLeft: '2.75rem' }} />
-                    <Mail size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+                    <Mail size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-quaternary)' }} />
                    </div>
                  </div>
                  <div className="form-group">
                    <label>Emergency Contact Person</label>
                    <div style={{ position: 'relative' }}>
                     <input type="text" placeholder="Emergency contact name" style={{ paddingLeft: '2.75rem' }} />
-                    <Shield size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+                    <Shield size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-quaternary)' }} />
                    </div>
                  </div>
                   <div className="form-group">
                     <label>Emergency Contact Phone</label>
                     <div style={{ display: 'flex', gap: '0.5rem' }}>
-                       <select style={{ width: '100px', flexShrink: 0, padding: '0.625rem', border: '1px solid #e2e8f0', borderRadius: '8px' }}>
+                       <select style={{ width: '100px', flexShrink: 0, padding: '0.625rem', border: '1px solid var(--border-default)', borderRadius: '8px' }}>
                          <option>+234</option>
                          <option>+1</option>
                          <option>+44</option>
                        </select>
-                       <input type="text" placeholder="814 609 2019" style={{ flex: 1, padding: '0.625rem', border: '1px solid #e2e8f0', borderRadius: '8px' }} />
+                       <input type="text" placeholder="814 609 2019" style={{ flex: 1, padding: '0.625rem', border: '1px solid var(--border-default)', borderRadius: '8px' }} />
                     </div>
                   </div>
                </div>
@@ -299,17 +320,17 @@ const SignupWizard = () => {
       case 4: // Payment
         return (
           <div className="step-content">
-            <div style={{ background: 'rgba(13, 35, 49, 0.02)', padding: '1.5rem', borderRadius: '16px', marginBottom: '2rem', border: '1px solid #e2e8f0' }}>
-               <h4 style={{ marginBottom: '1rem', color: '#0d2331' }}>Order Summary</h4>
+            <div style={{ background: 'rgba(13, 35, 49, 0.02)', padding: '1.5rem', borderRadius: '16px', marginBottom: '2rem', border: '1px solid var(--border-default)' }}>
+               <h4 style={{ marginBottom: '1rem', color: 'var(--bg-brand)' }}>Order Summary</h4>
                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem', fontSize: '0.9rem' }}>
-                  <span style={{ color: '#64748b' }}>Account Type</span>
+                  <span style={{ color: 'var(--text-tertiary)' }}>Account Type</span>
                   <span style={{ fontWeight: 600, textTransform: 'capitalize' }}>{selectedType.replace('-', ' ')}</span>
                </div>
                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', fontSize: '0.9rem' }}>
-                  <span style={{ color: '#64748b' }}>Selected Plan</span>
+                  <span style={{ color: 'var(--text-tertiary)' }}>Selected Plan</span>
                   <span style={{ fontWeight: 600 }}>{location.state?.planTier || 'Starter Plan'} — Monthly</span>
                </div>
-               <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 800, fontSize: '1.2rem', color: '#0d2331', borderTop: '1px dashed #cbd5e1', paddingTop: '1rem' }}>
+               <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 800, fontSize: '1.2rem', color: 'var(--bg-brand)', borderTop: '1px dashed var(--border-heavy)', paddingTop: '1rem' }}>
                   <span>Total Due</span>
                   <span>₦25,000</span>
                </div>
@@ -327,8 +348,8 @@ const SignupWizard = () => {
                       key={method.name}
                       onClick={() => setPaymentMethod(method.name)}
                       style={{ 
-                        padding: '1.5rem 1rem', borderRadius: '12px', border: paymentMethod === method.name ? '2px solid #0d2331' : '1px solid #e2e8f0',
-                        textAlign: 'center', cursor: 'pointer', background: paymentMethod === method.name ? '#f8fafc' : 'white',
+                        padding: '1.5rem 1rem', borderRadius: '12px', border: paymentMethod === method.name ? '2px solid var(--bg-brand)' : '1px solid var(--border-default)',
+                        textAlign: 'center', cursor: 'pointer', background: paymentMethod === method.name ? 'var(--bg-subtle)' : 'white',
                         transition: 'all 0.2s', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem'
                       }}
                     >
@@ -347,7 +368,7 @@ const SignupWizard = () => {
                               <svg width="26" height="26" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M50 20C30 20 20 40 20 50C20 60 30 80 50 80C70 80 80 60 80 50C80 40 70 20 50 20Z" stroke="#fb923c" strokeWidth="8" />
                                 <path d="M40 30C25 30 15 45 15 50C15 55 25 70 40 70" stroke="#f472b6" strokeWidth="6" />
-                                <path d="M60 30C75 30 85 45 85 50C85 55 75 70 60 70" stroke="#22c55e" strokeWidth="6" />
+                                <path d="M60 30C75 30 85 45 85 50C85 55 75 70 60 70" stroke="var(--text-success)" strokeWidth="6" />
                               </svg>
                               <span style={{ fontWeight: 900, fontSize: '1.2rem', color: '#1f2937', letterSpacing: '-0.5px' }}>flutterwave</span>
                             </div>
@@ -363,8 +384,8 @@ const SignupWizard = () => {
                </div>
             </div>
 
-            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', marginTop: '2rem', padding: '1.5rem', background: '#f0fdf4', borderRadius: '12px', border: '1px solid #dcfce7' }}>
-               <Lock size={20} color="#22c55e" />
+            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', marginTop: '2rem', padding: '1.5rem', background: '#f0fdf4', borderRadius: '12px', border: '1px solid var(--bg-success-subtle)' }}>
+               <Lock size={20} color="var(--text-success)" />
                <div style={{ flex: 1 }}>
                   <p style={{ fontSize: '0.85rem', color: '#16a34a', fontWeight: 600, marginBottom: '0.25rem' }}>Secure Checkout</p>
                   <p style={{ fontSize: '0.75rem', color: '#16a34a', opacity: 0.8 }}>You will be redirected to {paymentMethod}'s secure portal to complete your transaction.</p>
@@ -378,35 +399,37 @@ const SignupWizard = () => {
   };
 
   return (
-    <div className="card" style={{ maxWidth: '850px', padding: '3.5rem' }}>
+    <div style={{ width: '100%', maxWidth: '850px', margin: '0 auto' }}>
       <button 
         onClick={() => navigate('/')} 
-        style={{ background: 'none', border: 'none', color: '#64748b', fontSize: '0.9rem', cursor: 'pointer', marginBottom: '1.5rem', padding: 0 }}
+        style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'none', border: 'none', color: 'var(--text-tertiary)', fontSize: '0.9rem', fontWeight: 600, cursor: 'pointer', marginBottom: '2.5rem', padding: 0, transition: 'color 0.2s' }}
+        onMouseOver={(e) => e.target.style.color = 'var(--text-primary)'}
+        onMouseOut={(e) => e.target.style.color = 'var(--text-tertiary)'}
       >
         ← Back to Site
       </button>
-      <h1 className="card-title" style={{ fontSize: '2.5rem', textAlign: 'center' }}>Sign Up</h1>
-      <p className="card-subtitle" style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+      <h1 style={{ fontSize: '3rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.5rem', letterSpacing: '-0.03em' }}>Sign Up</h1>
+      <p style={{ fontSize: '1.125rem', color: 'var(--text-secondary)', marginBottom: '3.5rem' }}>
         {step === 4 ? "Unlock the full potential of InVisitor" : "InVisitor is catered to businesses of all kinds."}
       </p>
 
       {/* Modern Stepper */}
       <div style={{ display: 'flex', position: 'relative', marginBottom: '4rem', padding: '0 2rem' }}>
-        <div style={{ position: 'absolute', top: '22px', left: '10%', right: '10%', height: '2px', background: '#e2e8f0', zIndex: 0 }} />
-        <div style={{ position: 'absolute', top: '22px', left: '10%', width: `${((step - 1) / (steps.length - 1)) * 80}%`, height: '2.5px', background: '#22c55e', zIndex: 1, transition: 'all 0.4s ease' }} />
+        <div style={{ position: 'absolute', top: '22px', left: '10%', right: '10%', height: '2px', background: 'var(--border-default)', zIndex: 0 }} />
+        <div style={{ position: 'absolute', top: '22px', left: '10%', width: `${((step - 1) / (steps.length - 1)) * 80}%`, height: '2.5px', background: 'var(--text-success)', zIndex: 1, transition: 'all 0.4s ease' }} />
         
         {steps.map((s) => (
           <div key={s.id} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem', zIndex: 2 }}>
             <div style={{ 
               width: '44px', height: '44px', borderRadius: '50%', 
-              background: step > s.id ? '#22c55e' : (step === s.id ? '#0d2331' : 'white'),
-              border: step > s.id ? '2px solid #22c55e' : (step === s.id ? '2px solid #0d2331' : '2px solid #e2e8f0'),
-              display: 'flex', alignItems: 'center', justifyContent: 'center', color: step >= s.id ? 'white' : '#94a3b8',
+              background: step > s.id ? 'var(--text-success)' : (step === s.id ? 'var(--bg-brand)' : 'white'),
+              border: step > s.id ? '2px solid var(--text-success)' : (step === s.id ? '2px solid var(--bg-brand)' : '2px solid var(--border-default)'),
+              display: 'flex', alignItems: 'center', justifyContent: 'center', color: step >= s.id ? 'white' : 'var(--text-quaternary)',
               fontSize: '0.95rem', fontWeight: 700, transition: 'all 0.3s'
             }}>
               {step > s.id ? <Check size={20} /> : s.id}
             </div>
-            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: step === s.id ? '#0d2331' : (step > s.id ? '#22c55e' : '#94a3b8'), textAlign: 'center' }}>{s.label}</span>
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: step === s.id ? 'var(--bg-brand)' : (step > s.id ? 'var(--text-success)' : 'var(--text-quaternary)'), textAlign: 'center' }}>{s.label}</span>
           </div>
         ))}
       </div>
@@ -427,12 +450,11 @@ const SignupWizard = () => {
 
       <div style={{ display: 'flex', gap: '1.5rem', marginTop: '3.5rem' }}>
         {step > 1 && (
-          <button onClick={prevStep} className="btn btn-outline" style={{ flex: 1, padding: '1.2rem' }}>Back</button>
+          <button onClick={prevStep} style={{ flex: 1, padding: '1.2rem', background: 'transparent', color: 'var(--text-primary)', border: '1.5px solid var(--border-default)', borderRadius: '12px', fontSize: '1rem', fontWeight: 700, cursor: 'pointer', transition: 'all 0.2s' }} onMouseOver={(e) => e.target.style.background = 'var(--bg-subtle)'} onMouseOut={(e) => e.target.style.background = 'transparent'}>Back</button>
         )}
         <button 
           onClick={step === 4 ? () => navigate('/verify-payment') : nextStep} 
-          className="btn btn-primary" 
-          style={{ flex: 2, padding: '1.2rem' }}
+          style={{ flex: 2, padding: '1.2rem', background: 'var(--bg-brand)', color: 'white', border: 'none', borderRadius: '12px', fontSize: '1rem', fontWeight: 700, cursor: 'pointer', transition: 'background 0.2s', boxShadow: '0 4px 12px rgba(0, 144, 230, 0.2)' }}
         >
           {step === 4 ? `Pay with ${paymentMethod}` : 'Proceed'}
         </button>
@@ -441,11 +463,18 @@ const SignupWizard = () => {
       <style jsx>{`
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
         .payment-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+        
+        .form-group label { display: block; font-size: 0.875rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; }
+        .form-group input, .form-group select { 
+          width: 100%; padding: 1rem; border-radius: 12px; border: 1.5px solid var(--border-default); 
+          background: transparent; color: var(--text-primary); font-size: 1rem; outline: none; transition: border-color 0.2s; 
+        }
+        .form-group input:focus, .form-group select:focus { border-color: var(--bg-brand); }
+        
         @media (max-width: 768px) {
           .form-grid { grid-template-columns: 1fr; }
           .payment-grid { grid-template-columns: 1fr; }
           .step-label { display: none; }
-          .card-title { font-size: 2rem !important; }
         }
       `}</style>
     </div>

@@ -16,13 +16,13 @@ const MOCK_INVOICES = [
 const STATUS_COLORS = {
   paid: { bg: '#f0fdf4', color: '#16a34a' },
   unpaid: { bg: '#fffbeb', color: '#d97706' },
-  overdue: { bg: '#fef2f2', color: '#dc2626' },
+  overdue: { bg: 'var(--bg-danger-subtle)', color: '#dc2626' },
 };
 
 const CHART_COLORS = {
-  paid: '#22c55e',
+  paid: 'var(--text-success)',
   unpaid: '#f59e0b',
-  overdue: '#ef4444'
+  overdue: 'var(--text-danger)'
 };
 
 const Invoices = () => {
@@ -112,11 +112,11 @@ const Invoices = () => {
           <div className="inv-chart-content">
             <ResponsiveContainer width="100%" height={240}>
               <BarChart data={barData} margin={{ top: 20, right: 20, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#64748b' }} dy={10} />
-                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#64748b' }} />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border-default)" />
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: 'var(--text-tertiary)' }} dy={10} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: 'var(--text-tertiary)' }} />
                 <Tooltip 
-                  cursor={{ fill: '#f1f5f9' }}
+                  cursor={{ fill: 'var(--bg-muted)' }}
                   contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
                 />
                 <Bar dataKey="count" fill="#0ea5e9" radius={[4, 4, 0, 0]} barSize={32} />
@@ -174,14 +174,14 @@ const Invoices = () => {
                   >
                     <td>
                       <div className="inv-id-col">
-                        <FileText size={16} color="#64748b" />
+                        <FileText size={16} color="var(--text-tertiary)" />
                         <span style={{ fontWeight: 700 }}>{inv.id}</span>
                       </div>
                     </td>
                     <td style={{ fontWeight: 600 }}>{inv.description}</td>
-                    <td style={{ fontWeight: 800, color: '#0d2331' }}>{inv.amount}</td>
-                    <td style={{ color: '#64748b' }}>{inv.date}</td>
-                    <td style={{ color: '#64748b' }}>{inv.dueDate}</td>
+                    <td style={{ fontWeight: 800, color: 'var(--bg-brand)' }}>{inv.amount}</td>
+                    <td style={{ color: 'var(--text-tertiary)' }}>{inv.date}</td>
+                    <td style={{ color: 'var(--text-tertiary)' }}>{inv.dueDate}</td>
                     <td>
                       <span className="inv-status-badge" style={{ background: sc.bg, color: sc.color }}>
                         {inv.status.toUpperCase()}
@@ -203,7 +203,7 @@ const Invoices = () => {
               })}
               {paginated.length === 0 && (
                 <tr>
-                  <td colSpan="7" style={{ textAlign: 'center', padding: '3rem', color: '#94a3b8' }}>
+                  <td colSpan="7" style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-quaternary)' }}>
                     No invoices found.
                   </td>
                 </tr>
@@ -227,31 +227,31 @@ const Invoices = () => {
       <style jsx>{`
         .inv-page { display: flex; flex-direction: column; gap: 1.5rem; padding-bottom: 3rem; }
         .inv-header { display: flex; justify-content: space-between; align-items: flex-start; }
-        .inv-header h1 { font-size: 1.75rem; font-weight: 800; color: #1e293b; margin-bottom: 0.25rem; }
-        .inv-header p { color: #64748b; }
+        .inv-header h1 { font-size: 1.75rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.25rem; }
+        .inv-header p { color: var(--text-tertiary); }
         .inv-controls { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
         .inv-analytics-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 1.5rem; margin-bottom: 1rem; }
-        .inv-chart-card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.5rem; }
-        .inv-chart-title { font-size: 1rem; font-weight: 700; color: #1e293b; margin: 0 0 1rem 0; display: flex; align-items: center; gap: 0.5rem; }
+        .inv-chart-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 16px; padding: 1.5rem; }
+        .inv-chart-title { font-size: 1rem; font-weight: 700; color: var(--text-primary); margin: 0 0 1rem 0; display: flex; align-items: center; gap: 0.5rem; }
         .inv-chart-content { display: flex; flex-direction: column; align-items: center; }
         .inv-chart-legend { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 0.5rem; }
-        .legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; font-weight: 600; color: #64748b; }
+        .legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; font-weight: 600; color: var(--text-tertiary); }
         .legend-color { width: 10px; height: 10px; border-radius: 50%; }
-        .inv-search { flex: 1; min-width: 250px; display: flex; align-items: center; gap: 0.75rem; background: white; padding: 0.75rem 1rem; border: 1px solid #e2e8f0; border-radius: 10px; color: #94a3b8; }
-        .inv-search input { flex: 1; border: none; outline: none; background: none; font-size: 0.875rem; color: #1e293b; }
+        .inv-search { flex: 1; min-width: 250px; display: flex; align-items: center; gap: 0.75rem; background: var(--bg-surface); padding: 0.75rem 1rem; border: 1px solid var(--border-default); border-radius: 10px; color: var(--text-quaternary); }
+        .inv-search input { flex: 1; border: none; outline: none; background: none; font-size: 0.875rem; color: var(--text-primary); }
         .inv-status-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-        .inv-tab { background: white; border: 1px solid #e2e8f0; padding: 0.5rem 1.25rem; border-radius: 8px; font-size: 0.8125rem; font-weight: 600; color: #64748b; cursor: pointer; transition: all 0.2s; }
-        .inv-tab.active { background: #0d2331; color: white; border-color: #0d2331; }
-        .inv-table-card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.5rem; }
+        .inv-tab { background: var(--bg-surface); border: 1px solid var(--border-default); padding: 0.5rem 1.25rem; border-radius: 8px; font-size: 0.8125rem; font-weight: 600; color: var(--text-tertiary); cursor: pointer; transition: all 0.2s; }
+        .inv-tab.active { background: var(--bg-brand); color: var(--text-inverse); border-color: var(--bg-brand); }
+        .inv-table-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 16px; padding: 1.5rem; }
         .inv-table { width: 100%; border-collapse: collapse; min-width: 800px; }
-        .inv-table th { padding: 0.875rem 0; font-size: 0.75rem; font-weight: 600; color: #94a3b8; border-bottom: 1px solid #f1f5f9; text-align: left; text-transform: uppercase; letter-spacing: 0.05em; }
-        .inv-table td { padding: 1rem 0; font-size: 0.875rem; border-bottom: 1px solid #f8fafc; color: #1e293b; }
+        .inv-table th { padding: 0.875rem 0; font-size: 0.75rem; font-weight: 600; color: var(--text-quaternary); border-bottom: 1px solid var(--bg-muted); text-align: left; text-transform: uppercase; letter-spacing: 0.05em; }
+        .inv-table td { padding: 1rem 0; font-size: 0.875rem; border-bottom: 1px solid var(--bg-subtle); color: var(--text-primary); }
         .inv-table tbody tr:last-child td { border-bottom: none; }
         .inv-id-col { display: flex; align-items: center; gap: 0.5rem; }
         .inv-status-badge { padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.05em; }
         .inv-actions { display: flex; gap: 0.5rem; }
-        .inv-btn-view { background: #f8fafc; border: 1px solid #e2e8f0; padding: 0.5rem 0.75rem; border-radius: 8px; font-weight: 600; color: #0d2331; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; transition: background 0.2s; }
-        .inv-btn-view:hover { background: #e2e8f0; }
+        .inv-btn-view { background: var(--bg-subtle); border: 1px solid var(--border-default); padding: 0.5rem 0.75rem; border-radius: 8px; font-weight: 600; color: var(--bg-brand); cursor: pointer; display: flex; align-items: center; gap: 0.4rem; transition: background 0.2s; }
+        .inv-btn-view:hover { background: var(--border-default); }
         @media (max-width: 900px) {
           .inv-analytics-grid { grid-template-columns: 1fr; }
         }

@@ -27,11 +27,11 @@ const Blog = () => {
       {/* Navigation Bar */}
       <nav className="blog-nav">
         <div className="nav-content">
-          <div className="logo" onClick={() => navigate('/')} style={{ cursor: 'pointer', margin: 0, color: '#0d2331' }}>
+          <div className="logo" onClick={() => navigate('/')} style={{ cursor: 'pointer', margin: 0, color: 'var(--bg-brand)' }}>
             <svg width="30" height="30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="50" cy="25" r="15" fill="#0d2331" />
-              <path d="M20 55C20 49.4772 24.4772 45 30 45H70C75.5228 45 80 49.4772 80 55V60H20V55Z" fill="#0d2331" />
-              <path d="M20 65H80V75C80 80.5228 75.5228 85 70 85H30C24.4772 85 20 80.5228 20 75V65Z" fill="#0d2331" />
+              <circle cx="50" cy="25" r="15" fill="var(--bg-brand)" />
+              <path d="M20 55C20 49.4772 24.4772 45 30 45H70C75.5228 45 80 49.4772 80 55V60H20V55Z" fill="var(--bg-brand)" />
+              <path d="M20 65H80V75C80 80.5228 75.5228 85 70 85H30C24.4772 85 20 80.5228 20 75V65Z" fill="var(--bg-brand)" />
             </svg>
             <span style={{ fontSize: '1.25rem', fontWeight: 800 }}>InVisitor</span>
           </div>
@@ -111,13 +111,13 @@ const Blog = () => {
       <style jsx>{`
         .blog-page {
           min-height: 100vh;
-          background: #f8fafc;
+          background: var(--bg-subtle);
           font-family: 'Plus Jakarta Sans', sans-serif;
         }
         .blog-nav {
-          background: white;
+          background: var(--bg-surface);
           padding: 1rem 2rem;
-          border-bottom: 1px solid #e2e8f0;
+          border-bottom: 1px solid var(--border-default);
           position: sticky;
           top: 0;
           z-index: 100;
@@ -132,18 +132,18 @@ const Blog = () => {
         .btn-back {
           background: none;
           border: none;
-          color: #64748b;
+          color: var(--text-tertiary);
           font-weight: 600;
           cursor: pointer;
           font-size: 0.9rem;
           transition: color 0.2s;
         }
         .btn-back:hover {
-          color: #0d2331;
+          color: var(--bg-brand);
         }
         .blog-hero {
-          background: linear-gradient(135deg, #0d2331 0%, #1a3c52 100%);
-          color: white;
+          background: linear-gradient(135deg, var(--bg-brand) 0%, var(--bg-brand-hover) 100%);
+          color: var(--text-inverse);
           padding: 6rem 2rem;
           text-align: center;
         }
@@ -155,7 +155,7 @@ const Blog = () => {
         }
         .blog-hero p {
           font-size: 1.25rem;
-          color: #cbd5e1;
+          color: var(--border-heavy);
           max-width: 600px;
           margin: 0 auto;
           line-height: 1.6;
@@ -174,7 +174,7 @@ const Blog = () => {
           margin-bottom: 4rem;
         }
         .blog-card {
-          background: white;
+          background: var(--bg-surface);
           border-radius: 20px;
           overflow: hidden;
           box-shadow: 0 10px 30px rgba(0,0,0,0.05);
@@ -191,7 +191,7 @@ const Blog = () => {
           transform: scale(1.05);
         }
         .blog-card:hover .blog-read-more {
-          color: #00a3ff;
+          color: var(--accent-primary);
           gap: 0.75rem;
         }
         .blog-image-wrapper {
@@ -210,7 +210,7 @@ const Blog = () => {
           top: 1rem;
           left: 1rem;
           background: rgba(255, 255, 255, 0.9);
-          color: #0d2331;
+          color: var(--bg-brand);
           padding: 0.4rem 1rem;
           border-radius: 30px;
           font-size: 0.75rem;
@@ -230,7 +230,7 @@ const Blog = () => {
           align-items: center;
           justify-content: space-between;
           font-size: 0.8rem;
-          color: #64748b;
+          color: var(--text-tertiary);
           margin-bottom: 1rem;
           font-weight: 500;
         }
@@ -242,12 +242,12 @@ const Blog = () => {
         .blog-title {
           font-size: 1.25rem;
           font-weight: 800;
-          color: #0d2331;
+          color: var(--bg-brand);
           margin-bottom: 1rem;
           line-height: 1.4;
         }
         .blog-excerpt {
-          color: #475569;
+          color: var(--text-secondary);
           font-size: 0.95rem;
           line-height: 1.6;
           margin-bottom: 1.5rem;
@@ -257,7 +257,7 @@ const Blog = () => {
           background: none;
           border: none;
           padding: 0;
-          color: #0d2331;
+          color: var(--bg-brand);
           font-weight: 700;
           font-size: 0.9rem;
           display: flex;
@@ -274,20 +274,20 @@ const Blog = () => {
           gap: 1rem;
         }
         .page-btn {
-          background: white;
-          border: 1px solid #e2e8f0;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-default);
           padding: 0.75rem 1.25rem;
           border-radius: 12px;
           display: flex;
           align-items: center;
           gap: 0.5rem;
           font-weight: 600;
-          color: #0d2331;
+          color: var(--bg-brand);
           cursor: pointer;
           transition: all 0.2s;
         }
         .page-btn:hover:not(:disabled) {
-          background: #f1f5f9;
+          background: var(--bg-muted);
         }
         .page-btn:disabled {
           opacity: 0.5;
@@ -306,17 +306,17 @@ const Blog = () => {
           border-radius: 10px;
           border: none;
           background: transparent;
-          color: #64748b;
+          color: var(--text-tertiary);
           font-weight: 600;
           cursor: pointer;
           transition: all 0.2s;
         }
         .page-num:hover {
-          background: #e2e8f0;
+          background: var(--border-default);
         }
         .page-num.active {
-          background: #00a3ff;
-          color: white;
+          background: var(--accent-primary);
+          color: var(--text-inverse);
         }
         @media (max-width: 768px) {
           .blog-hero h1 { font-size: 2.5rem; }
