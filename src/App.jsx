@@ -5,6 +5,7 @@ import AuthLayout from './components/AuthLayout';
 import DashboardLayout from './components/DashboardLayout';
 import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
+import ForgotPasswordWizard from './pages/auth/ForgotPasswordWizard';
 import GetStarted from './pages/GetStarted';
 import SignupWizard from './pages/SignupWizard';
 import Success from './pages/Success';
@@ -93,6 +94,7 @@ function App() {
         {/* Auth Layout Routes */}
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPasswordWizard />} />
           <Route path="/signup" element={<SignupWizard />} />
           <Route path="/register" element={<SignupWizard />} />
           <Route path="/payment" element={<SignupWizard />} />

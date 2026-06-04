@@ -129,7 +129,7 @@ const Login = () => {
               <input type="checkbox" id="remember" style={{ width: '1.125rem', height: '1.125rem', accentColor: 'var(--bg-brand)' }} />
               <label htmlFor="remember" style={{ margin: 0, fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-secondary)', cursor: 'pointer' }}>Remember me</label>
             </div>
-            <a href="#" style={{ color: 'var(--bg-brand)', fontSize: '0.875rem', fontWeight: 700, textDecoration: 'none' }}>Forgot Password?</a>
+            <Link to="/forgot-password" style={{ color: 'var(--bg-brand)', fontSize: '0.875rem', fontWeight: 700, textDecoration: 'none' }}>Forgot Password?</Link>
           </div>
 
           <button type="submit" style={{ width: '100%', padding: '1rem', background: 'var(--bg-brand)', color: 'white', border: 'none', borderRadius: '12px', fontSize: '1rem', fontWeight: 700, cursor: 'pointer', transition: 'background 0.2s', boxShadow: '0 4px 12px rgba(0, 144, 230, 0.2)' }}>Log in</button>
