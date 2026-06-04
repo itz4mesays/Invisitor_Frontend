@@ -168,7 +168,7 @@ const ManagerDashboard = () => {
               <div className="md-sub-progress-bar" style={{ width: '65%' }}></div>
             </div>
             <p className="md-sub-text">124 days remaining in your current cycle</p>
-            <button className="md-btn-renew">Manage Subscription</button>
+            <button className="md-btn-renew" onClick={() => navigate('/manager/subscription')}>Manage Subscription</button>
           </div>
 
           <div className="md-quick-actions">

@@ -11,6 +11,11 @@ import Success from './pages/Success';
 import VerifyingPayment from './pages/VerifyingPayment';
 import PaymentFailed from './pages/PaymentFailed';
 
+// Subscription Pages
+import SubscriptionManagement from './pages/shared/SubscriptionManagement';
+import PaymentCheckout from './pages/shared/PaymentCheckout';
+import PaymentSuccess from './pages/shared/PaymentSuccess';
+
 // Public Pages
 import Blog from './pages/shared/Blog';
 import BlogPost from './pages/shared/BlogPost';
@@ -115,9 +120,12 @@ function App() {
           <Route path="activity-log" element={<ActivityLog />} />
           <Route path="appointments" element={<Appointments />} />
           <Route path="calendar" element={<Calendar />} />
-          <Route path="notifications" element={<Notifications />} />
+          <Route path="security/add" element={<AddOfficer />} />
           <Route path="profile" element={<Profile />} />
           <Route path="settings" element={<Settings />} />
+          <Route path="subscription" element={<SubscriptionManagement />} />
+          <Route path="checkout" element={<PaymentCheckout />} />
+          <Route path="payment-success" element={<PaymentSuccess />} />
           <Route path="*" element={<div>Coming Soon</div>} />
         </Route>
 
@@ -136,6 +144,9 @@ function App() {
           <Route path="support/tickets/:ticketId" element={<TicketView />} />
           <Route path="profile" element={<Profile />} />
           <Route path="settings" element={<Settings />} />
+          <Route path="subscription" element={<SubscriptionManagement />} />
+          <Route path="checkout" element={<PaymentCheckout />} />
+          <Route path="payment-success" element={<PaymentSuccess />} />
           <Route path="*" element={<div>Coming Soon</div>} />
         </Route>
 
@@ -166,6 +177,9 @@ function App() {
           <Route path="residents/:residentId" element={<ResidentDetails />} />
           <Route path="profile" element={<Profile />} />
           <Route path="settings" element={<Settings />} />
+          <Route path="subscription" element={<SubscriptionManagement />} />
+          <Route path="checkout" element={<PaymentCheckout />} />
+          <Route path="payment-success" element={<PaymentSuccess />} />
           <Route path="*" element={<div>Coming Soon</div>} />
         </Route>
 
@@ -205,6 +219,9 @@ function App() {
           <Route path="support/tickets/:ticketId" element={<TicketView />} />
           <Route path="profile" element={<Profile />} />
           <Route path="settings" element={<Settings />} />
+          <Route path="subscription" element={<SubscriptionManagement />} />
+          <Route path="checkout" element={<PaymentCheckout />} />
+          <Route path="payment-success" element={<PaymentSuccess />} />
           <Route path="*" element={<div>Coming Soon</div>} />
         </Route>
 

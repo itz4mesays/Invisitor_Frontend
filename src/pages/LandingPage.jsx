@@ -11,14 +11,9 @@ import {
 import landingHeroBg from '../assets/landing-hero.png';
 import landingAboutImg from '../assets/landing-about.png';
 
-const Logo = ({ color = "white" }) => (
-  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-    <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="25" r="18" fill={color} />
-      <path d="M20 55C20 49.5 24.5 45 30 45H70C75.5 45 80 49.5 80 55V60H20V55Z" fill={color} />
-      <path d="M20 65H80V75C80 80.5 75.5 85 70 85H30C24.5 85 20 80.5 20 75V65Z" fill={color} />
-    </svg>
-    <span style={{ fontSize: '1.5rem', fontWeight: 800, color: color, letterSpacing: '-0.02em' }}>InVisitor</span>
+const Logo = ({ color = "white", style = {} }) => (
+  <div style={{ display: 'flex', alignItems: 'center', ...style }}>
+    <img src="/logo_white.png" alt="InVisitor Logo" style={{ height: '40px', objectFit: 'contain' }} />
   </div>
 );
 

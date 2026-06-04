@@ -198,6 +198,14 @@ const HostDashboard = () => {
                 </div>
               </div>
             </div>
+            <div style={{ marginTop: '1.5rem', display: 'flex', justifyContent: 'flex-end' }}>
+              <button 
+                onClick={() => navigate('/host/subscription')}
+                style={{ padding: '0.75rem 1.5rem', borderRadius: '8px', background: 'var(--accent-primary)', color: 'white', border: 'none', cursor: 'pointer', fontWeight: 600, boxShadow: '0 4px 12px rgba(0, 163, 255, 0.2)' }}
+              >
+                Manage Subscription
+              </button>
+            </div>
           </div>
 
           <div className="dashboard-row-split">

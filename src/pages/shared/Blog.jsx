@@ -1,39 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, ArrowRight, ArrowLeft } from 'lucide-react';
-
-const MOCK_BLOGS = [
-  { id: 1, title: 'The Future of Workplace Security in 2026', category: 'Security', date: 'May 12, 2026', readTime: '5 min read', image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800', excerpt: 'Discover how AI and biometric integrations are shaping the way modern enterprises secure their facilities and manage visitors.' },
-  { id: 2, title: 'Top 5 Visitor Management Trends', category: 'Industry News', date: 'May 08, 2026', readTime: '4 min read', image: 'https://images.unsplash.com/photo-1556761175-5973dc0f32d7?auto=format&fit=crop&q=80&w=800', excerpt: 'From touchless check-ins to dynamic access control, see what trends are dominating the workspace management sector this year.' },
-  { id: 3, title: 'How InVisitor Saves Front Desk Time', category: 'Case Study', date: 'May 01, 2026', readTime: '6 min read', image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800', excerpt: 'Learn how Acme Corp reduced their guest processing time by 80% using our streamlined pre-registration workflows.' },
-  { id: 4, title: 'Creating a Welcoming Lobby Experience', category: 'Design', date: 'Apr 25, 2026', readTime: '4 min read', image: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80&w=800', excerpt: 'The lobby is your company’s first impression. Here are actionable tips to make it welcoming yet secure.' },
-  { id: 5, title: 'Integrating Access Control Systems', category: 'Technology', date: 'Apr 18, 2026', readTime: '7 min read', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800', excerpt: 'A technical deep-dive into connecting cloud-based VMS solutions with legacy on-premise turnstiles and doors.' },
-  { id: 6, title: 'The Rise of Hybrid Work and Visitor Tracking', category: 'Workplace', date: 'Apr 10, 2026', readTime: '5 min read', image: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=800', excerpt: 'With employees splitting time between home and office, keeping track of who is actually in the building has never been more important.' },
-  { id: 7, title: 'Understanding Data Privacy in Visitor Logs', category: 'Compliance', date: 'Apr 02, 2026', readTime: '6 min read', image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=800', excerpt: 'Are your visitor log books violating GDPR or CCPA? What you need to know about digital visitor privacy.' },
-];
+import { Calendar, ArrowRight, ArrowLeft, Mail, Clock } from 'lucide-react';
+import { MOCK_BLOGS } from '../../data/mockBlogs';
 
 const ITEMS_PER_PAGE = 6;
+const CATEGORIES = ['All', 'Security', 'Industry News', 'Case Study', 'Design', 'Technology', 'Workplace'];
 
 const Blog = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
+  const [activeCategory, setActiveCategory] = useState('All');
   
-  const totalPages = Math.ceil(MOCK_BLOGS.length / ITEMS_PER_PAGE);
-  const currentBlogs = MOCK_BLOGS.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+  // Filtering
+  const filteredBlogs = useMemo(() => {
+    if (activeCategory === 'All') return MOCK_BLOGS;
+    return MOCK_BLOGS.filter(blog => blog.category === activeCategory);
+  }, [activeCategory]);
+
+  const featuredPost = filteredBlogs.length > 0 ? filteredBlogs[0] : null;
+  const gridPosts = filteredBlogs.slice(1);
+
+  const totalPages = Math.ceil(gridPosts.length / ITEMS_PER_PAGE);
+  const currentGridPosts = gridPosts.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+
+  const handleCategoryClick = (category) => {
+    setActiveCategory(category);
+    setCurrentPage(1);
+  };
 
   return (
     <div className="blog-page">
       {/* Navigation Bar */}
       <nav className="blog-nav">
         <div className="nav-content">
-          <div className="logo" onClick={() => navigate('/')} style={{ cursor: 'pointer', margin: 0, color: 'var(--bg-brand)' }}>
-            <svg width="30" height="30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="50" cy="25" r="15" fill="var(--bg-brand)" />
-              <path d="M20 55C20 49.4772 24.4772 45 30 45H70C75.5228 45 80 49.4772 80 55V60H20V55Z" fill="var(--bg-brand)" />
-              <path d="M20 65H80V75C80 80.5228 75.5228 85 70 85H30C24.4772 85 20 80.5228 20 75V65Z" fill="var(--bg-brand)" />
-            </svg>
-            <span style={{ fontSize: '1.25rem', fontWeight: 800 }}>InVisitor</span>
+          <div className="logo" onClick={() => navigate('/')} style={{ cursor: 'pointer', margin: 0, color: 'var(--bg-brand)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <img src="/logo_white.png" alt="InVisitor Logo" style={{ height: '30px', filter: 'invert(1)' }} />
+            <span style={{ fontSize: '1.25rem', fontWeight: 800 }}>InVisitor Blog</span>
           </div>
           <button onClick={() => navigate('/')} className="btn-back">Back to Home</button>
         </div>
@@ -41,16 +44,65 @@ const Blog = () => {
 
       {/* Hero Section */}
       <header className="blog-hero">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+        <div className="hero-pattern"></div>
+        <motion.div className="hero-content" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <h1>News & Insights</h1>
-          <p>Discover the latest trends in workplace security, visitor management, and enterprise technology.</p>
+          <p>Discover the latest trends in workplace security, visitor management, and enterprise technology shaping the future of work.</p>
         </motion.div>
       </header>
 
-      {/* Blog Grid */}
       <main className="blog-main">
+        {/* Category Filters */}
+        <div className="category-filters">
+          {CATEGORIES.map(cat => (
+            <button 
+              key={cat} 
+              className={`cat-btn ${activeCategory === cat ? 'active' : ''}`}
+              onClick={() => handleCategoryClick(cat)}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {/* Featured Post */}
+        {featuredPost && currentPage === 1 && (
+          <motion.div 
+            className="featured-post"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            onClick={() => navigate(`/blog/${featuredPost.id}`)}
+          >
+            <div className="featured-image-wrapper">
+              <img src={featuredPost.image} alt={featuredPost.title} />
+              <span className="featured-category">{featuredPost.category}</span>
+            </div>
+            <div className="featured-content">
+              <div className="featured-meta">
+                <span><Calendar size={14} /> {featuredPost.date}</span>
+                <span><Clock size={14} /> {featuredPost.readTime}</span>
+              </div>
+              <h2>{featuredPost.title}</h2>
+              <p>{featuredPost.excerpt}</p>
+              
+              <div className="featured-footer">
+                <div className="author-info">
+                  <img src={featuredPost.authorAvatar} alt={featuredPost.author} className="author-avatar" />
+                  <div className="author-details">
+                    <span className="author-name">{featuredPost.author}</span>
+                    <span className="author-role">{featuredPost.authorRole}</span>
+                  </div>
+                </div>
+                <button className="read-more-btn">Read Article <ArrowRight size={18} /></button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Blog Grid */}
         <div className="blog-grid">
-          {currentBlogs.map((blog, index) => (
+          {currentGridPosts.map((blog, index) => (
             <motion.div 
               key={blog.id} 
               className="blog-card"
@@ -61,16 +113,24 @@ const Blog = () => {
             >
               <div className="blog-image-wrapper">
                 <img src={blog.image} alt={blog.title} className="blog-image" />
-                <span className="blog-category">{blog.category}</span>
+                <div className="glass-category">
+                  <span>{blog.category}</span>
+                </div>
               </div>
               <div className="blog-content">
                 <div className="blog-meta">
                   <span className="blog-date"><Calendar size={14} /> {blog.date}</span>
-                  <span className="blog-read-time">{blog.readTime}</span>
+                  <span className="blog-read-time"><Clock size={14} /> {blog.readTime}</span>
                 </div>
                 <h3 className="blog-title">{blog.title}</h3>
                 <p className="blog-excerpt">{blog.excerpt}</p>
-                <button className="blog-read-more">Read Article <ArrowRight size={16} /></button>
+                <div className="blog-card-footer">
+                   <div className="small-author">
+                      <img src={blog.authorAvatar} alt={blog.author} />
+                      <span>{blog.author}</span>
+                   </div>
+                  <button className="blog-read-more">Read <ArrowRight size={16} /></button>
+                </div>
               </div>
             </motion.div>
           ))}
@@ -108,14 +168,29 @@ const Blog = () => {
         )}
       </main>
 
+      {/* Newsletter Section */}
+      <section className="newsletter-section">
+        <div className="newsletter-container">
+          <div className="newsletter-icon"><Mail size={32} /></div>
+          <h2>Subscribe to our Newsletter</h2>
+          <p>Get the latest insights on workplace security and visitor management delivered straight to your inbox every month.</p>
+          <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
+            <input type="email" placeholder="Enter your work email" required />
+            <button type="submit">Subscribe</button>
+          </form>
+          <span className="newsletter-disclaimer">We care about your data in our <a href="#">privacy policy</a>.</span>
+        </div>
+      </section>
+
       <style jsx>{`
         .blog-page {
           min-height: 100vh;
-          background: var(--bg-subtle);
+          background: #f8fafc;
           font-family: 'Plus Jakarta Sans', sans-serif;
         }
         .blog-nav {
-          background: var(--bg-surface);
+          background: rgba(255, 255, 255, 0.9);
+          backdrop-filter: blur(10px);
           padding: 1rem 2rem;
           border-bottom: 1px solid var(--border-default);
           position: sticky;
@@ -132,32 +207,51 @@ const Blog = () => {
         .btn-back {
           background: none;
           border: none;
-          color: var(--text-tertiary);
-          font-weight: 600;
+          color: var(--text-secondary);
+          font-weight: 700;
           cursor: pointer;
-          font-size: 0.9rem;
+          font-size: 0.95rem;
           transition: color 0.2s;
         }
         .btn-back:hover {
           color: var(--bg-brand);
         }
         .blog-hero {
-          background: linear-gradient(135deg, var(--bg-brand) 0%, var(--bg-brand-hover) 100%);
-          color: var(--text-inverse);
-          padding: 6rem 2rem;
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+          color: white;
+          padding: 6rem 2rem 8rem;
           text-align: center;
+          position: relative;
+          overflow: hidden;
+        }
+        .hero-pattern {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px);
+          background-size: 30px 30px;
+          opacity: 0.5;
+        }
+        .hero-content {
+          position: relative;
+          z-index: 2;
+          max-width: 800px;
+          margin: 0 auto;
         }
         .blog-hero h1 {
-          font-size: 3.5rem;
+          font-size: 4rem;
           font-weight: 800;
-          margin-bottom: 1rem;
-          letter-spacing: -0.02em;
+          margin-bottom: 1.5rem;
+          letter-spacing: -0.03em;
+          background: linear-gradient(to right, #fff, #94a3b8);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
         }
         .blog-hero p {
           font-size: 1.25rem;
-          color: var(--border-heavy);
-          max-width: 600px;
-          margin: 0 auto;
+          color: #cbd5e1;
           line-height: 1.6;
         }
         .blog-main {
@@ -167,36 +261,183 @@ const Blog = () => {
           position: relative;
           z-index: 10;
         }
+        .category-filters {
+          display: flex;
+          gap: 0.75rem;
+          margin-bottom: 3rem;
+          overflow-x: auto;
+          padding-bottom: 1rem;
+          scrollbar-width: none;
+        }
+        .category-filters::-webkit-scrollbar {
+          display: none;
+        }
+        .cat-btn {
+          padding: 0.75rem 1.5rem;
+          border-radius: 30px;
+          border: 1px solid rgba(255,255,255,0.2);
+          background: rgba(255,255,255,0.1);
+          backdrop-filter: blur(10px);
+          color: white;
+          font-weight: 600;
+          font-size: 0.95rem;
+          cursor: pointer;
+          white-space: nowrap;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .cat-btn.active, .cat-btn:hover {
+          background: var(--accent-primary);
+          border-color: var(--accent-primary);
+          color: white;
+        }
+        
+        /* Featured Post */
+        .featured-post {
+          background: white;
+          border-radius: 24px;
+          overflow: hidden;
+          display: grid;
+          grid-template-columns: 1.2fr 1fr;
+          box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+          margin-bottom: 4rem;
+          cursor: pointer;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          border: 1px solid var(--border-default);
+        }
+        .featured-post:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 25px 50px rgba(0,0,0,0.12);
+        }
+        .featured-image-wrapper {
+          position: relative;
+          height: 100%;
+          min-height: 400px;
+        }
+        .featured-image-wrapper img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        .featured-category {
+          position: absolute;
+          top: 1.5rem;
+          left: 1.5rem;
+          background: var(--bg-brand);
+          color: white;
+          padding: 0.5rem 1.25rem;
+          border-radius: 30px;
+          font-size: 0.8rem;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+        .featured-content {
+          padding: 3rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+        .featured-meta {
+          display: flex;
+          gap: 1.5rem;
+          color: var(--text-tertiary);
+          font-size: 0.9rem;
+          font-weight: 600;
+          margin-bottom: 1rem;
+        }
+        .featured-meta span {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+        .featured-content h2 {
+          font-size: 2.25rem;
+          font-weight: 800;
+          color: var(--text-primary);
+          line-height: 1.2;
+          margin-bottom: 1.5rem;
+          letter-spacing: -0.02em;
+        }
+        .featured-content p {
+          color: var(--text-secondary);
+          font-size: 1.1rem;
+          line-height: 1.6;
+          margin-bottom: 2.5rem;
+        }
+        .featured-footer {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-top: auto;
+          padding-top: 2rem;
+          border-top: 1px solid var(--border-default);
+        }
+        .author-info {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+        }
+        .author-avatar {
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+        .author-details {
+          display: flex;
+          flex-direction: column;
+        }
+        .author-name {
+          font-weight: 800;
+          color: var(--text-primary);
+        }
+        .author-role {
+          font-size: 0.85rem;
+          color: var(--text-tertiary);
+          font-weight: 500;
+        }
+        .read-more-btn {
+          background: none;
+          border: none;
+          color: var(--accent-primary);
+          font-weight: 800;
+          font-size: 1rem;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          cursor: pointer;
+        }
+
+        /* Blog Grid */
         .blog-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-          gap: 2rem;
+          grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+          gap: 2.5rem;
           margin-bottom: 4rem;
         }
         .blog-card {
-          background: var(--bg-surface);
+          background: white;
           border-radius: 20px;
           overflow: hidden;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+          box-shadow: 0 10px 30px rgba(0,0,0,0.04);
           cursor: pointer;
           transition: all 0.3s ease;
           display: flex;
           flex-direction: column;
+          border: 1px solid var(--border-default);
         }
         .blog-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+          transform: translateY(-8px);
+          box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+          border-color: rgba(0, 163, 255, 0.3);
         }
         .blog-card:hover .blog-image {
           transform: scale(1.05);
         }
-        .blog-card:hover .blog-read-more {
-          color: var(--accent-primary);
-          gap: 0.75rem;
-        }
         .blog-image-wrapper {
           position: relative;
-          height: 220px;
+          height: 240px;
           overflow: hidden;
         }
         .blog-image {
@@ -205,19 +446,21 @@ const Blog = () => {
           object-fit: cover;
           transition: transform 0.5s ease;
         }
-        .blog-category {
+        .glass-category {
           position: absolute;
           top: 1rem;
           left: 1rem;
-          background: rgba(255, 255, 255, 0.9);
-          color: var(--bg-brand);
-          padding: 0.4rem 1rem;
+          background: rgba(255, 255, 255, 0.2);
+          backdrop-filter: blur(8px);
+          border: 1px solid rgba(255, 255, 255, 0.4);
+          color: white;
+          padding: 0.5rem 1rem;
           border-radius: 30px;
           font-size: 0.75rem;
-          font-weight: 700;
+          font-weight: 800;
           text-transform: uppercase;
           letter-spacing: 0.05em;
-          backdrop-filter: blur(4px);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
         .blog-content {
           padding: 2rem;
@@ -228,45 +471,69 @@ const Blog = () => {
         .blog-meta {
           display: flex;
           align-items: center;
-          justify-content: space-between;
-          font-size: 0.8rem;
+          gap: 1.5rem;
+          font-size: 0.85rem;
           color: var(--text-tertiary);
           margin-bottom: 1rem;
-          font-weight: 500;
+          font-weight: 600;
         }
-        .blog-date {
+        .blog-meta span {
           display: flex;
           align-items: center;
           gap: 0.4rem;
         }
         .blog-title {
-          font-size: 1.25rem;
+          font-size: 1.35rem;
           font-weight: 800;
-          color: var(--bg-brand);
+          color: var(--text-primary);
           margin-bottom: 1rem;
           line-height: 1.4;
+          letter-spacing: -0.01em;
         }
         .blog-excerpt {
           color: var(--text-secondary);
-          font-size: 0.95rem;
+          font-size: 1rem;
           line-height: 1.6;
-          margin-bottom: 1.5rem;
+          margin-bottom: 2rem;
           flex: 1;
+        }
+        .blog-card-footer {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding-top: 1.5rem;
+          border-top: 1px solid var(--border-default);
+        }
+        .small-author {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+        }
+        .small-author img {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+        .small-author span {
+          font-weight: 700;
+          font-size: 0.9rem;
+          color: var(--text-primary);
         }
         .blog-read-more {
           background: none;
           border: none;
           padding: 0;
-          color: var(--bg-brand);
-          font-weight: 700;
-          font-size: 0.9rem;
+          color: var(--accent-primary);
+          font-weight: 800;
+          font-size: 0.95rem;
           display: flex;
           align-items: center;
-          gap: 0.5rem;
+          gap: 0.4rem;
           cursor: pointer;
-          transition: all 0.2s;
-          margin-top: auto;
         }
+
+        /* Pagination */
         .pagination {
           display: flex;
           justify-content: center;
@@ -274,20 +541,20 @@ const Blog = () => {
           gap: 1rem;
         }
         .page-btn {
-          background: var(--bg-surface);
+          background: white;
           border: 1px solid var(--border-default);
           padding: 0.75rem 1.25rem;
           border-radius: 12px;
           display: flex;
           align-items: center;
           gap: 0.5rem;
-          font-weight: 600;
-          color: var(--bg-brand);
+          font-weight: 700;
+          color: var(--text-primary);
           cursor: pointer;
           transition: all 0.2s;
         }
         .page-btn:hover:not(:disabled) {
-          background: var(--bg-muted);
+          background: var(--bg-subtle);
         }
         .page-btn:disabled {
           opacity: 0.5;
@@ -304,24 +571,120 @@ const Blog = () => {
           align-items: center;
           justify-content: center;
           border-radius: 10px;
-          border: none;
-          background: transparent;
-          color: var(--text-tertiary);
-          font-weight: 600;
+          border: 1px solid transparent;
+          background: white;
+          color: var(--text-secondary);
+          font-weight: 700;
           cursor: pointer;
           transition: all 0.2s;
         }
         .page-num:hover {
-          background: var(--border-default);
+          border-color: var(--border-default);
         }
         .page-num.active {
           background: var(--accent-primary);
-          color: var(--text-inverse);
+          color: white;
+          box-shadow: 0 4px 12px rgba(0, 163, 255, 0.3);
         }
+
+        /* Newsletter */
+        .newsletter-section {
+          background: white;
+          padding: 6rem 2rem;
+          border-top: 1px solid var(--border-default);
+        }
+        .newsletter-container {
+          max-width: 600px;
+          margin: 0 auto;
+          text-align: center;
+          background: var(--bg-surface);
+          padding: 4rem;
+          border-radius: 32px;
+          box-shadow: 0 20px 40px rgba(0,0,0,0.03);
+          border: 1px solid var(--border-default);
+        }
+        .newsletter-icon {
+          width: 64px;
+          height: 64px;
+          background: rgba(0, 163, 255, 0.1);
+          color: var(--accent-primary);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 1.5rem;
+        }
+        .newsletter-container h2 {
+          font-size: 2rem;
+          font-weight: 800;
+          color: var(--text-primary);
+          margin-bottom: 1rem;
+          letter-spacing: -0.02em;
+        }
+        .newsletter-container p {
+          color: var(--text-secondary);
+          line-height: 1.6;
+          margin-bottom: 2.5rem;
+        }
+        .newsletter-form {
+          display: flex;
+          gap: 1rem;
+          margin-bottom: 1rem;
+        }
+        .newsletter-form input {
+          flex: 1;
+          padding: 1rem 1.5rem;
+          border-radius: 12px;
+          border: 1px solid var(--border-default);
+          font-size: 1rem;
+          background: #f8fafc;
+        }
+        .newsletter-form input:focus {
+          outline: none;
+          border-color: var(--accent-primary);
+          box-shadow: 0 0 0 3px rgba(0, 163, 255, 0.1);
+        }
+        .newsletter-form button {
+          padding: 1rem 2rem;
+          border-radius: 12px;
+          background: var(--bg-brand);
+          color: white;
+          border: none;
+          font-weight: 800;
+          font-size: 1rem;
+          cursor: pointer;
+          transition: background 0.2s;
+        }
+        .newsletter-form button:hover {
+          background: var(--bg-brand-hover);
+        }
+        .newsletter-disclaimer {
+          font-size: 0.85rem;
+          color: var(--text-tertiary);
+        }
+        .newsletter-disclaimer a {
+          color: var(--accent-primary);
+          text-decoration: none;
+        }
+
+        @media (max-width: 992px) {
+          .featured-post {
+            grid-template-columns: 1fr;
+          }
+          .featured-image-wrapper {
+            min-height: 300px;
+          }
+        }
+
         @media (max-width: 768px) {
           .blog-hero h1 { font-size: 2.5rem; }
+          .cat-btn { padding: 0.5rem 1rem; font-size: 0.85rem; }
+          .category-filters { padding-bottom: 0.5rem; }
           .blog-grid { grid-template-columns: 1fr; }
-          .blog-main { margin-top: -2rem; padding: 0 1rem; }
+          .featured-content { padding: 2rem; }
+          .featured-content h2 { font-size: 1.75rem; }
+          .newsletter-container { padding: 2rem; }
+          .newsletter-form { flex-direction: column; }
         }
       `}</style>
     </div>

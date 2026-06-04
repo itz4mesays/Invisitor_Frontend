@@ -192,12 +192,8 @@ const DashboardLayout = () => {
       <aside className={`sidebar ${isSidebarOpen ? 'open' : 'closed'}`}>
         <div className="sidebar-header">
           <div className="logo-container">
-            <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="50" cy="25" r="18" fill="var(--accent-blue)" />
-              <path d="M20 55C20 49.5 24.5 45 30 45H70C75.5 45 80 49.5 80 55V60H20V55Z" fill="var(--accent-blue)" />
-              <path d="M20 65H80V75C80 80.5 75.5 85 70 85H30C24.5 85 20 80.5 20 75V65Z" fill="var(--accent-blue)" />
-            </svg>
-            <span className="logo-text">InVisitor</span>
+            <img src="/dashboard_logo.png" className="logo-img logo-light" alt="InVisitor" />
+            <img src="/logo_white.png" className="logo-img logo-dark" alt="InVisitor" />
           </div>
           <button className="sidebar-toggle-btn" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
             {isSidebarOpen ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
@@ -450,22 +446,33 @@ const DashboardLayout = () => {
           align-items: center;
           gap: 0.75rem;
           overflow: hidden;
+          width: 140px;
+          height: 32px;
+          transition: width 0.3s ease;
         }
 
-        .logo-text {
-          font-size: 1.25rem;
-          font-weight: 800;
-          color: var(--bg-brand);
-          white-space: nowrap;
+        .sidebar.closed .logo-container {
+          width: 32px;
         }
 
-        .sidebar.closed .logo-text {
-          display: none;
+        .logo-img {
+          height: 32px;
+          width: 140px;
+          object-fit: cover;
+          object-position: left center;
         }
+
+        .logo-light { display: block; }
+        .logo-dark { display: none; }
+
+        :global(body.dark-mode) .logo-light { display: none; }
+        :global(body.dark-mode) .logo-dark { display: block; }
 
         .sidebar-nav {
           flex: 1;
           padding: 1rem;
+          overflow-y: auto;
+          overflow-x: hidden;
         }
 
         .nav-list {
