@@ -209,6 +209,7 @@ const ManageAccessLevel = () => {
                         ))}
                       </tbody>
                     </table>
+                    </div>
                   </div>
 
                 </div>
