@@ -7,12 +7,21 @@ const ManageTransactions = () => {
   const [selectedTransaction, setSelectedTransaction] = useState(null);
   const [showToast, setShowToast] = useState(false);
   
-  const transactions = [
+  const [transactions, setTransactions] = useState([
     { id: 'TRX-98231', user: 'TechCorp Industries', role: 'Host', type: 'Subscription Payment', amount: '₦499,000.00', date: 'Today, 10:23 AM', status: 'Completed', method: 'Credit Card', ref: 'REF-8389201' },
     { id: 'TRX-98230', user: 'Victoria Garden City', role: 'Estate Manager', type: 'Plan Upgrade', amount: '₦850,000.00', date: 'Yesterday, 02:15 PM', status: 'Completed', method: 'Bank Transfer', ref: 'REF-8389202' },
     { id: 'TRX-98229', user: 'Alice Williams', role: 'Resident', type: 'Service Fee', amount: '₦25,000.00', date: 'Oct 12, 2023', status: 'Pending', method: 'Debit Card', ref: 'REF-8389203' },
     { id: 'TRX-98228', user: 'Global Finance LLC', role: 'Host', type: 'Subscription Payment', amount: '₦299,000.00', date: 'Oct 10, 2023', status: 'Failed', method: 'Credit Card', ref: 'REF-8389204' },
-  ];
+  ]);
+
+  const parseAmount = (amountStr) => parseFloat(amountStr.replace(/[^0-9.-]+/g,""));
+  const formatAmount = (num) => '₦' + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  
+  const totalVolume = formatAmount(transactions.reduce((sum, trx) => sum + parseAmount(trx.amount), 0));
+  const totalCompleted = formatAmount(transactions.filter(t => t.status === 'Completed').reduce((sum, trx) => sum + parseAmount(trx.amount), 0));
+  const totalPending = formatAmount(transactions.filter(t => t.status === 'Pending').reduce((sum, trx) => sum + parseAmount(trx.amount), 0));
+  const totalFailed = formatAmount(transactions.filter(t => t.status === 'Failed').reduce((sum, trx) => sum + parseAmount(trx.amount), 0));
+
 
   const handleDownload = () => {
     setShowToast(true);
@@ -40,10 +49,11 @@ const ManageTransactions = () => {
         </button>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', marginBottom: '2rem' }}>
-        {[{ label: 'Total Revenue', val: '₦12,450,000.00', icon: <DollarSign size={20}/>, c: 'var(--bg-brand)' },
-          { label: 'Pending Payments', val: '₦325,000.00', icon: <CreditCard size={20}/>, c: '#f59e0b' },
-          { label: 'Failed Transactions', val: '₦85,000.00', icon: <ArrowDownRight size={20}/>, c: '#ef4444' }].map((stat, idx) => (
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+        {[{ label: 'Total Volume', val: totalVolume, icon: <DollarSign size={20}/>, c: 'var(--bg-brand)' },
+          { label: 'Completed', val: totalCompleted, icon: <ArrowUpRight size={20}/>, c: 'var(--text-success)' },
+          { label: 'Pending', val: totalPending, icon: <CreditCard size={20}/>, c: '#f59e0b' },
+          { label: 'Failed', val: totalFailed, icon: <ArrowDownRight size={20}/>, c: '#ef4444' }].map((stat, idx) => (
           <div key={idx} style={{ background: 'var(--bg-surface)', padding: '1.5rem', borderRadius: '16px', border: '1px solid var(--border-default)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: `${stat.c}15`, color: stat.c, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {stat.icon}

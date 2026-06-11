@@ -36,6 +36,7 @@ import HostDetails from './pages/admin/HostDetails';
 import EstateManagerDetails from './pages/admin/EstateManagerDetails';
 import TicketDetails from './pages/admin/TicketDetails';
 import ManageAccessLevel from './pages/admin/ManageAccessLevel';
+import AdminDataImport from './pages/admin/DataImport';
 
 // Manager Pages
 import ResidentDashboard from './pages/dashboards/ResidentDashboard';
@@ -53,6 +54,7 @@ import AddVisitor from './pages/host/AddVisitor';
 import VisitorDetails from './pages/host/VisitorDetails';
 import HostFrontDesk from './pages/host/FrontDesk';
 import VisitorReport from './pages/host/VisitorReport';
+import HostManageHosts from './pages/host/ManageHosts';
 
 // Shared Pages
 import ActivityLog from './pages/shared/ActivityLog';
@@ -77,6 +79,7 @@ import AddOfficer from './pages/manager/AddOfficer';
 import OfficerDetails from './pages/manager/OfficerDetails';
 import ResidentDetails from './pages/manager/ResidentDetails';
 import AddResident from './pages/manager/AddResident';
+import ManagerDataImport from './pages/manager/DataImport';
 
 // Support Pages (shared across non-admin roles)
 import SupportDashboard from './pages/support/SupportDashboard';
@@ -118,6 +121,7 @@ function App() {
           <Route path="transactions" element={<ManageTransactions />} />
           <Route path="invoices" element={<ManageInvoices />} />
           <Route path="users" element={<ManageUsers />} />
+          <Route path="data-import" element={<AdminDataImport />} />
           <Route path="access-level" element={<ManageAccessLevel />} />
           <Route path="activity-log" element={<ActivityLog />} />
           <Route path="appointments" element={<Appointments />} />
@@ -177,6 +181,7 @@ function App() {
           <Route path="residents" element={<ManagerResidents />} />
           <Route path="residents/add" element={<AddResident />} />
           <Route path="residents/:residentId" element={<ResidentDetails />} />
+          <Route path="data-import" element={<ManagerDataImport />} />
           <Route path="profile" element={<Profile />} />
           <Route path="settings" element={<Settings />} />
           <Route path="subscription" element={<SubscriptionManagement />} />
@@ -199,6 +204,7 @@ function App() {
         <Route path="/host" element={<DashboardLayout />}>
           <Route index element={<Navigate to="/host/dashboard" replace />} />
           <Route path="dashboard" element={<HostDashboard />} />
+          <Route path="hosts" element={<HostManageHosts />} />
           <Route path="transactions" element={<Transactions />} />
           <Route path="activity-log" element={<ActivityLog />} />
           <Route path="notifications" element={<Notifications />} />

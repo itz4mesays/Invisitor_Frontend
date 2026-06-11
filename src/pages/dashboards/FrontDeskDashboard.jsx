@@ -57,9 +57,14 @@ const FrontDeskDashboard = () => {
   const recentActivity = [
     { type: 'check-in', visitor: 'David Awolowo', host: 'Alison Ogaga', time: 'Just now' },
     { type: 'check-out', visitor: 'Sarah Johnson', host: 'John Smith', time: '5 mins ago' },
-    { type: 'check-in', visitor: 'Michael Chang', host: 'Emily Davis', time: '12 mins ago' },
     { type: 'check-in', visitor: 'Grace Olu', host: 'Victor Salisu', time: '28 mins ago' },
   ];
+
+  const [waitingBay, setWaitingBay] = useState([
+    { id: 1, name: 'Michael Chang', host: 'Emily Davis', type: 'Walk-in', timeWaiting: '4 mins' }
+  ]);
+  const [visitorNeedsConfirmation, setVisitorNeedsConfirmation] = useState(true);
+
 
   return (
     <div className="fd-page">
@@ -150,7 +155,34 @@ const FrontDeskDashboard = () => {
                 </div>
               ))}
             </div>
-            <button className="fd-btn-outline-full mt-4" onClick={() => setIsCheckInModalOpen(true)}>Check-In Expected Visitor</button>
+            <button className="fd-btn-outline-full mt-4" onClick={() => { setVisitorNeedsConfirmation(false); setIsCheckInModalOpen(true); }}>Check-In Expected Visitor</button>
+          </div>
+
+          <div className="fd-waiting-bay-card" style={{ marginTop: '1.5rem' }}>
+            <div className="fd-card-header" style={{ marginBottom: '1rem' }}>
+              <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#f59e0b' }}>
+                <Clock size={18} /> Waiting Bay
+              </h3>
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, background: '#fef3c7', color: '#d97706', padding: '2px 8px', borderRadius: '12px' }}>{waitingBay.length} Pending</span>
+            </div>
+            <div className="fd-expected-list">
+              {waitingBay.length === 0 ? (
+                <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-quaternary)', fontSize: '0.875rem' }}>No visitors waiting.</div>
+              ) : (
+                waitingBay.map((visitor, idx) => (
+                  <div key={idx} className="fd-expected-item" style={{ borderLeft: '4px solid #f59e0b' }}>
+                    <div className="fd-exp-info">
+                      <h4>{visitor.name}</h4>
+                      <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>Host: {visitor.host}</p>
+                    </div>
+                    <div className="fd-exp-meta" style={{ flexDirection: 'column', alignItems: 'flex-end', gap: '4px' }}>
+                      <span className="fd-exp-time" style={{ color: '#d97706', fontWeight: 700 }}>{visitor.timeWaiting}</span>
+                      <button style={{ background: 'none', border: 'none', color: 'var(--accent-primary)', fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer' }}>Override</button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -172,7 +204,11 @@ const FrontDeskDashboard = () => {
                   <p style={{ margin: '0 0 2px', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Host: <strong>Alison Ogaga</strong></p>
                   <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Purpose: <strong>Medical Appointment</strong> &bull; Time: <strong>11:30 AM</strong></p>
                 </div>
-                <div style={{ padding: '0.5rem 1rem', background: '#e0f2fe', color: '#0369a1', borderRadius: '12px', fontSize: '0.75rem', fontWeight: '700' }}>Valid Appointment</div>
+                {visitorNeedsConfirmation ? (
+                  <div style={{ padding: '0.5rem 1rem', background: '#fef3c7', color: '#d97706', borderRadius: '12px', fontSize: '0.75rem', fontWeight: '700' }}>Host Approval Required</div>
+                ) : (
+                  <div style={{ padding: '0.5rem 1rem', background: '#e0f2fe', color: '#0369a1', borderRadius: '12px', fontSize: '0.75rem', fontWeight: '700' }}>Pre-Approved</div>
+                )}
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -194,7 +230,15 @@ const FrontDeskDashboard = () => {
               </div>
 
               <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-                <button onClick={() => setCheckInSuccess(true)} style={{ background: 'var(--bg-brand)', color: 'var(--text-inverse)', border: 'none', padding: '1rem 2rem', borderRadius: '12px', fontSize: '0.875rem', fontWeight: '700', cursor: 'pointer', flex: 1 }}>Complete Check-In</button>
+                {visitorNeedsConfirmation ? (
+                  <button onClick={() => {
+                    setWaitingBay([{ id: Date.now(), name: 'Dr. Jennifer Johnson', host: 'Alison Ogaga', type: 'Appointment', timeWaiting: 'Just now' }, ...waitingBay]);
+                    setIsCheckInModalOpen(false);
+                    alert("Visitor moved to Waiting Bay. Host has been notified.");
+                  }} style={{ background: '#f59e0b', color: 'white', border: 'none', padding: '1rem 2rem', borderRadius: '12px', fontSize: '0.875rem', fontWeight: '700', cursor: 'pointer', flex: 1 }}>Move to Waiting Bay</button>
+                ) : (
+                  <button onClick={() => setCheckInSuccess(true)} style={{ background: 'var(--bg-brand)', color: 'var(--text-inverse)', border: 'none', padding: '1rem 2rem', borderRadius: '12px', fontSize: '0.875rem', fontWeight: '700', cursor: 'pointer', flex: 1 }}>Complete Check-In</button>
+                )}
                 <button onClick={() => setIsCheckInModalOpen(false)} style={{ background: 'var(--bg-surface)', color: 'var(--text-primary)', border: '1px solid var(--border-default)', padding: '1rem 2rem', borderRadius: '12px', fontSize: '0.875rem', fontWeight: '700', cursor: 'pointer', flex: 1 }}>Cancel</button>
               </div>
             </div>
@@ -262,7 +306,7 @@ const FrontDeskDashboard = () => {
         .fd-feed-details p { font-size: 0.8125rem; color: var(--text-tertiary); margin: 0; font-weight: 500; }
         .fd-feed-time { display: flex; align-items: center; gap: 4px; color: var(--text-quaternary); font-size: 0.75rem; font-weight: 600; }
 
-        .fd-expected-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 24px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+        .fd-expected-card, .fd-waiting-bay-card { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 24px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
         .fd-expected-list { display: flex; flex-direction: column; gap: 0.75rem; }
         .fd-expected-item { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem; border: 1px solid var(--bg-muted); border-radius: 16px; background: #fcfcfd; cursor: pointer; transition: all 0.2s; }
         .fd-expected-item:hover { border-color: var(--border-default); background: var(--bg-surface); }

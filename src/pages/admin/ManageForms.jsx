@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Plus, Edit2, FileText, Settings, Copy, Trash2, CheckCircle } from 'lucide-react';
+import { Search, Plus, Edit2, FileText, Settings, Copy, Trash2, CheckCircle, Clock, XCircle, LayoutTemplate } from 'lucide-react';
 
 const ManageForms = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -27,6 +27,49 @@ const ManageForms = () => {
         <button className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <Plus size={18} /> Create New Form
         </button>
+      </div>
+
+      {/* Overview Cards */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+        <div style={{ background: 'var(--bg-surface)', padding: '1.5rem', borderRadius: '16px', border: '1px solid var(--border-default)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'var(--bg-brand-subtle)', color: 'var(--bg-brand)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <LayoutTemplate size={24} />
+          </div>
+          <div>
+            <p style={{ color: 'var(--text-tertiary)', fontSize: '0.875rem', fontWeight: 600, margin: '0 0 0.25rem 0' }}>Total Forms</p>
+            <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>{forms.length}</h3>
+          </div>
+        </div>
+
+        <div style={{ background: 'var(--bg-surface)', padding: '1.5rem', borderRadius: '16px', border: '1px solid var(--border-default)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'var(--bg-success-subtle)', color: 'var(--text-success)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <CheckCircle size={24} />
+          </div>
+          <div>
+            <p style={{ color: 'var(--text-tertiary)', fontSize: '0.875rem', fontWeight: 600, margin: '0 0 0.25rem 0' }}>Active Forms</p>
+            <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>{forms.filter(f => f.status === 'Active').length}</h3>
+          </div>
+        </div>
+
+        <div style={{ background: 'var(--bg-surface)', padding: '1.5rem', borderRadius: '16px', border: '1px solid var(--border-default)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(139, 92, 246, 0.1)', color: '#8b5cf6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <FileText size={24} />
+          </div>
+          <div>
+            <p style={{ color: 'var(--text-tertiary)', fontSize: '0.875rem', fontWeight: 600, margin: '0 0 0.25rem 0' }}>Total Fields</p>
+            <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>{forms.reduce((sum, f) => sum + f.fields, 0)}</h3>
+          </div>
+        </div>
+
+        <div style={{ background: 'var(--bg-surface)', padding: '1.5rem', borderRadius: '16px', border: '1px solid var(--border-default)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Clock size={24} />
+          </div>
+          <div>
+            <p style={{ color: 'var(--text-tertiary)', fontSize: '0.875rem', fontWeight: 600, margin: '0 0 0.25rem 0' }}>Draft Forms</p>
+            <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>{forms.filter(f => f.status === 'Draft').length}</h3>
+          </div>
+        </div>
       </div>
 
       <div style={{ background: 'var(--bg-surface)', borderRadius: '16px', border: '1px solid var(--border-default)', overflow: 'hidden' }}>

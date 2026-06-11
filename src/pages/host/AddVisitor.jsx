@@ -39,7 +39,7 @@ const AddVisitor = () => {
           <ArrowLeft size={16} /> Back to Visitors
         </button>
         <h1>Add New Visitor</h1>
-        <p>Enter the visitor's profile and schedule their appointment details.</p>
+        <p>Enter the visitor's profile and identification details.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="add-v-form">
@@ -105,27 +105,7 @@ const AddVisitor = () => {
           </div>
         </section>
 
-        <section className="form-section">
-          <h2><Calendar size={18} /> Appointment Details</h2>
-          <div className="form-grid">
-            <div className="form-group">
-              <label>Expected Date</label>
-              <div className="input-with-icon">
-                <input type="date" required />
-              </div>
-            </div>
-            <div className="form-group">
-              <label>Expected Time</label>
-              <div className="input-with-icon">
-                <input type="time" required />
-              </div>
-            </div>
-            <div className="form-group" style={{ gridColumn: '1 / -1' }}>
-              <label>Purpose of Visit</label>
-              <input type="text" placeholder="e.g. Meeting, Maintenance, Delivery" required />
-            </div>
-          </div>
-        </section>
+
 
         <div className="form-actions">
           <button type="button" className="btn-cancel" onClick={() => navigate('/host/visitors')}>Cancel</button>

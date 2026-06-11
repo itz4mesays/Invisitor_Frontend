@@ -39,6 +39,7 @@ const AddAppointment = () => {
     appointmentDate: '',
     arrivalTime: '',
     duration: '30 Minutes',
+    autoApprove: false,
   });
 
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -307,6 +308,22 @@ const AddAppointment = () => {
           </div>
         </section>
 
+        {['resident', 'host', 'frontdesk'].includes(role) && (
+          <section className="aa-section" style={{ padding: '1.5rem 2rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div>
+              <h3 style={{ margin: '0 0 0.25rem', fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)' }}>Auto-Approve Entry</h3>
+              <p style={{ margin: 0, fontSize: '0.8125rem', color: 'var(--text-quaternary)' }}>Skip gate confirmation when this visitor arrives.</p>
+            </div>
+            <button
+              type="button"
+              className={`aa-toggle-btn ${form.autoApprove ? 'on' : 'off'}`}
+              onClick={() => setForm(prev => ({ ...prev, autoApprove: !prev.autoApprove }))}
+            >
+              <span className="aa-toggle-knob" />
+            </button>
+          </section>
+        )}
+
         <div className="aa-actions">
           <button type="submit" className="aa-btn-submit">
             Create Appointment
@@ -364,6 +381,13 @@ const AddAppointment = () => {
         .aa-btn-submit:hover { background: var(--bg-brand-hover); }
         .aa-btn-cancel { background: var(--bg-surface); border: 1.5px solid var(--border-default); color: var(--text-secondary); padding: 1rem 2rem; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.2s; }
         .aa-btn-cancel:hover { background: var(--bg-subtle); border-color: var(--border-heavy); }
+
+        .aa-toggle-btn { width: 44px; height: 24px; border-radius: 12px; border: none; position: relative; cursor: pointer; transition: background 0.3s; }
+        .aa-toggle-btn.off { background: var(--border-heavy); }
+        .aa-toggle-btn.on { background: var(--bg-brand); }
+        .aa-toggle-knob { width: 20px; height: 20px; background: white; border-radius: 50%; position: absolute; top: 2px; transition: transform 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .aa-toggle-btn.off .aa-toggle-knob { transform: translateX(2px); }
+        .aa-toggle-btn.on .aa-toggle-knob { transform: translateX(22px); }
 
         @media (max-width: 640px) {
           .aa-grid { grid-template-columns: 1fr; }

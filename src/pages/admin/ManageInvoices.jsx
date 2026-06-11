@@ -14,6 +14,15 @@ const ManageInvoices = () => {
     { id: 'INV-2023-1003', user: 'Global Finance LLC', role: 'Host', amount: '₦299,000.00', dueDate: 'Oct 10, 2023', status: 'Unpaid', items: [{ desc: 'Basic Subscription (Monthly)', amount: '₦299,000.00' }] },
   ]);
 
+  const parseAmount = (amountStr) => parseFloat(amountStr.replace(/[^0-9.-]+/g,""));
+  const formatAmount = (num) => '₦' + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  
+  const totalInvoiced = formatAmount(invoices.reduce((sum, inv) => sum + parseAmount(inv.amount), 0));
+  const totalPaid = formatAmount(invoices.filter(i => i.status === 'Paid').reduce((sum, inv) => sum + parseAmount(inv.amount), 0));
+  const totalPending = formatAmount(invoices.filter(i => i.status === 'Due').reduce((sum, inv) => sum + parseAmount(inv.amount), 0));
+  const totalOverdue = formatAmount(invoices.filter(i => i.status === 'Unpaid').reduce((sum, inv) => sum + parseAmount(inv.amount), 0));
+
+
   const getStatusColor = (status) => {
     switch(status) {
       case 'Paid': return { bg: 'var(--bg-success-subtle)', color: 'var(--text-success)' };
@@ -45,10 +54,11 @@ const ManageInvoices = () => {
         </button>
       </div>
 
-      <div className="stat-grid">
-        {[{ label: 'Total Invoiced', val: '₦1,648,000.00', icon: <FileText size={20}/>, c: 'var(--bg-brand)' },
-          { label: 'Unpaid / Overdue', val: '₦299,000.00', icon: <AlertTriangle size={20}/>, c: '#ef4444' },
-          { label: 'Collected', val: '₦850,000.00', icon: <CheckCircle size={20}/>, c: 'var(--text-success)' }].map((stat, idx) => (
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+        {[{ label: 'Total Revenue', val: totalPaid, icon: <FileText size={20}/>, c: 'var(--bg-brand)' },
+          { label: 'Paid Invoices', val: invoices.filter(i => i.status === 'Paid').length.toString(), icon: <CheckCircle size={20}/>, c: 'var(--text-success)' },
+          { label: 'Pending Invoices', val: totalPending, icon: <Clock size={20}/>, c: '#f59e0b' },
+          { label: 'Overdue Invoices', val: totalOverdue, icon: <AlertTriangle size={20}/>, c: '#ef4444' }].map((stat, idx) => (
           <div key={idx} style={{ background: 'var(--bg-surface)', padding: '1.5rem', borderRadius: '16px', border: '1px solid var(--border-default)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: `${stat.c}15`, color: stat.c, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {stat.icon}

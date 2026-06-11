@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Filter, Download, Eye, Building } from 'lucide-react';
+import { Search, Filter, Download, Eye, Building, Users, CheckCircle, XCircle, BarChart2 } from 'lucide-react';
 
 const ManageHosts = () => {
   const navigate = useNavigate();
@@ -29,6 +29,49 @@ const ManageHosts = () => {
         <button className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <Download size={18} /> Export List
         </button>
+      </div>
+
+      {/* Overview Cards */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+        <div style={{ background: 'var(--bg-surface)', padding: '1.5rem', borderRadius: '16px', border: '1px solid var(--border-default)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'var(--bg-brand-subtle)', color: 'var(--bg-brand)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Building size={24} />
+          </div>
+          <div>
+            <p style={{ color: 'var(--text-tertiary)', fontSize: '0.875rem', fontWeight: 600, margin: '0 0 0.25rem 0' }}>Total Hosts</p>
+            <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>{hosts.length}</h3>
+          </div>
+        </div>
+
+        <div style={{ background: 'var(--bg-surface)', padding: '1.5rem', borderRadius: '16px', border: '1px solid var(--border-default)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'var(--bg-success-subtle)', color: 'var(--text-success)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <CheckCircle size={24} />
+          </div>
+          <div>
+            <p style={{ color: 'var(--text-tertiary)', fontSize: '0.875rem', fontWeight: 600, margin: '0 0 0.25rem 0' }}>Active Hosts</p>
+            <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>{hosts.filter(h => h.status === 'Active').length}</h3>
+          </div>
+        </div>
+
+        <div style={{ background: 'var(--bg-surface)', padding: '1.5rem', borderRadius: '16px', border: '1px solid var(--border-default)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <BarChart2 size={24} />
+          </div>
+          <div>
+            <p style={{ color: 'var(--text-tertiary)', fontSize: '0.875rem', fontWeight: 600, margin: '0 0 0.25rem 0' }}>Enterprise Plans</p>
+            <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>{hosts.filter(h => h.plan === 'Enterprise').length}</h3>
+          </div>
+        </div>
+
+        <div style={{ background: 'var(--bg-surface)', padding: '1.5rem', borderRadius: '16px', border: '1px solid var(--border-default)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'var(--bg-danger-subtle)', color: 'var(--text-danger)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <XCircle size={24} />
+          </div>
+          <div>
+            <p style={{ color: 'var(--text-tertiary)', fontSize: '0.875rem', fontWeight: 600, margin: '0 0 0.25rem 0' }}>Inactive Hosts</p>
+            <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>{hosts.filter(h => h.status === 'Inactive').length}</h3>
+          </div>
+        </div>
       </div>
 
       <div style={{ background: 'var(--bg-surface)', borderRadius: '16px', border: '1px solid var(--border-default)', overflow: 'hidden' }}>

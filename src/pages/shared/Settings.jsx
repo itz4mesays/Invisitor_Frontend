@@ -5,7 +5,7 @@ import {
   User, Lock, Bell, Shield, Key, UserX, Camera, Check, X,
   Eye, EyeOff, Smartphone, Mail, AlertTriangle, Copy, RefreshCw,
   CheckCircle, MessageSquare, Volume2, MonitorSmartphone, Globe,
-  BellOff, BellRing, Moon, Sun
+  BellOff, BellRing, Moon, Sun, Clock
 } from 'lucide-react';
 
 /* ─── Mock Admin Profile Data ─────────────────────────────── */
@@ -92,9 +92,10 @@ const Settings = () => {
   const location = useLocation();
   const role = location.pathname.split('/')[1];
 
-  const tabs =
+  let tabs =
     role === 'resident'
       ? [
+          { id: 'visitor_rules', label: 'Visitor Access Rules', icon: <CheckCircle size={18} /> },
           { id: 'security', label: 'Change Password', icon: <Key size={18} /> },
           { id: '2fa', label: 'Setup 2FA', icon: <Shield size={18} /> },
           { id: 'deactivate', label: 'Deactivate Account', icon: <UserX size={18} /> },
@@ -104,6 +105,10 @@ const Settings = () => {
           { id: 'security', label: 'Security', icon: <Lock size={18} /> },
           { id: 'notifications', label: 'Notifications', icon: <Bell size={18} /> },
         ];
+
+  if (['host', 'frontdesk'].includes(role)) {
+    tabs.splice(2, 0, { id: 'visitor_rules', label: 'Visitor Access Rules', icon: <CheckCircle size={18} /> });
+  }
 
   const [activeTab, setActiveTab] = useState(tabs[0].id);
 
@@ -160,28 +165,23 @@ const Settings = () => {
     }
   };
 
-  /* Notifications state */
-  const buildDefaultNotifState = () => {
-    const state = {};
-    NOTIF_CATEGORIES.forEach(cat =>
-      cat.items.forEach(item => {
-        state[item.id] = { email: true, sms: false, in_app: true };
-      })
-    );
-    return state;
-  };
-  const [notifSettings, setNotifSettings] = useState(buildDefaultNotifState());
-  const [quietHours, setQuietHours] = useState({ enabled: false, from: '22:00', to: '07:00' });
-  const [notifSaved, setNotifSaved] = useState(false);
-  const toggleNotif = (itemId, channel) => {
+  /* ─── Notification Settings State ─── */
+  const [notifSettings, setNotifSettings] = useState({
+    push: true,
+    email: true,
+    sms: false,
+    whatsapp: false,
+  });
+
+  const toggleGlobalNotif = (channel) => {
     setNotifSettings(prev => ({
       ...prev,
-      [itemId]: { ...prev[itemId], [channel]: !prev[itemId][channel] }
+      [channel]: !prev[channel]
     }));
   };
+
   const handleNotifSave = () => {
-    setNotifSaved(true);
-    setTimeout(() => setNotifSaved(false), 3000);
+    alert('Notification settings saved!');
   };
 
   /* Deactivate (resident only) */
@@ -200,6 +200,27 @@ const Settings = () => {
       alert('Account deactivated. You will be redirected to the login page.');
     }, 1500);
   };
+
+  /* Visitor Rules state (Resident only) */
+  const [visitorRules, setVisitorRules] = useState({
+    autoApproveWindow: true,
+  });
+  const [vipList, setVipList] = useState([
+    { name: 'Alice (Nanny)', type: 'Domestic Staff' },
+    { name: 'John (Driver)', type: 'Domestic Staff' },
+  ]);
+  const [newVipName, setNewVipName] = useState('');
+  const handleAddVip = (e) => {
+    e.preventDefault();
+    if (newVipName.trim()) {
+      setVipList([...vipList, { name: newVipName, type: 'VIP' }]);
+      setNewVipName('');
+    }
+  };
+  const handleRemoveVip = (idx) => {
+    setVipList(vipList.filter((_, i) => i !== idx));
+  };
+
 
   /* ─── Tab Content ──────────────────────────────────────────── */
   const renderProfile = () => (
@@ -475,100 +496,97 @@ const Settings = () => {
 
   const renderNotifications = () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-      {/* Quiet Hours */}
       <div className="set-card">
+        <h2>Notification Channels</h2>
+        <p>Select how you would like to receive alerts and updates.</p>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginTop: '1.5rem' }}>
+          {[
+            { id: 'push', label: 'Push Notifications', desc: 'Receive alerts directly on your device.', icon: <BellRing size={20} /> },
+            { id: 'email', label: 'Email Notifications', desc: 'Receive daily summaries and important alerts via email.', icon: <Mail size={20} /> },
+            { id: 'sms', label: 'SMS Notifications', desc: 'Get text messages for critical security alerts.', icon: <MessageSquare size={20} /> },
+            { id: 'whatsapp', label: 'WhatsApp Notifications', desc: 'Receive visitor and security updates via WhatsApp.', icon: <Smartphone size={20} /> },
+          ].map(channel => (
+            <div key={channel.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem', background: 'var(--bg-subtle)', borderRadius: '12px', border: '1px solid var(--border-default)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--bg-surface)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-primary)', border: '1px solid var(--border-default)' }}>
+                  {channel.icon}
+                </div>
+                <div>
+                  <h4 style={{ margin: 0, fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary)' }}>{channel.label}</h4>
+                  <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-quaternary)' }}>{channel.desc}</p>
+                </div>
+              </div>
+              <button
+                className={`notif-master-toggle ${notifSettings[channel.id] ? 'on' : 'off'}`}
+                onClick={() => toggleGlobalNotif(channel.id)}
+              >
+                <span className="toggle-knob" />
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="form-actions">
+        <button className="btn-save" onClick={handleNotifSave}>
+          Save Preferences
+        </button>
+      </div>
+    </div>
+  );
+
+  const renderVisitorRules = () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      <div className="set-card">
+        <h2>Auto-Approve Window</h2>
+        <p>Automatically approve pre-scheduled visitors if they arrive within 30 minutes of their appointment time.</p>
         <div className="notif-section-header">
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <Moon size={20} style={{ color: 'var(--accent-primary)' }} />
+            <Clock size={20} style={{ color: 'var(--accent-primary)' }} />
             <div>
-              <h3 className="notif-group-title" style={{ marginBottom: '0.15rem' }}>Quiet Hours</h3>
-              <p className="notif-group-desc">Suppress all notifications during these hours.</p>
+              <h3 className="notif-group-title" style={{ marginBottom: '0.15rem' }}>Smart Auto-Approval</h3>
+              <p className="notif-group-desc">Skips gate confirmation for on-time arrivals.</p>
             </div>
           </div>
           <button
-            className={`notif-master-toggle ${quietHours.enabled ? 'on' : 'off'}`}
-            onClick={() => setQuietHours(q => ({ ...q, enabled: !q.enabled }))}
+            className={`notif-master-toggle ${visitorRules.autoApproveWindow ? 'on' : 'off'}`}
+            onClick={() => setVisitorRules(r => ({ ...r, autoApproveWindow: !r.autoApproveWindow }))}
           >
             <span className="toggle-knob" />
           </button>
         </div>
-        {quietHours.enabled && (
-          <div className="quiet-hours-row">
-            <div className="form-group" style={{ flex: 1 }}>
-              <label>From</label>
-              <input type="time" value={quietHours.from} onChange={e => setQuietHours(q => ({ ...q, from: e.target.value }))} />
-            </div>
-            <div className="quiet-to-label">to</div>
-            <div className="form-group" style={{ flex: 1 }}>
-              <label>Until</label>
-              <input type="time" value={quietHours.to} onChange={e => setQuietHours(q => ({ ...q, to: e.target.value }))} />
-            </div>
-          </div>
-        )}
       </div>
 
-      {/* Channel Legend */}
-      <div className="notif-legend-row">
-        {DELIVERY_CHANNELS.map(ch => (
-          <div key={ch.id} className="notif-legend-item">
-            <span className="notif-ch-icon">{ch.icon}</span> {ch.label}
-          </div>
-        ))}
-      </div>
-
-      {/* Per-Category Matrix */}
-      {NOTIF_CATEGORIES.map(cat => (
-        <div className="set-card" key={cat.group} style={{ padding: 0, overflow: 'hidden' }}>
-          <div className="notif-cat-header">
-            <span className="notif-cat-icon">{cat.icon}</span>
-            <h3>{cat.group}</h3>
-          </div>
-          <table className="notif-matrix">
-            <thead>
-              <tr>
-                <th className="notif-th-label">Notification</th>
-                {DELIVERY_CHANNELS.map(ch => (
-                  <th key={ch.id} className="notif-th-channel">
-                    <span className="notif-ch-icon">{ch.icon}</span>
-                    <span className="notif-ch-label">{ch.label}</span>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {cat.items.map(item => (
-                <tr key={item.id} className="notif-row">
-                  <td className="notif-td-label">
-                    <div className="notif-item-name">{item.label}</div>
-                    <div className="notif-item-desc">{item.desc}</div>
-                  </td>
-                  {DELIVERY_CHANNELS.map(ch => (
-                    <td key={ch.id} className="notif-td-channel">
-                      <button
-                        className={`notif-toggle-btn ${notifSettings[item.id]?.[ch.id] ? 'on' : 'off'}`}
-                        onClick={() => toggleNotif(item.id, ch.id)}
-                      >
-                        <span className="toggle-knob" />
-                      </button>
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <div className="set-card">
+        <h2>VIP & Trusted Visitors List</h2>
+        <p>Add people who never require confirmation to enter the estate (e.g. family, domestic staff).</p>
+        <div className="vip-list-container" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1.5rem' }}>
+          {vipList.map((vip, idx) => (
+            <div key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem', background: 'var(--bg-subtle)', borderRadius: '12px', border: '1px solid var(--border-default)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--bg-surface)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--border-default)' }}><User size={18} /></div>
+                <div>
+                  <h4 style={{ margin: 0, fontSize: '0.9375rem', fontWeight: 700, color: 'var(--text-primary)' }}>{vip.name}</h4>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-quaternary)', fontWeight: 600 }}>{vip.type}</span>
+                </div>
+              </div>
+              <button onClick={() => handleRemoveVip(idx)} style={{ background: 'none', border: 'none', color: 'var(--text-danger)', cursor: 'pointer' }}><X size={18} /></button>
+            </div>
+          ))}
         </div>
-      ))}
 
-      <div className="form-actions">
-        <button className="btn-save" onClick={handleNotifSave}>
-          {notifSaved ? <><Check size={16} /> Saved!</> : 'Save Preferences'}
-        </button>
+        <form onSubmit={handleAddVip} style={{ marginTop: '1.5rem', display: 'flex', gap: '0.75rem' }}>
+          <input type="text" placeholder="Add a new trusted visitor..." value={newVipName} onChange={e => setNewVipName(e.target.value)} style={{ flex: 1, padding: '0.75rem 1rem', border: '1.5px solid var(--border-heavy)', borderRadius: '10px', fontSize: '0.95rem', color: 'var(--text-primary)', background: 'var(--bg-surface)' }} />
+          <button type="submit" className="btn-save" disabled={!newVipName.trim()}>Add</button>
+        </form>
       </div>
     </div>
   );
 
   const renderResidentContent = () => {
     switch(activeTab) {
+      case 'visitor_rules': return renderVisitorRules();
       case 'security': return (
         <div className="set-card">
           <h2>Change Password</h2>
@@ -615,6 +633,7 @@ const Settings = () => {
       case 'profile': return renderProfile();
       case 'security': return renderSecurity();
       case 'notifications': return renderNotifications();
+      case 'visitor_rules': return renderVisitorRules();
       default: return null;
     }
   };
@@ -790,21 +809,19 @@ const Settings = () => {
         .notif-group-desc { font-size: 0.82rem; color: var(--text-quaternary); }
         .quiet-hours-row { display: flex; align-items: flex-end; gap: 1rem; margin-top: 1.25rem; }
         .quiet-to-label { font-weight: 700; color: var(--text-secondary); padding-bottom: 0.75rem; }
-        .notif-legend-row { display: flex; gap: 1.5rem; align-items: center; padding: 0 0.25rem; }
-        .notif-legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; font-weight: 600; color: var(--text-tertiary); }
-        .notif-ch-icon { display: flex; align-items: center; color: var(--text-tertiary); }
-        .notif-cat-header { display: flex; align-items: center; gap: 0.75rem; padding: 1rem 1.5rem; border-bottom: 1px solid var(--border-default); background: var(--bg-subtle); }
-        .notif-cat-header h3 { font-size: 0.95rem; font-weight: 800; color: var(--text-primary); margin: 0; }
-        .notif-cat-icon { color: var(--accent-primary); display: flex; }
         .notif-matrix { width: 100%; border-collapse: collapse; }
-        .notif-th-label { padding: 0.75rem 1.5rem; text-align: left; font-size: 0.75rem; font-weight: 700; color: var(--text-quaternary); text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border-default); }
-        .notif-th-channel { padding: 0.75rem 1rem; text-align: center; font-size: 0.75rem; font-weight: 700; color: var(--text-quaternary); border-bottom: 1px solid var(--border-default); width: 100px; }
-        .notif-th-channel { display: table-cell; }
-        .notif-th-channel { flex-direction: column; align-items: center; gap: 0.25rem; }
-        .notif-ch-label { display: block; font-size: 0.7rem; }
+        .notif-th-label { padding: 1rem 1.5rem; text-align: left; font-size: 0.75rem; font-weight: 800; color: var(--text-quaternary); text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border-default); background: var(--bg-surface); }
+        .notif-th-channel { padding: 0.75rem; border-bottom: 1px solid var(--border-default); background: var(--bg-surface); }
+        .notif-ch-label { font-size: 0.7rem; font-weight: 800; color: var(--text-quaternary); text-transform: uppercase; letter-spacing: 0.05em; }
+        .notif-ch-icon { display: flex; align-items: center; color: var(--text-tertiary); }
         .notif-row { transition: background 0.15s; }
-        .notif-row:hover { background: var(--bg-subtle); }
-        .notif-row:not(:last-child) td { border-bottom: 1px solid var(--border-default); }
+        .notif-row:hover td { background: var(--bg-subtle); }
+        .notif-master-toggle, .notif-toggle-btn { width: 44px; height: 24px; border-radius: 12px; border: none; position: relative; cursor: pointer; transition: background 0.3s; display: inline-block; }
+        .notif-master-toggle.off, .notif-toggle-btn.off { background: var(--border-heavy); }
+        .notif-master-toggle.on, .notif-toggle-btn.on { background: var(--bg-brand); }
+        .toggle-knob { width: 20px; height: 20px; background: white; border-radius: 50%; position: absolute; top: 2px; transition: transform 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .notif-master-toggle.off .toggle-knob, .notif-toggle-btn.off .toggle-knob { transform: translateX(2px); }
+        .notif-master-toggle.on .toggle-knob, .notif-toggle-btn.on .toggle-knob { transform: translateX(22px); }
         .notif-td-label { padding: 1.1rem 1.5rem; }
         .notif-item-name { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.2rem; }
         .notif-item-desc { font-size: 0.78rem; color: var(--text-quaternary); line-height: 1.45; }

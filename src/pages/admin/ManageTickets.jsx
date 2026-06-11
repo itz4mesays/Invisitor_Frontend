@@ -45,10 +45,10 @@ const ManageTickets = () => {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem', marginBottom: '2rem' }}>
-        {[{ label: 'Total Tickets', val: '1,248', icon: <MessageSquare size={20}/>, c: 'var(--bg-brand)' },
-          { label: 'Open', val: '45', icon: <Clock size={20}/>, c: '#ef4444' },
-          { label: 'Resolved', val: '1,102', icon: <CheckCircle size={20}/>, c: '#10b981' },
-          { label: 'Closed', val: '101', icon: <XCircle size={20}/>, c: 'var(--text-tertiary)' }].map((stat, idx) => (
+        {[{ label: 'Total Tickets', val: tickets.length, icon: <MessageSquare size={20}/>, c: 'var(--bg-brand)' },
+          { label: 'Open', val: tickets.filter(t => t.status === 'Open' || t.status === 'Pending').length, icon: <Clock size={20}/>, c: '#ef4444' },
+          { label: 'Resolved', val: tickets.filter(t => t.status === 'Resolved').length, icon: <CheckCircle size={20}/>, c: '#10b981' },
+          { label: 'Closed', val: tickets.filter(t => t.status === 'Closed').length, icon: <XCircle size={20}/>, c: 'var(--text-tertiary)' }].map((stat, idx) => (
           <div key={idx} style={{ background: 'var(--bg-surface)', padding: '1.5rem', borderRadius: '16px', border: '1px solid var(--border-default)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: `${stat.c}15`, color: stat.c, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {stat.icon}

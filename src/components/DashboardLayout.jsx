@@ -17,7 +17,8 @@ import {
   Sun,
   Moon,
   AlertTriangle,
-  FileText
+  FileText,
+  Upload
 } from 'lucide-react';
 
 const DashboardLayout = () => {
@@ -92,6 +93,7 @@ const DashboardLayout = () => {
           { icon: <FileText size={20} />, label: 'Forms', path: `/${currentRole}/forms` },
           { icon: <BarChart2 size={20} />, label: 'Transactions', path: `/${currentRole}/transactions` },
           { icon: <FileText size={20} />, label: 'Manage Invoices', path: `/${currentRole}/invoices` },
+          { icon: <Upload size={20} />, label: 'Data Import', path: `/${currentRole}/data-import` },
           { 
             icon: <ShieldCheck size={20} />, 
             label: 'Access Level', 
@@ -111,6 +113,7 @@ const DashboardLayout = () => {
           { icon: <ShieldCheck size={20} />, label: 'Security', path: `/${currentRole}/security` },
           { icon: <Calendar size={20} />, label: 'Appointments', path: `/${currentRole}/appointments` },
           { icon: <FileText size={20} />, label: 'Manage Invoices', path: `/${currentRole}/invoices` },
+          { icon: <Upload size={20} />, label: 'Data Import', path: `/${currentRole}/data-import` },
           { 
             icon: <BarChart2 size={20} />, 
             label: 'Reports', 
@@ -137,6 +140,7 @@ const DashboardLayout = () => {
       case 'host':
         return [
           ...baseMenus,
+          { icon: <Users size={20} />, label: 'Manage Hosts', path: `/${currentRole}/hosts` },
           { icon: <Users size={20} />, label: 'Visitors', path: `/${currentRole}/visitors` },
           { icon: <Calendar size={20} />, label: 'Appointments', path: `/${currentRole}/appointments` },
           { 
