@@ -36,7 +36,7 @@ const Blog = () => {
         <div className="nav-content">
           <div className="logo" onClick={() => navigate('/')} style={{ cursor: 'pointer', margin: 0, color: 'var(--bg-brand)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <img src="/logo_white.png" alt="InVisitor Logo" style={{ height: '30px', filter: 'invert(1)' }} />
-            <span style={{ fontSize: '1.25rem', fontWeight: 800 }}>InVisitor Blog</span>
+            <span style={{ fontSize: '1.25rem', fontWeight: 800 }}>Blog</span>
           </div>
           <button onClick={() => navigate('/')} className="btn-back">Back to Home</button>
         </div>

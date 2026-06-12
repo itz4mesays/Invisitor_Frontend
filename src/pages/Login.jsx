@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { DUMMY_USERS, ROLES } from '../constants/roles';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, Loader2, CheckCircle2 } from 'lucide-react';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,38 +14,52 @@ const Login = () => {
   const [otpError, setOtpError] = useState('');
   const [pendingUser, setPendingUser] = useState(null);
   const [generatedOtp] = useState('123456');
+  
+  // Loading and Toast states
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState('Authenticating...');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
     setOtpError('');
+    setLoadingMessage('Authenticating User Credentials...');
+    setIsLoading(true);
 
-    const user = DUMMY_USERS.find(u => u.email === email && u.password === password);
+    setTimeout(() => {
+      setIsLoading(false);
+      const user = DUMMY_USERS.find(u => u.email === email && u.password === password);
 
-    if (user) {
-      if (user.role === ROLES.HOST || user.role === ROLES.ESTATE_MANAGER || user.role === ROLES.RESIDENT) {
-        setPendingUser(user);
-        setIsOtpStep(true);
+      if (user) {
+        if (user.role === ROLES.HOST || user.role === ROLES.ESTATE_MANAGER || user.role === ROLES.RESIDENT || user.role === ROLES.ADMIN) {
+          setPendingUser(user);
+          setIsOtpStep(true);
+        } else {
+          const rolePath = user.role === ROLES.ESTATE_MANAGER ? 'manager' : user.role;
+          navigate(`/${rolePath}/dashboard`, { state: { showWelcomeToast: true, userName: user.name } });
+        }
       } else {
-        const rolePath = user.role === ROLES.ESTATE_MANAGER ? 'manager' : user.role;
-        navigate(`/${rolePath}/dashboard`);
+        setError('Invalid email or password. Check the credentials below.');
       }
-    } else {
-      setError('Invalid email or password. Check the credentials below.');
-    }
+    }, 1200); // Simulate network request
   };
 
   const handleVerifyOtp = (e) => {
     e.preventDefault();
     setOtpError('');
+    setLoadingMessage('Verifying your OTP...');
+    setIsLoading(true);
 
-    const otpCode = otpDigits.join('');
-    if (otpCode === generatedOtp) {
-      const rolePath = pendingUser.role === ROLES.ESTATE_MANAGER ? 'manager' : pendingUser.role;
-      navigate(`/${rolePath}/dashboard`);
-    } else {
-      setOtpError('Invalid OTP. Please try again.');
-    }
+    setTimeout(() => {
+      setIsLoading(false);
+      const otpCode = otpDigits.join('');
+      if (otpCode === generatedOtp) {
+        const rolePath = pendingUser.role === ROLES.ESTATE_MANAGER ? 'manager' : pendingUser.role;
+        navigate(`/${rolePath}/dashboard`, { state: { showWelcomeToast: true, userName: pendingUser.name } });
+      } else {
+        setOtpError('Invalid OTP. Please try again.');
+      }
+    }, 1200);
   };
 
   const handleBackToLogin = () => {
@@ -77,7 +91,25 @@ const Login = () => {
 
 
   return (
-    <div style={{ width: '100%', maxWidth: '440px', margin: '0 auto' }}>
+    <div style={{ width: '100%', maxWidth: '440px', margin: '0 auto', position: 'relative' }}>
+      {/* Loading Overlay */}
+      {isLoading && (
+        <div style={{
+          position: 'fixed',
+          top: 0, left: 0, right: 0, bottom: 0,
+          background: 'rgba(255, 255, 255, 0.7)',
+          backdropFilter: 'blur(4px)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 9999
+        }}>
+          <Loader2 size={48} color="var(--accent-primary)" style={{ animation: 'spin 1s linear infinite' }} />
+          <p style={{ marginTop: '1rem', fontWeight: 600, color: 'var(--text-primary)' }}>{loadingMessage}</p>
+        </div>
+      )}
+
       <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.5rem', letterSpacing: '-0.03em' }}>Welcome back</h1>
       <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', marginBottom: '2.5rem' }}>Enter your details to access your account</p>
 

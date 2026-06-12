@@ -18,7 +18,8 @@ import {
   Moon,
   AlertTriangle,
   FileText,
-  Upload
+  Upload,
+  CheckCircle2
 } from 'lucide-react';
 
 const DashboardLayout = () => {
@@ -27,8 +28,25 @@ const DashboardLayout = () => {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
   const [openDropdowns, setOpenDropdowns] = useState({});
+  const [showWelcomeToast, setShowWelcomeToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (location.state?.showWelcomeToast) {
+      setShowWelcomeToast(true);
+      setToastMessage(`Welcome back, ${location.state.userName || 'User'}!`);
+      
+      // Clear state to prevent toast on refresh
+      window.history.replaceState({}, document.title);
+
+      const timer = setTimeout(() => {
+        setShowWelcomeToast(false);
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [location]);
 
   const notifications = [
     { id: 1, text: "Your visitor James arrived.", time: "2m ago", unread: true },
@@ -181,6 +199,33 @@ const DashboardLayout = () => {
 
   const menuItems = getMenuItems(role);
 
+  const getPageTitle = () => {
+    const currentPath = location.pathname;
+    
+    // Check flat items
+    let activeItem = menuItems.find(item => !item.isDropdown && item.path === currentPath);
+    if (activeItem) return activeItem.label;
+
+    // Check dropdown children
+    for (const item of menuItems) {
+      if (item.isDropdown) {
+        const childItem = item.children.find(c => c.path.split('?')[0] === currentPath);
+        if (childItem) return childItem.label;
+      }
+    }
+    
+    // Fallbacks
+    if (currentPath.endsWith('/settings')) return 'Settings';
+    if (currentPath.endsWith('/profile')) return 'Your Profile';
+    if (currentPath.endsWith('/notifications')) return 'Notifications';
+    
+    // Dynamic parts or unknown
+    const pathParts = currentPath.split('/');
+    const lastPart = pathParts[pathParts.length - 1];
+    // Capitalize fallback
+    return lastPart ? lastPart.charAt(0).toUpperCase() + lastPart.slice(1).replace('-', ' ') : 'Dashboard';
+  };
+
   const toggleDropdown = (label) => {
     setOpenDropdowns(prev => ({ ...prev, [label]: !prev[label] }));
   };
@@ -192,6 +237,29 @@ const DashboardLayout = () => {
 
   return (
     <div className="dashboard-container">
+      {/* Welcome Toast */}
+      {showWelcomeToast && (
+        <div style={{
+          position: 'fixed',
+          top: '20px',
+          right: '20px',
+          background: '#10b981',
+          boxShadow: '0 10px 30px rgba(16, 185, 129, 0.3)',
+          padding: '1rem 1.5rem',
+          borderRadius: '12px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.75rem',
+          zIndex: 10000,
+          animation: 'slideInRight 0.3s ease forwards'
+        }}>
+          <CheckCircle2 size={24} color="#ffffff" />
+          <span style={{ fontWeight: 600, color: '#ffffff' }}>
+            {toastMessage}
+          </span>
+        </div>
+      )}
+
       {/* Sidebar */}
       <aside className={`sidebar ${isSidebarOpen ? 'open' : 'closed'}`}>
         <div className="sidebar-header">
@@ -297,6 +365,9 @@ const DashboardLayout = () => {
             <button className="mobile-dashboard-menu-btn" onClick={() => setIsSidebarOpen(true)}>
               <Menu size={24} color="var(--text-tertiary)" />
             </button>
+            <h1 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0, letterSpacing: '-0.02em', display: 'flex', alignItems: 'center' }}>
+              {getPageTitle()}
+            </h1>
             <div style={{ flex: 1 }}></div>
           </div>
           <div className="header-actions">
