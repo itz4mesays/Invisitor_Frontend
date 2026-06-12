@@ -95,18 +95,34 @@ const LandingPage = () => {
 
   const privatePlans = [
     {
+      name: '30-Day Free Trial',
+      monthlyPrice: 0,
+      tagline: 'Try before you buy',
+      visitors: '100/mo',
+      hosts: '5',
+      history: '7 days',
+      notif: 'Email only',
+      badge: 'Standard',
+      reporting: 'Basic Overview',
+      accessRules: 'Basic Rules',
+      waitingBay: 'Not Included',
+      support: 'Email',
+      color: '#10b981',
+      popular: false
+    },
+    {
       name: 'Starter Plan',
       monthlyPrice: 25000,
       tagline: 'Perfect for small shops & offices',
       visitors: '500/mo',
-      hosts: '10',
+      hosts: '20',
       history: '30 days',
       notif: 'Email + SMS',
-      badge: 'Basic',
-      reporting: 'Standard',
-      support: 'Priority Email',
-      security: 'Basic Whitelist',
-      calendar: 'Basic',
+      badge: 'Standard',
+      reporting: 'Exportable Logs',
+      accessRules: 'Auto-Approve',
+      waitingBay: 'Included',
+      support: 'Standard',
       color: 'var(--accent-primary)',
       popular: true
     },
@@ -117,12 +133,12 @@ const LandingPage = () => {
       visitors: '5,000/mo',
       hosts: '100',
       history: '90 days',
-      notif: 'Push + Email + SMS',
-      badge: 'Advanced',
-      reporting: 'Detailed',
-      support: '24/7 Phone/Email',
-      security: 'Geo + Blacklist',
-      calendar: 'Advanced Sync',
+      notif: 'Email, SMS, Push',
+      badge: 'Advanced & Custom',
+      reporting: 'Full Analytics',
+      accessRules: 'VIP & Auto-Approve',
+      waitingBay: 'Included + Alerts',
+      support: 'Priority',
       color: '#8b5cf6'
     },
     {
@@ -132,17 +148,33 @@ const LandingPage = () => {
       visitors: 'Unlimited',
       hosts: 'Unlimited',
       history: 'Unlimited',
-      notif: 'Custom',
-      badge: 'Advanced',
+      notif: 'All + WhatsApp',
+      badge: 'White-labeled',
       reporting: 'Custom Analytics',
+      accessRules: 'Advanced Access',
+      waitingBay: 'Custom Flows',
       support: 'Dedicated Manager',
-      security: 'Advanced SOC2',
-      calendar: 'Multi-Team',
       color: 'var(--bg-brand)'
     }
   ];
 
   const estatePlans = [
+    {
+      name: '30-Day Free Trial',
+      monthlyPrice: 0,
+      tagline: 'Test drive for your estate',
+      residents: 'Up to 20',
+      visitors: '200/mo',
+      security: '2 Officers',
+      notifications: 'Email only',
+      accessRules: 'Basic Rules',
+      waitingBay: 'Not Included',
+      invoicing: 'Manual',
+      reporting: 'Basic Logs',
+      support: 'Email',
+      color: '#10b981',
+      popular: false
+    },
     {
       name: 'Estate Basic',
       monthlyPrice: 50000,
@@ -150,12 +182,12 @@ const LandingPage = () => {
       residents: 'Up to 100',
       visitors: '1,000/mo',
       security: '5 Officers',
+      notifications: 'Email + SMS',
+      accessRules: 'Auto-Approve',
+      waitingBay: 'Included',
       invoicing: 'Automated',
-      notifications: 'SMS + Email',
-      calendar: 'Basic',
-      reporting: 'Standard',
-      support: 'Email',
-      accessControl: 'Gate Log',
+      reporting: 'Standard Logs',
+      support: 'Standard',
       color: '#10b981',
       popular: false
     },
@@ -166,12 +198,12 @@ const LandingPage = () => {
       residents: 'Up to 500',
       visitors: '10,000/mo',
       security: '20 Officers',
-      invoicing: 'Automated',
-      notifications: 'SMS + Email',
-      calendar: 'Full Sync',
+      notifications: 'Email, SMS, Push',
+      accessRules: 'VIP List Support',
+      waitingBay: 'Included + Alerts',
+      invoicing: 'Automated & Tracking',
       reporting: 'Advanced Analytics',
-      support: '24/7 Phone/Email',
-      accessControl: 'QR + Badge',
+      support: 'Priority',
       color: 'var(--accent-primary)',
       popular: true
     },
@@ -182,12 +214,12 @@ const LandingPage = () => {
       residents: 'Unlimited',
       visitors: 'Unlimited',
       security: 'Unlimited',
-      invoicing: 'Automated',
-      notifications: 'Custom Channels',
-      calendar: 'Custom',
-      reporting: 'Advanced Analytics',
+      notifications: 'All + WhatsApp',
+      accessRules: 'Advanced Security',
+      waitingBay: 'Custom Flow',
+      invoicing: 'Custom Workflows',
+      reporting: 'Custom Reporting',
       support: 'Dedicated Manager',
-      accessControl: 'QR + Badge',
       color: 'var(--bg-brand)',
       popular: false
     }
@@ -585,7 +617,7 @@ const LandingPage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -16 }}
                 transition={{ duration: 0.3 }}
-                style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}
+                style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '1.5rem' }}
               >
                 {privatePlans.map((plan, i) => {
                   const displayPrice = isYearly
@@ -629,10 +661,10 @@ const LandingPage = () => {
                           <FeatureItem icon={<Users size={15}/>} label="Hosts" value={plan.hosts} />
                           <FeatureItem icon={<Clock size={15}/>} label="Visit History" value={plan.history} />
                           <FeatureItem icon={<Bell size={15}/>} label="Notifications" value={plan.notif} />
+                          <FeatureItem icon={<Shield size={15}/>} label="Access Rules" value={plan.accessRules} />
+                          <FeatureItem icon={<Clock size={15}/>} label="Waiting Bay" value={plan.waitingBay} />
                           <FeatureItem icon={<Printer size={15}/>} label="Visitor Badges" value={plan.badge} />
                           <FeatureItem icon={<BarChart size={15}/>} label="Reporting" value={plan.reporting} />
-                          <FeatureItem icon={<Calendar size={15}/>} label="Calendar" value={plan.calendar} />
-                          <FeatureItem icon={<Shield size={15}/>} label="Security" value={plan.security} />
                           <FeatureItem icon={<Headphones size={15}/>} label="Support" value={plan.support} />
                         </ul>
                       </div>
@@ -656,7 +688,7 @@ const LandingPage = () => {
                 exit={{ opacity: 0, y: -16 }}
                 transition={{ duration: 0.3 }}
               >
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: '1.5rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '1.5rem' }}>
                   {estatePlans.map((plan, i) => {
                     const displayPrice = isYearly
                       ? Math.round(plan.monthlyPrice * 12 * 0.8).toLocaleString()
@@ -700,10 +732,10 @@ const LandingPage = () => {
                             <FeatureItem icon={<User size={15}/>} label="Monthly Visitors" value={plan.visitors} />
                             <FeatureItem icon={<Shield size={15}/>} label="Security Officers" value={plan.security} />
                             <FeatureItem icon={<Bell size={15}/>} label="Notifications" value={plan.notifications} />
-                            <FeatureItem icon={<Calendar size={15}/>} label="Calendar" value={plan.calendar} />
+                            <FeatureItem icon={<Shield size={15}/>} label="Access Rules" value={plan.accessRules} />
+                            <FeatureItem icon={<Clock size={15}/>} label="Waiting Bay" value={plan.waitingBay} />
                             <FeatureItem icon={<BarChart size={15}/>} label="Reporting" value={plan.reporting} />
                             <FeatureItem icon={<Printer size={15}/>} label="Auto Invoicing" value={plan.invoicing} />
-                            <FeatureItem icon={<Clock size={15}/>} label="Access Control" value={plan.accessControl} />
                             <FeatureItem icon={<Headphones size={15}/>} label="Support" value={plan.support} />
                           </ul>
                         </div>
