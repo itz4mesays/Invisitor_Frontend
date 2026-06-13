@@ -19,7 +19,8 @@ import {
   AlertTriangle,
   FileText,
   Upload,
-  CheckCircle2
+  CheckCircle2,
+  Box
 } from 'lucide-react';
 
 const DashboardLayout = () => {
@@ -105,6 +106,7 @@ const DashboardLayout = () => {
           ...baseMenus,
           { icon: <Users size={20} />, label: 'Manage Hosts', path: `/${currentRole}/hosts` },
           { icon: <Users size={20} />, label: 'Manage Users', path: `/${currentRole}/users` },
+          { icon: <Box size={20} />, label: 'Manage Plans', path: `/${currentRole}/plans` },
           { icon: <ShieldCheck size={20} />, label: 'Estate Managers', path: `/${currentRole}/estate-managers` },
           { icon: <FileText size={20} />, label: 'Tickets', path: `/${currentRole}/tickets` },
           { icon: <Users size={20} />, label: 'Leads', path: `/${currentRole}/leads` },
@@ -145,6 +147,28 @@ const DashboardLayout = () => {
           { icon: <BarChart2 size={20} />, label: 'Transactions', path: `/${currentRole}/transactions` },
           { icon: <ShieldCheck size={20} />, label: 'Manage QR Codes', path: `/${currentRole}/qr-codes` },
           supportArea,
+          { icon: <BarChart2 size={20} />, label: 'Activity Log', path: `/${currentRole}/activity-log` },
+        ];
+      case 'support':
+        return [
+          ...baseMenus,
+          { icon: <Users size={20} />, label: 'Manage Hosts', path: `/${currentRole}/hosts` },
+          { icon: <ShieldCheck size={20} />, label: 'Estate Managers', path: `/${currentRole}/estate-managers` },
+          { icon: <Box size={20} />, label: 'Manage Plans', path: `/${currentRole}/plans` },
+          { icon: <BarChart2 size={20} />, label: 'Transactions', path: `/${currentRole}/transactions` },
+          { icon: <FileText size={20} />, label: 'Manage Invoices', path: `/${currentRole}/invoices` },
+          { icon: <Users size={20} />, label: 'Leads', path: `/${currentRole}/leads` },
+          { icon: <FileText size={20} />, label: 'Manage Tickets', path: `/${currentRole}/tickets` },
+          { icon: <BarChart2 size={20} />, label: 'Activity Log', path: `/${currentRole}/activity-log` },
+        ];
+      case 'finance':
+        return [
+          ...baseMenus,
+          { icon: <Users size={20} />, label: 'Manage Hosts', path: `/${currentRole}/hosts` },
+          { icon: <ShieldCheck size={20} />, label: 'Estate Managers', path: `/${currentRole}/estate-managers` },
+          { icon: <Box size={20} />, label: 'Manage Plans', path: `/${currentRole}/plans` },
+          { icon: <BarChart2 size={20} />, label: 'Transactions', path: `/${currentRole}/transactions` },
+          { icon: <FileText size={20} />, label: 'Manage Invoices', path: `/${currentRole}/invoices` },
           { icon: <BarChart2 size={20} />, label: 'Activity Log', path: `/${currentRole}/activity-log` },
         ];
       case 'resident':

@@ -37,6 +37,7 @@ import EstateManagerDetails from './pages/admin/EstateManagerDetails';
 import TicketDetails from './pages/admin/TicketDetails';
 import ManageAccessLevel from './pages/admin/ManageAccessLevel';
 import AdminDataImport from './pages/admin/DataImport';
+import ManagePlans from './pages/admin/ManagePlans';
 
 // Manager Pages
 import ResidentDashboard from './pages/dashboards/ResidentDashboard';
@@ -44,6 +45,7 @@ import ManagerDashboard from './pages/dashboards/ManagerDashboard';
 import VisitorDashboard from './pages/dashboards/VisitorDashboard';
 import HostDashboard from './pages/dashboards/HostDashboard';
 import FrontDeskDashboard from './pages/dashboards/FrontDeskDashboard';
+import FinanceDashboard from './pages/dashboards/FinanceDashboard';
 
 // Resident Pages
 import ResidentReports from './pages/resident/Reports';
@@ -121,6 +123,7 @@ function App() {
           <Route path="transactions" element={<ManageTransactions />} />
           <Route path="invoices" element={<ManageInvoices />} />
           <Route path="users" element={<ManageUsers />} />
+          <Route path="plans" element={<ManagePlans />} />
           <Route path="data-import" element={<AdminDataImport />} />
           <Route path="access-level" element={<ManageAccessLevel />} />
           <Route path="activity-log" element={<ActivityLog />} />
@@ -248,6 +251,43 @@ function App() {
           <Route path="support/dashboard" element={<SupportDashboard />} />
           <Route path="support/tickets" element={<ManageTickets />} />
           <Route path="support/tickets/:ticketId" element={<TicketView />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="*" element={<div>Coming Soon</div>} />
+        </Route>
+
+        <Route path="/support" element={<DashboardLayout />}>
+          <Route index element={<Navigate to="/support/dashboard" replace />} />
+          <Route path="dashboard" element={<SupportDashboard />} />
+          <Route path="hosts" element={<ManageHosts />} />
+          <Route path="hosts/:id" element={<HostDetails />} />
+          <Route path="estate-managers" element={<ManageEstateManagers />} />
+          <Route path="estate-managers/:id" element={<EstateManagerDetails />} />
+          <Route path="plans" element={<ManagePlans />} />
+          <Route path="transactions" element={<ManageTransactions />} />
+          <Route path="invoices" element={<ManageInvoices />} />
+          <Route path="leads" element={<ManageLeads />} />
+          <Route path="tickets" element={<ManageTickets />} />
+          <Route path="tickets/:ticketId" element={<TicketView />} />
+          <Route path="activity-log" element={<ActivityLog />} />
+          <Route path="calendar" element={<Calendar />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="*" element={<div>Coming Soon</div>} />
+        </Route>
+
+        <Route path="/finance" element={<DashboardLayout />}>
+          <Route index element={<Navigate to="/finance/dashboard" replace />} />
+          <Route path="dashboard" element={<FinanceDashboard />} />
+          <Route path="hosts" element={<ManageHosts />} />
+          <Route path="hosts/:id" element={<HostDetails />} />
+          <Route path="estate-managers" element={<ManageEstateManagers />} />
+          <Route path="estate-managers/:id" element={<EstateManagerDetails />} />
+          <Route path="plans" element={<ManagePlans />} />
+          <Route path="transactions" element={<ManageTransactions />} />
+          <Route path="invoices" element={<ManageInvoices />} />
+          <Route path="activity-log" element={<ActivityLog />} />
+          <Route path="calendar" element={<Calendar />} />
           <Route path="profile" element={<Profile />} />
           <Route path="settings" element={<Settings />} />
           <Route path="*" element={<div>Coming Soon</div>} />

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Search, Eye, Filter, Download, Building2, Users, ShieldCheck, CheckCircle } from 'lucide-react';
 
 const ManageEstateManagers = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const currentRole = location.pathname.split('/')[1] || 'admin';
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedEstate, setSelectedEstate] = useState(null);
   const [activeTab, setActiveTab] = useState('security');
@@ -22,7 +24,7 @@ const ManageEstateManagers = () => {
   ];
 
   const handleViewEstate = (estate) => {
-    navigate(`/admin/estate-managers/${estate.id}`);
+    navigate(`/${currentRole}/estate-managers/${estate.id}`);
   };
 
   return (

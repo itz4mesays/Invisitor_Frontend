@@ -236,6 +236,8 @@ const Login = () => {
           <li><strong>Visitor:</strong> visitor@...</li>
           <li><strong>Host:</strong> host@...</li>
           <li><strong>FrontDesk:</strong> frontdesk@...</li>
+          <li><strong>Support:</strong> support@...</li>
+          <li><strong>Finance:</strong> finance@...</li>
         </ul>
       </div>
 

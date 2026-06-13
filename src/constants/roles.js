@@ -5,6 +5,8 @@ export const ROLES = {
   HOST: 'host',
   FRONTDESK: 'frontdesk',
   ADMIN: 'admin',
+  SUPPORT: 'support',
+  FINANCE: 'finance',
 };
 
 export const DUMMY_USERS = [
@@ -55,5 +57,21 @@ export const DUMMY_USERS = [
     password: 'password123',
     role: ROLES.ADMIN,
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Admin',
+  },
+  {
+    id: '7',
+    name: 'Tech Support',
+    email: 'support@invisitor.com',
+    password: 'password123',
+    role: ROLES.SUPPORT,
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Support',
+  },
+  {
+    id: '8',
+    name: 'Finance Manager',
+    email: 'finance@invisitor.com',
+    password: 'password123',
+    role: ROLES.FINANCE,
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Finance',
   },
 ];

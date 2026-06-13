@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Search, Filter, Download, Eye, Building, Users, CheckCircle, XCircle, BarChart2 } from 'lucide-react';
 
 const ManageHosts = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const currentRole = location.pathname.split('/')[1] || 'admin';
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedHost, setSelectedHost] = useState(null);
   const [activeTab, setActiveTab] = useState('officers');
@@ -16,7 +18,7 @@ const ManageHosts = () => {
   ];
 
   const handleViewHost = (host) => {
-    navigate(`/admin/hosts/${host.id}`);
+    navigate(`/${currentRole}/hosts/${host.id}`);
   };
 
   return (
