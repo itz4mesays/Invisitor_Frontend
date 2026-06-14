@@ -10,7 +10,7 @@ import {
 
 /* ─── Mock Admin Profile Data ─────────────────────────────── */
 const ADMIN_PROFILE = {
-  name: 'David Fayemi',
+  name: 'Oyedele Fara',
   email: 'david@invisitor.com',
   phone: '+234 801 234 5678',
   role: 'Super Administrator',

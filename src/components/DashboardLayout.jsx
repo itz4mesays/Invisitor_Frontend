@@ -400,7 +400,7 @@ const DashboardLayout = () => {
                 <AlertTriangle size={16} /> SOS
               </button>
             )}
-            <span className="header-user-name" style={{ fontSize: '0.875rem', fontWeight: '700', color: 'var(--text-primary)' }}>David Fayemi</span>
+            <span className="header-user-name" style={{ fontSize: '0.875rem', fontWeight: '700', color: 'var(--text-primary)' }}>Oyedele Olufemi</span>
             <button className="theme-toggle-btn" onClick={() => setIsDarkMode(!isDarkMode)} style={{ background: 'none', border: 'none', color: 'var(--text-tertiary)', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
               {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
             </button>
