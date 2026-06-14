@@ -41,6 +41,24 @@ const generateUserGrowthData = () => {
   });
 };
 
+const generateMonthlyRevenueData = (year) => {
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  return months.map(m => {
+    return {
+      label: m,
+      value: 20000 + Math.random() * 40000,
+    };
+  });
+};
+
+const generateInvoiceStatusData = (year) => {
+  return [
+    { label: 'Paid', value: 150000 + Math.random() * 50000, color: '#10b981' },
+    { label: 'Due', value: 40000 + Math.random() * 20000, color: '#3b82f6' },
+    { label: 'Overdue', value: 10000 + Math.random() * 15000, color: '#ef4444' },
+  ];
+};
+
 const GroupedBarChart = ({ data, height = 300 }) => {
   const W = 560;
   const H = height;
@@ -130,6 +148,48 @@ const LineChart = ({ data, height = 300 }) => {
   );
 };
 
+const SingleBarChart = ({ data, height = 300 }) => {
+  const W = 800;
+  const H = height;
+  const padL = 40;
+  const padR = 20;
+  const padT = 20;
+  const padB = 30;
+  const chartW = W - padL - padR;
+  const chartH = H - padT - padB;
+  const maxVal = Math.max(...data.map((d) => d.value), 1);
+  const barW = (chartW / data.length) * 0.6;
+  const stepX = chartW / data.length;
+
+  const yTicks = [0, 0.25, 0.5, 0.75, 1].map((t) => ({
+    y: padT + chartH * (1 - t),
+    label: `₦${Math.round((maxVal * t) / 1000)}k`,
+  }));
+
+  return (
+    <svg width="100%" height={H} viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none">
+      {yTicks.map((t, i) => (
+        <g key={`y-${i}`}>
+          <line x1={padL} y1={t.y} x2={W - padR} y2={t.y} stroke="var(--border-default)" strokeDasharray="4 4" opacity={0.6} />
+          <text x={padL - 8} y={t.y + 4} textAnchor="end" fontSize={10} fill="var(--text-quaternary)" fontFamily="inherit">{t.label}</text>
+        </g>
+      ))}
+      {data.map((d, i) => {
+        const x = padL + i * stepX + (stepX - barW) / 2;
+        const barH = (d.value / maxVal) * chartH;
+        return (
+          <g key={i}>
+            <rect x={x} y={padT + chartH - barH} width={barW} height={barH} fill={d.color || "#10b981"} rx={4} />
+            <text x={padL + i * stepX + stepX / 2} y={H - 8} textAnchor="middle" fontSize={10} fill="var(--text-quaternary)" fontFamily="inherit">
+              {d.label}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+};
+
 const PieChart = ({ segments, size = 160 }) => {
   const r = 60;
   const cx = size / 2;
@@ -166,8 +226,16 @@ const FinanceDashboard = () => {
   const [startDate, setStartDate] = useState('2026-01-01');
   const [endDate, setEndDate] = useState('2026-12-31');
 
+  // Yearly filter state for Monthly Revenue Chart
+  const [revenueYear, setRevenueYear] = useState('2026');
+
+  // Yearly filter state for Invoice Status Chart
+  const [statusYear, setStatusYear] = useState('2026');
+
   const chartData = useMemo(() => generateRevenueData(), [selectedMonth]);
   const growthData = useMemo(() => generateUserGrowthData(), [startDate, endDate]);
+  const monthlyRevenueData = useMemo(() => generateMonthlyRevenueData(revenueYear), [revenueYear]);
+  const statusData = useMemo(() => generateInvoiceStatusData(statusYear), [statusYear]);
 
   const stats = [
     { label: 'Total Revenue', value: '₦245.5k', trend: '+12.5%', icon: <DollarSign size={20} />, color: '#10b981', bg: 'rgba(16, 185, 129, 0.1)', isPositive: true },
@@ -306,6 +374,56 @@ const FinanceDashboard = () => {
         </div>
         <div className="fin-line-chart-wrap" style={{ marginTop: '1rem' }}>
           <LineChart data={growthData} height={320} />
+        </div>
+      </div>
+
+      <div className="fin-charts-row" style={{ gridTemplateColumns: '1fr 1fr' }}>
+        <div className="fin-chart-card" style={{ marginBottom: '1.5rem' }}>
+          <div className="fin-chart-header">
+            <div>
+              <h3>Monthly Revenue Overview</h3>
+              <p>Total revenue collected per month in {revenueYear}</p>
+            </div>
+            <div className="fin-chart-controls">
+              <select 
+                className="fin-date-input"
+                value={revenueYear}
+                onChange={(e) => setRevenueYear(e.target.value)}
+                style={{ padding: '6px 12px', minWidth: '100px' }}
+              >
+                <option value="2026">2026</option>
+                <option value="2025">2025</option>
+                <option value="2024">2024</option>
+              </select>
+            </div>
+          </div>
+          <div className="fin-bar-chart-wrap" style={{ marginTop: '1rem' }}>
+            <SingleBarChart data={monthlyRevenueData} height={320} />
+          </div>
+        </div>
+
+        <div className="fin-chart-card" style={{ marginBottom: '1.5rem' }}>
+          <div className="fin-chart-header">
+            <div>
+              <h3>Invoice Status Breakdown</h3>
+              <p>Total amount per invoice status in {statusYear}</p>
+            </div>
+            <div className="fin-chart-controls">
+              <select 
+                className="fin-date-input"
+                value={statusYear}
+                onChange={(e) => setStatusYear(e.target.value)}
+                style={{ padding: '6px 12px', minWidth: '100px' }}
+              >
+                <option value="2026">2026</option>
+                <option value="2025">2025</option>
+                <option value="2024">2024</option>
+              </select>
+            </div>
+          </div>
+          <div className="fin-bar-chart-wrap" style={{ marginTop: '1rem' }}>
+            <SingleBarChart data={statusData} height={320} />
+          </div>
         </div>
       </div>
 

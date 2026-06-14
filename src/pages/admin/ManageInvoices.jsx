@@ -1,8 +1,71 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Filter, Download, ArrowUpRight, ArrowDownRight, FileText, CheckCircle, Clock, X, CreditCard, AlertTriangle } from 'lucide-react';
 
+const InvoicePieChart = ({ data, size = 160 }) => {
+  const r = 60;
+  const cx = size / 2;
+  const cy = size / 2;
+  let currentAngle = -Math.PI / 2;
+  const total = data.reduce((sum, d) => sum + d.value, 0);
+
+  if (total === 0) return null;
+
+  return (
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+      {data.map((seg, i) => {
+        const angle = (seg.value / total) * 2 * Math.PI;
+        if (angle === 0) return null;
+        if (angle === 2 * Math.PI) return <circle key={i} cx={cx} cy={cy} r={r} fill={seg.color} />;
+        
+        const x1 = cx + r * Math.cos(currentAngle);
+        const y1 = cy + r * Math.sin(currentAngle);
+        const nextAngle = currentAngle + angle;
+        const x2 = cx + r * Math.cos(nextAngle);
+        const y2 = cy + r * Math.sin(nextAngle);
+        const largeArc = angle > Math.PI ? 1 : 0;
+        const d = `M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z`;
+        currentAngle = nextAngle;
+        return <path key={i} d={d} fill={seg.color} stroke="var(--bg-surface)" strokeWidth={2} />;
+      })}
+      <circle cx={cx} cy={cy} r={42} fill="var(--bg-surface)" />
+    </svg>
+  );
+};
+
+const InvoiceBarChart = ({ data, height = 200 }) => {
+  const W = 300;
+  const H = height;
+  const pad = 20;
+  const chartW = W - pad * 2;
+  const chartH = H - pad * 2;
+  const maxVal = Math.max(...data.map(d => d.value), 1);
+  const barW = chartW / data.length - 20;
+
+  return (
+    <svg width="100%" height={H} viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none">
+      {data.map((d, i) => {
+        const barH = (d.value / maxVal) * chartH;
+        const x = pad + i * (chartW / data.length) + 10;
+        const y = pad + chartH - barH;
+        return (
+          <g key={i}>
+            <rect x={x} y={y} width={barW} height={barH} fill={d.color} rx={4} />
+            <text x={x + barW / 2} y={H - 4} textAnchor="middle" fontSize={10} fill="var(--text-secondary)" fontFamily="inherit">{d.label}</text>
+            <text x={x + barW / 2} y={y - 6} textAnchor="middle" fontSize={10} fontWeight="bold" fill="var(--text-primary)" fontFamily="inherit">
+              ₦{(d.value / 1000).toFixed(0)}k
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+};
+
 const ManageInvoices = () => {
+  const location = useLocation();
+  const role = location.pathname.split('/')[1] || 'admin';
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedInvoice, setSelectedInvoice] = useState(null);
   const [showToast, setShowToast] = useState(false);
@@ -31,6 +94,22 @@ const ManageInvoices = () => {
       default: return { bg: 'var(--bg-subtle)', color: 'var(--text-secondary)' };
     }
   };
+
+  const valPaid = invoices.filter(i => i.status === 'Paid').reduce((sum, inv) => sum + parseAmount(inv.amount), 0);
+  const valDue = invoices.filter(i => i.status === 'Due').reduce((sum, inv) => sum + parseAmount(inv.amount), 0);
+  const valUnpaid = invoices.filter(i => i.status === 'Unpaid').reduce((sum, inv) => sum + parseAmount(inv.amount), 0);
+
+  const pieData = [
+    { label: 'Paid', value: invoices.filter(i => i.status === 'Paid').length, color: '#10b981' },
+    { label: 'Due', value: invoices.filter(i => i.status === 'Due').length, color: '#0090e6' },
+    { label: 'Overdue', value: invoices.filter(i => i.status === 'Unpaid').length, color: '#ef4444' },
+  ];
+
+  const barData = [
+    { label: 'Collected', value: valPaid, color: '#10b981' },
+    { label: 'Pending', value: valDue, color: '#0090e6' },
+    { label: 'Overdue', value: valUnpaid, color: '#ef4444' },
+  ];
 
   const handleMarkAsPaid = (e) => {
     e.preventDefault();
@@ -70,6 +149,34 @@ const ManageInvoices = () => {
           </div>
         ))}
       </div>
+
+      {role === 'finance' && (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+          <div style={{ background: 'var(--bg-surface)', padding: '1.5rem', borderRadius: '16px', border: '1px solid var(--border-default)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <h3 style={{ width: '100%', fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '1rem' }}>Invoice Status Distribution</h3>
+            <div style={{ position: 'relative', display: 'flex', justifySelf: 'center', alignItems: 'center' }}>
+              <InvoicePieChart data={pieData} size={180} />
+              <div style={{ position: 'absolute', display: 'flex', flexDirection: 'column', alignItems: 'center', pointerEvents: 'none', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                <span style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>{invoices.length}</span>
+                <span style={{ fontSize: '0.7rem', color: 'var(--text-quaternary)', fontWeight: 600 }}>TOTAL</span>
+              </div>
+            </div>
+            <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+              {pieData.map(d => (
+                <div key={d.label} style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)' }}>
+                  <span style={{ width: '10px', height: '10px', borderRadius: '3px', background: d.color }}></span> {d.label} ({d.value})
+                </div>
+              ))}
+            </div>
+          </div>
+          <div style={{ background: 'var(--bg-surface)', padding: '1.5rem', borderRadius: '16px', border: '1px solid var(--border-default)', display: 'flex', flexDirection: 'column' }}>
+            <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '1rem' }}>Revenue Collection (Amount)</h3>
+            <div style={{ flex: 1, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
+              <InvoiceBarChart data={barData} height={180} />
+            </div>
+          </div>
+        </div>
+      )}
 
       <div style={{ background: 'var(--bg-surface)', borderRadius: '16px', border: '1px solid var(--border-default)', overflow: 'hidden' }}>
         <div style={{ padding: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border-default)' }}>
