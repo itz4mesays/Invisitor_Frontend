@@ -63,6 +63,7 @@ import ActivityLog from './pages/shared/ActivityLog';
 import Profile from './pages/shared/Profile';
 import Notifications from './pages/shared/Notifications';
 import Transactions from './pages/financial/Transactions';
+import Wallet from './pages/financial/Wallet';
 import Appointments from './pages/shared/Appointments';
 import AddAppointment from './pages/shared/AddAppointment';
 import Settings from './pages/shared/Settings';
@@ -82,6 +83,7 @@ import OfficerDetails from './pages/manager/OfficerDetails';
 import ResidentDetails from './pages/manager/ResidentDetails';
 import AddResident from './pages/manager/AddResident';
 import ManagerDataImport from './pages/manager/DataImport';
+import SendNotifications from './pages/manager/SendNotifications';
 
 // Support Pages (shared across non-admin roles)
 import SupportDashboard from './pages/support/SupportDashboard';
@@ -129,6 +131,7 @@ function App() {
           <Route path="activity-log" element={<ActivityLog />} />
           <Route path="appointments" element={<Appointments />} />
           <Route path="calendar" element={<Calendar />} />
+          <Route path="wallet-history" element={<Wallet />} />
           <Route path="security/add" element={<AddOfficer />} />
           <Route path="profile" element={<Profile />} />
           <Route path="settings" element={<Settings />} />
@@ -185,6 +188,8 @@ function App() {
           <Route path="residents/add" element={<AddResident />} />
           <Route path="residents/:residentId" element={<ResidentDetails />} />
           <Route path="data-import" element={<ManagerDataImport />} />
+          <Route path="wallet" element={<Wallet />} />
+          <Route path="send-notifications" element={<SendNotifications />} />
           <Route path="profile" element={<Profile />} />
           <Route path="settings" element={<Settings />} />
           <Route path="subscription" element={<SubscriptionManagement />} />
@@ -224,6 +229,8 @@ function App() {
           <Route path="calendar" element={<Calendar />} />
           <Route path="invoices" element={<Invoices />} />
           <Route path="invoices/:id" element={<InvoiceDetails />} />
+          <Route path="wallet" element={<Wallet />} />
+          <Route path="send-notifications" element={<SendNotifications />} />
           <Route path="front-desk" element={<HostFrontDesk />} />
           <Route path="support/dashboard" element={<SupportDashboard />} />
           <Route path="support/tickets" element={<ManageTickets />} />
@@ -285,6 +292,7 @@ function App() {
           <Route path="estate-managers/:id" element={<EstateManagerDetails />} />
           <Route path="plans" element={<ManagePlans />} />
           <Route path="transactions" element={<ManageTransactions />} />
+          <Route path="wallet-history" element={<Wallet />} />
           <Route path="invoices" element={<ManageInvoices />} />
           <Route path="activity-log" element={<ActivityLog />} />
           <Route path="calendar" element={<Calendar />} />

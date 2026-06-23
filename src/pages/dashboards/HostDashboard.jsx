@@ -18,7 +18,9 @@ import {
   Copy,
   X,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Wallet,
+  Send
 } from 'lucide-react';
 
 const Modal = ({ isOpen, onClose, children, maxWidth = '850px' }) => {
@@ -74,6 +76,10 @@ const HostDashboard = () => {
       navigate('/host/visitors/add');
     } else if (action.title.includes('Add a Front Desk Officer')) {
       navigate('/host/front-desk/add');
+    } else if (action.title.includes('Fund Wallet')) {
+      navigate('/host/wallet');
+    } else if (action.title.includes('Send Notifications')) {
+      navigate('/host/send-notifications');
     }
   };
 
@@ -109,6 +115,8 @@ const HostDashboard = () => {
     { title: 'Create an Appointment', desc: 'Schedule an appointment for a visitor', icon: <Calendar size={20} /> },
     { title: 'Add a Visitor', desc: 'Create a Visitor account', icon: <Plus size={20} /> },
     { title: 'Add a Front Desk Officer', desc: 'Create a Front Desk Officer Account', icon: <Plus size={20} /> },
+    { title: 'Fund Wallet', desc: 'Top up your notification credits', icon: <Wallet size={20} /> },
+    { title: 'Send Notifications', desc: 'Send SMS or WhatsApp messages', icon: <Send size={20} /> },
   ];
 
   const upcomingAppointments = [

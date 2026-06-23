@@ -20,7 +20,10 @@ import {
   FileText,
   Upload,
   CheckCircle2,
-  Box
+  Box,
+  Wallet,
+  Send,
+  X
 } from 'lucide-react';
 
 const DashboardLayout = () => {
@@ -113,6 +116,7 @@ const DashboardLayout = () => {
           { icon: <FileText size={20} />, label: 'Forms', path: `/${currentRole}/forms` },
           { icon: <BarChart2 size={20} />, label: 'Transactions', path: `/${currentRole}/transactions` },
           { icon: <FileText size={20} />, label: 'Manage Invoices', path: `/${currentRole}/invoices` },
+          { icon: <Wallet size={20} />, label: 'Wallet History', path: `/${currentRole}/wallet-history` },
           { icon: <Upload size={20} />, label: 'Data Import', path: `/${currentRole}/data-import` },
           { 
             icon: <ShieldCheck size={20} />, 
@@ -146,6 +150,8 @@ const DashboardLayout = () => {
           },
           { icon: <BarChart2 size={20} />, label: 'Transactions', path: `/${currentRole}/transactions` },
           { icon: <ShieldCheck size={20} />, label: 'Manage QR Codes', path: `/${currentRole}/qr-codes` },
+          { icon: <Wallet size={20} />, label: 'Wallet', path: `/${currentRole}/wallet` },
+          { icon: <Send size={20} />, label: 'Send Notifications', path: `/${currentRole}/send-notifications` },
           supportArea,
           { icon: <BarChart2 size={20} />, label: 'Activity Log', path: `/${currentRole}/activity-log` },
         ];
@@ -167,6 +173,7 @@ const DashboardLayout = () => {
           { icon: <Users size={20} />, label: 'Manage Hosts', path: `/${currentRole}/hosts` },
           { icon: <ShieldCheck size={20} />, label: 'Estate Managers', path: `/${currentRole}/estate-managers` },
           { icon: <Box size={20} />, label: 'Manage Plans', path: `/${currentRole}/plans` },
+          { icon: <Wallet size={20} />, label: 'Wallet History', path: `/${currentRole}/wallet-history` },
           { icon: <BarChart2 size={20} />, label: 'Transactions', path: `/${currentRole}/transactions` },
           { icon: <FileText size={20} />, label: 'Manage Invoices', path: `/${currentRole}/invoices` },
           { icon: <BarChart2 size={20} />, label: 'Activity Log', path: `/${currentRole}/activity-log` },
@@ -199,6 +206,8 @@ const DashboardLayout = () => {
           { icon: <ShieldCheck size={20} />, label: 'Front-Desk Officers', path: `/${currentRole}/front-desk` },
           { icon: <FileText size={20} />, label: 'Manage Invoices', path: `/${currentRole}/invoices` },
           { icon: <BarChart2 size={20} />, label: 'Transactions', path: `/${currentRole}/transactions` },
+          { icon: <Wallet size={20} />, label: 'Wallet', path: `/${currentRole}/wallet` },
+          { icon: <Send size={20} />, label: 'Send Notifications', path: `/${currentRole}/send-notifications` },
           supportArea,
           { icon: <BarChart2 size={20} />, label: 'Activity Log', path: `/${currentRole}/activity-log` },
         ];
@@ -278,9 +287,28 @@ const DashboardLayout = () => {
           animation: 'slideInRight 0.3s ease forwards'
         }}>
           <CheckCircle2 size={24} color="#ffffff" />
-          <span style={{ fontWeight: 600, color: '#ffffff' }}>
+          <span style={{ fontWeight: 600, color: '#ffffff', flex: 1 }}>
             {toastMessage}
           </span>
+          <button 
+            onClick={() => setShowWelcomeToast(false)}
+            style={{
+              background: 'transparent',
+              border: 'none',
+              color: '#ffffff',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '0',
+              opacity: 0.8,
+              transition: 'opacity 0.2s',
+            }}
+            onMouseOver={(e) => e.currentTarget.style.opacity = '1'}
+            onMouseOut={(e) => e.currentTarget.style.opacity = '0.8'}
+          >
+            <X size={18} />
+          </button>
         </div>
       )}
 
@@ -401,6 +429,32 @@ const DashboardLayout = () => {
               </button>
             )}
             <span className="header-user-name" style={{ fontSize: '0.875rem', fontWeight: '700', color: 'var(--text-primary)' }}>Oyedele Olufemi</span>
+            
+            {['manager', 'host', 'frontdesk', 'finance', 'admin'].includes(role) && (
+              <button 
+                onClick={() => navigate(`/${role}/${['finance', 'admin'].includes(role) ? 'wallet-history' : 'wallet'}`)}
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '6px', 
+                  background: 'var(--bg-subtle)', 
+                  border: '1px solid var(--border-default)', 
+                  padding: '6px 12px', 
+                  borderRadius: '20px', 
+                  color: 'var(--text-primary)', 
+                  fontWeight: 700, 
+                  fontSize: '0.875rem',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+                onMouseOver={(e) => { e.currentTarget.style.borderColor = 'var(--bg-brand)'; }}
+                onMouseOut={(e) => { e.currentTarget.style.borderColor = 'var(--border-default)'; }}
+              >
+                <Wallet size={16} color="var(--bg-brand)" />
+                ₦12,500.00
+              </button>
+            )}
+
             <button className="theme-toggle-btn" onClick={() => setIsDarkMode(!isDarkMode)} style={{ background: 'none', border: 'none', color: 'var(--text-tertiary)', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
               {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
             </button>

@@ -24,3 +24,4 @@ dist-ssr
 *.sw?
 
 invisitor.code-workspace
+implementation_plan.md
