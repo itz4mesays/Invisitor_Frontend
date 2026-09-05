@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { ShieldCheck, Users, Key, Search, MoreVertical, Plus, X, Check } from 'lucide-react';
+import { ShieldCheck, Users, Key, Search, MoreVertical, Plus, X, Check, Eye, Edit2, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ManageAccessLevel = () => {
@@ -8,6 +8,41 @@ const ManageAccessLevel = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [isCreateRoleOpen, setIsCreateRoleOpen] = useState(false);
   const [newRole, setNewRole] = useState({ name: '', description: '' });
+
+  const [isCreatePermissionOpen, setIsCreatePermissionOpen] = useState(false);
+  const [newPermissions, setNewPermissions] = useState([
+    { module: '', code: '', display_name: '', description: '' }
+  ]);
+
+  const moduleOptions = [
+    'Host Management', 'Roles & Permissions', 'Users Management', 'Visitors', 
+    'Appointments', 'Reports', 'QR Codes', 'Frontdesks', 'Invoices', 
+    'Transactions', 'Audit Logs', 'Support Tickets', 'Calendar', 
+    'Resident', 'Security'
+  ];
+
+  const handleAddPermissionRow = () => {
+    setNewPermissions([...newPermissions, { module: '', code: '', display_name: '', description: '' }]);
+  };
+
+  const handlePermissionChange = (index, field, value) => {
+    const updated = [...newPermissions];
+    updated[index][field] = value;
+    setNewPermissions(updated);
+  };
+
+  const handleRemovePermissionRow = (index) => {
+    const updated = [...newPermissions];
+    updated.splice(index, 1);
+    setNewPermissions(updated);
+  };
+
+  const handleCreatePermissionsSubmit = (e) => {
+    e.preventDefault();
+    // In a real scenario, you'd send `newPermissions` to your API here.
+    setIsCreatePermissionOpen(false);
+    setNewPermissions([{ module: '', code: '', display_name: '', description: '' }]);
+  };
 
   useEffect(() => {
     const tab = searchParams.get('tab');
@@ -182,9 +217,17 @@ const ManageAccessLevel = () => {
                           </span>
                         </td>
                         <td style={{ padding: '1.2rem 2rem', textAlign: 'right' }}>
-                          <button style={{ background: 'transparent', border: 'none', color: 'var(--text-tertiary)', cursor: 'pointer', padding: '0.5rem' }}>
-                            <MoreVertical size={18} />
-                          </button>
+                          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem' }}>
+                            <button style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', padding: '0.25rem' }}>
+                              <Eye size={16} />
+                            </button>
+                            <button style={{ background: 'transparent', border: 'none', color: 'var(--bg-brand)', cursor: 'pointer', padding: '0.25rem' }}>
+                              <Edit2 size={16} />
+                            </button>
+                            <button style={{ background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer', padding: '0.25rem' }}>
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -197,10 +240,17 @@ const ManageAccessLevel = () => {
           {/* Permissions Tab */}
           {activeTab === 'permissions' && (
             <div>
-              <div style={{ padding: '1.5rem 2rem', borderBottom: '1px solid var(--border-default)', background: 'var(--bg-surface)' }}>
+              <div style={{ padding: '1.5rem 2rem', borderBottom: '1px solid var(--border-default)', background: 'var(--bg-surface)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <p style={{ color: 'var(--text-secondary)', margin: 0, fontSize: '0.95rem' }}>
                   Select a role below to configure its module permissions across the platform.
                 </p>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => setIsCreatePermissionOpen(true)}
+                  style={{ width: 'auto', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+                >
+                  <Plus size={18} /> Create Permission
+                </button>
               </div>
 
               <div style={{ padding: '2rem' }}>
@@ -269,6 +319,11 @@ const ManageAccessLevel = () => {
                         </tbody>
                       </table>
                     </div>
+                    <div style={{ padding: '1.5rem', borderTop: '1px solid var(--border-default)', background: 'var(--bg-subtle)', display: 'flex', justifyContent: 'flex-end' }}>
+                      <button className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <Check size={18} /> Update Permissions
+                      </button>
+                    </div>
                   </div>
 
                 </div>
@@ -278,6 +333,109 @@ const ManageAccessLevel = () => {
 
         </div>
       </div>
+
+      {/* Create Permission Slide-over */}
+      <AnimatePresence>
+        {isCreatePermissionOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsCreatePermissionOpen(false)}
+              style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(4px)', zIndex: 1000 }}
+            />
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              style={{ position: 'fixed', top: 0, right: 0, bottom: 0, width: '100%', maxWidth: '600px', background: 'var(--bg-surface)', zIndex: 1001, boxShadow: '-10px 0 30px rgba(0,0,0,0.1)', display: 'flex', flexDirection: 'column' }}
+            >
+              <div style={{ padding: '1.5rem 2rem', borderBottom: '1px solid var(--border-default)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-subtle)' }}>
+                <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>Create Permissions</h2>
+                <button onClick={() => setIsCreatePermissionOpen(false)} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)' }}>
+                  <X size={20} />
+                </button>
+              </div>
+              <div style={{ padding: '2rem', flex: 1, overflowY: 'auto' }}>
+                <form id="createPermissionsForm" onSubmit={handleCreatePermissionsSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                  {newPermissions.map((perm, index) => (
+                    <div key={index} style={{ padding: '1.5rem', background: 'var(--bg-subtle)', borderRadius: '12px', border: '1px solid var(--border-default)', position: 'relative' }}>
+                      {newPermissions.length > 1 && (
+                        <button type="button" onClick={() => handleRemovePermissionRow(index)} style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'transparent', border: 'none', color: '#ef4444', cursor: 'pointer' }}>
+                          <Trash2 size={16} />
+                        </button>
+                      )}
+                      <h4 style={{ margin: '0 0 1rem 0', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Permission #{index + 1}</h4>
+                      
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                        <div className="form-group" style={{ margin: 0 }}>
+                          <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.5rem', display: 'block' }}>Module</label>
+                          <select 
+                            value={perm.module} 
+                            onChange={(e) => handlePermissionChange(index, 'module', e.target.value)}
+                            required
+                            style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid var(--border-default)', background: 'var(--bg-surface)', color: 'var(--text-primary)', outline: 'none' }}
+                          >
+                            <option value="" disabled>Select Module...</option>
+                            {moduleOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                          </select>
+                        </div>
+                        <div className="form-group" style={{ margin: 0 }}>
+                          <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.5rem', display: 'block' }}>Code</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. view.overview"
+                            value={perm.code}
+                            onChange={(e) => handlePermissionChange(index, 'code', e.target.value)}
+                            required
+                            style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid var(--border-default)', background: 'var(--bg-surface)', color: 'var(--text-primary)', outline: 'none' }}
+                          />
+                        </div>
+                      </div>
+
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                        <div className="form-group" style={{ margin: 0 }}>
+                          <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.5rem', display: 'block' }}>Display Name</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. View Overview"
+                            value={perm.display_name}
+                            onChange={(e) => handlePermissionChange(index, 'display_name', e.target.value)}
+                            required
+                            style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid var(--border-default)', background: 'var(--bg-surface)', color: 'var(--text-primary)', outline: 'none' }}
+                          />
+                        </div>
+                        <div className="form-group" style={{ margin: 0 }}>
+                          <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.5rem', display: 'block' }}>Description</label>
+                          <input
+                            type="text"
+                            placeholder="Optional"
+                            value={perm.description}
+                            onChange={(e) => handlePermissionChange(index, 'description', e.target.value)}
+                            style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid var(--border-default)', background: 'var(--bg-surface)', color: 'var(--text-primary)', outline: 'none' }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  
+                  <button type="button" onClick={handleAddPermissionRow} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '1rem', background: 'transparent', border: '1px dashed var(--border-heavy)', borderRadius: '8px', color: 'var(--bg-brand)', fontWeight: 600, cursor: 'pointer' }}>
+                    <Plus size={18} /> Add Another Permission
+                  </button>
+                </form>
+              </div>
+              <div style={{ padding: '1.5rem', borderTop: '1px solid var(--border-default)', background: 'var(--bg-subtle)', display: 'flex', gap: '1rem' }}>
+                <button type="button" onClick={() => setIsCreatePermissionOpen(false)} className="btn btn-secondary" style={{ flex: 1 }}>Cancel</button>
+                <button form="createPermissionsForm" type="submit" className="btn btn-primary" style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem' }}>
+                  <Check size={18} /> Save Permissions
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* Create Role Slide-over */}
       <AnimatePresence>
