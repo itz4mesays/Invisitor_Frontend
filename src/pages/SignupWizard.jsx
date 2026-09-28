@@ -11,9 +11,37 @@ const SignupWizard = () => {
   const [paymentMethod, setPaymentMethod] = useState('Paystack');
   const [isVerifying, setIsVerifying] = useState(false);
   
-  // Extract number of units from residents string if available
   const initialUnits = location.state?.residents ? location.state.residents.replace(/[^0-9]/g, '') : '';
   const [units, setUnits] = useState(initialUnits);
+
+  const [address, setAddress] = useState('');
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
+  const [isGeocoding, setIsGeocoding] = useState(false);
+
+  const handleAddressBlur = async () => {
+    if (!address.trim()) return;
+    setIsGeocoding(true);
+    try {
+      const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+      if (!apiKey) {
+        console.warn('Google Maps API key is missing. Add VITE_GOOGLE_MAPS_API_KEY to .env');
+        return;
+      }
+      const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`);
+      const data = await response.json();
+      
+      if (data.status === 'OK' && data.results.length > 0) {
+        const { lat, lng } = data.results[0].geometry.location;
+        setLatitude(lat.toString());
+        setLongitude(lng.toString());
+      }
+    } catch (error) {
+      console.error('Error fetching geocode:', error);
+    } finally {
+      setIsGeocoding(false);
+    }
+  };
 
   // Handle initial step from route if needed
   useEffect(() => {
@@ -135,9 +163,18 @@ const SignupWizard = () => {
                  <div className="form-group" style={{ gridColumn: 'span 2' }}>
                    <label>Address of Organization</label>
                    <div style={{ position: 'relative' }}>
-                    <input type="text" placeholder="Full physical address" style={{ paddingLeft: '2.75rem' }} />
+                    <input type="text" placeholder="Full physical address" style={{ paddingLeft: '2.75rem' }} value={address} onChange={(e) => setAddress(e.target.value)} onBlur={handleAddressBlur} />
                     <MapPin size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-quaternary)' }} />
                    </div>
+                   {isGeocoding && <span style={{ fontSize: '0.8rem', color: 'var(--bg-brand)', display: 'inline-block', marginTop: '0.4rem', fontWeight: 600 }}>Fetching your coordinates...</span>}
+                 </div>
+                 <div className="form-group">
+                   <label>Latitude</label>
+                   <input type="text" placeholder="0.0000" value={latitude} readOnly style={{ backgroundColor: 'rgba(0,0,0,0.02)', cursor: 'not-allowed' }} />
+                 </div>
+                 <div className="form-group">
+                   <label>Longitude</label>
+                   <input type="text" placeholder="0.0000" value={longitude} readOnly style={{ backgroundColor: 'rgba(0,0,0,0.02)', cursor: 'not-allowed' }} />
                  </div>
                  <div className="form-group">
                    <label>Industry</label>
@@ -173,9 +210,9 @@ const SignupWizard = () => {
              ) : (
                <div className="form-grid">
                  <div className="form-group" style={{ gridColumn: 'span 2' }}>
-                   <label>Legal Entity Name</label>
+                   <label>Estate Name</label>
                    <div style={{ position: 'relative' }}>
-                    <input type="text" placeholder="Full legal name" style={{ paddingLeft: '2.75rem' }} />
+                    <input type="text" placeholder="Full estate name" style={{ paddingLeft: '2.75rem' }} />
                     <Home size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-quaternary)' }} />
                    </div>
                  </div>
@@ -202,9 +239,10 @@ const SignupWizard = () => {
                  <div className="form-group" style={{ gridColumn: 'span 2' }}>
                    <label>Full Address</label>
                    <div style={{ position: 'relative' }}>
-                    <input type="text" placeholder="Property address" style={{ paddingLeft: '2.75rem' }} />
+                    <input type="text" placeholder="Property address" style={{ paddingLeft: '2.75rem' }} value={address} onChange={(e) => setAddress(e.target.value)} onBlur={handleAddressBlur} />
                     <MapPin size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-quaternary)' }} />
                    </div>
+                   {isGeocoding && <span style={{ fontSize: '0.8rem', color: 'var(--bg-brand)', display: 'inline-block', marginTop: '0.4rem', fontWeight: 600 }}>Fetching your coordinates...</span>}
                  </div>
                  <div className="form-group">
                    <label>Number of Units</label>
@@ -216,11 +254,11 @@ const SignupWizard = () => {
                  </div>
                  <div className="form-group">
                    <label>Latitude</label>
-                   <input type="text" placeholder="0.0000" />
+                   <input type="text" placeholder="0.0000" value={latitude} readOnly style={{ backgroundColor: 'rgba(0,0,0,0.02)', cursor: 'not-allowed' }} />
                  </div>
                  <div className="form-group">
                    <label>Longitude</label>
-                   <input type="text" placeholder="0.0000" />
+                   <input type="text" placeholder="0.0000" value={longitude} readOnly style={{ backgroundColor: 'rgba(0,0,0,0.02)', cursor: 'not-allowed' }} />
                  </div>
                </div>
              )}
@@ -461,13 +499,13 @@ const SignupWizard = () => {
       </div>
       
       <style jsx>{`
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
         .payment-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
         
-        .form-group label { display: block; font-size: 0.875rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; }
+        .form-group label { display: block; font-size: 0.875rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.35rem; }
         .form-group input, .form-group select { 
-          width: 100%; padding: 1rem; border-radius: 12px; border: 1.5px solid var(--border-default); 
-          background: transparent; color: var(--text-primary); font-size: 1rem; outline: none; transition: border-color 0.2s; 
+          width: 100%; padding: 0.75rem 1rem; border-radius: 10px; border: 1.5px solid var(--border-default); 
+          background: transparent; color: var(--text-primary); font-size: 0.95rem; outline: none; transition: border-color 0.2s; 
         }
         .form-group input:focus, .form-group select:focus { border-color: var(--bg-brand); }
         
